@@ -9,6 +9,11 @@ test.describe.parallel("Verify when user click Forgot Password ", () => {
     await loginPage.goto();
   });
 
+  test.afterEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+    await loginPage.close();
+  });
+
   test("[TC-06] User will be navigated to Reset password page", async () => {
     await test.step("Step 1: Enter username", async () => {
       await loginPage.clickForgotPassword();

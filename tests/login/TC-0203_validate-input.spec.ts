@@ -11,6 +11,11 @@ test.describe
     await loginPage.goto();
   });
 
+  test.afterEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+    await loginPage.close();
+  });
+
   for (const testData of testCaseData) {
     test(`[TC-0203] Show error message when user enter username = ${testData.username} or password = ${testData.password}`, async () => {
       await test.step("Step 1: Enter username", async () => {
