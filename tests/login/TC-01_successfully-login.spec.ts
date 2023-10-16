@@ -10,6 +10,11 @@ test.describe.parallel("Successfully login to OrangeHRM", () => {
     await loginPage.goto();
   });
 
+  test.afterEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+    await loginPage.close();
+  });
+
   for (const testData of testCaseData) {
     test("[TC-01] User can login to system successfully", async () => {
       await test.step("Step 1: Enter username", async () => {

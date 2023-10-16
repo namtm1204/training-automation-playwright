@@ -10,8 +10,13 @@ test.describe.parallel("Validate input when user enter invalid account", () => {
     await loginPage.goto();
   });
 
+  test.afterEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+    await loginPage.close();
+  });
+
   for (const testData of testCaseData) {
-    test(`[TC-0405] Show error alert when user enter username = ${testData.username} or password = ${testData.password}`, async () => {
+    test(`[TC-0405] Show error alert when user enter username = ${testData.username} and password = ${testData.password}`, async () => {
       await test.step("Step 1: Enter username", async () => {
         await loginPage.enterUserName(testData.username);
       });

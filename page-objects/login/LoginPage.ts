@@ -21,6 +21,10 @@ export class LoginPage {
     );
   }
 
+  async close() {
+    await this.page.close();
+  }
+
   async enterUserName(username: string) {
     await this.userNameInput.fill(username);
   }
