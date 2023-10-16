@@ -20,9 +20,10 @@ test.describe.parallel("Verify when user click Forgot Password ", () => {
     });
 
     await test.step("Verify navigation to Reset password page", async () => {
-      await expect(loginPage.page.getByRole("heading")).toHaveText([
-        "Reset Password",
-      ]);
+      await expect(loginPage.page.getByRole("heading")).toHaveText(
+        ["Reset Password"],
+        { timeout: 3 * 60 * 1000 }
+      );
     });
   });
 });

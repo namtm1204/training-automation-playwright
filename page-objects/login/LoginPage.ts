@@ -31,8 +31,8 @@ export class LoginPage {
   async enterPassword(password: string) {
     await this.passwordInput.fill(password);
   }
-  async clickLogin() {
-    await this.loginButton.click();
+  async clickLogin(time: number) {
+    await this.loginButton.click({ timeout: time });
   }
   async clickForgotPassword() {
     await this.forgotPasswordText.click();

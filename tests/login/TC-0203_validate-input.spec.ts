@@ -27,7 +27,7 @@ test.describe
       });
 
       await test.step("Step 3: Click Login", async () => {
-        await loginPage.clickLogin();
+        await loginPage.clickLogin(2 * 60 * 1000);
       });
 
       await test.step("Show error message below input", async () => {

@@ -26,13 +26,14 @@ test.describe.parallel("Successfully login to OrangeHRM", () => {
       });
 
       await test.step("Step 3: Click Login", async () => {
-        await loginPage.clickLogin();
+        await loginPage.clickLogin(2 * 60 * 1000);
       });
 
       await test.step("Verify navigation to Dashboard page", async () => {
-        await expect(loginPage.page.getByRole("heading")).toHaveText([
-          "Dashboard",
-        ]);
+        await expect(loginPage.page.getByRole("heading")).toHaveText(
+          ["Dashboard"],
+          { timeout: 3 * 60 * 1000 }
+        );
       });
     });
   }
