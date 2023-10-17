@@ -8,7 +8,7 @@ test.describe
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
-    await loginPage.goto();
+    await loginPage.goToLoginPage();
   });
 
   test.afterEach(async ({ page }) => {
@@ -27,7 +27,7 @@ test.describe
       });
 
       await test.step("Step 3: Click Login", async () => {
-        await loginPage.clickLogin(2 * 60 * 1000);
+        await loginPage.clickLogin();
       });
 
       await test.step("Show error message below input", async () => {

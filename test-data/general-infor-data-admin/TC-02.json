@@ -1,0 +1,56 @@
+[
+  {
+    "Organization_Name": "OrangeHRBBB",
+    "Phone": "012334567",
+    "Fax": "12345678910",
+    "Email": "abc@gmail.com"
+  },
+  {
+    "Organization_Name": "OrangeHRBBB",
+    "Phone": "+012334567",
+    "Fax": "12345678910",
+    "Email": "abc@gmail.com"
+  },
+  {
+    "Organization_Name": "OrangeHRBBB",
+    "Phone": "-012334567",
+    "Fax": "12345678910",
+    "Email": "abc@gmail.com"
+  },
+  {
+    "Organization_Name": "OrangeHRBBB",
+    "Phone": "(012)334567",
+    "Fax": "12345678910",
+    "Email": "abc@gmail.com"
+  },
+  {
+    "Organization_Name": "OrangeHRBBB",
+    "Phone": "/012334567",
+    "Fax": "12345678910",
+    "Email": "abc@gmail.com"
+  },
+  {
+    "Organization_Name": "OrangeHRBBB",
+    "Phone": "012334567",
+    "Fax": "+12345678910",
+    "Email": "abc@gmail.com"
+  },
+  {
+    "Organization_Name": "OrangeHRBBB",
+    "Phone": "012334567",
+    "Fax": "-12345678910",
+    "Email": "abc@gmail.com"
+  },
+  {
+    "Organization_Name": "OrangeHRBBB",
+    "Phone": "012334567",
+    "Fax": "(123)45678910",
+    "Email": "abc@gmail.com"
+  },
+  {
+    "Organization_Name": "OrangeHRBBB",
+    "Phone": "012334567",
+    "Fax": "/12345678910",
+    "Email": "abc@gmail.com"
+  }
+]
