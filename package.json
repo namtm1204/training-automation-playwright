@@ -6,7 +6,8 @@
   "scripts": {
     "test": "playwright test --trace on",
     "test:reporter": "playwright test --reporter=allure-playwright",
-    "allure-report": "allure generate ./allure-results --clean & allure open"
+    "allure-report": "allure generate ./allure-results --clean & allure open",
+    "test:debug": "playwright test --debug "
   },
   "keywords": [],
   "author": "",

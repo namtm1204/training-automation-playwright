@@ -3,6 +3,7 @@ import testCaseData from "../../test-data/general-infor-data-admin/TC-01.json";
 import { LoginPage } from "../../page-objects/login/LoginPage";
 import { GeneratePage } from "../../helpers/generatePage";
 import { OrganizationGeneralInformationPage } from "../../page-objects/admin/OrganizationGeneralInformationPage";
+import { log } from "console";
 
 test.describe.parallel("Update name", () => {
   let loginPage: LoginPage;
@@ -26,6 +27,7 @@ test.describe.parallel("Update name", () => {
 
   for (const testData of testCaseData) {
     test(`[TC-01] Verify general information saved successfully when updating only Origination name = ${testData.Organization_Name}`, async () => {
+      test.setTimeout(3 * 60 * 1000);
       await test.step("Step 1: Go to Organization General Information Page", async () => {
         await organizationGeneralInformationPage.goToOrganizationGeneralInformationPage();
       });
@@ -45,16 +47,9 @@ test.describe.parallel("Update name", () => {
       });
 
       await test.step("Step 5: Verify Origination name after updating ", async () => {
-        // test.setTimeout(3 * 60 * 1000);
-        console.log(
-          "log: " +
-            (
-              await organizationGeneralInformationPage.getOrganizationName()
-            ).innerText()
-        );
         expect(
           await organizationGeneralInformationPage.getOrganizationName()
-        ).toHaveText(testData.Organization_Name);
+        ).toHaveValue(testData.Organization_Name);
       });
     });
   }

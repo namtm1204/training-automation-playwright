@@ -17,7 +17,8 @@ export class LoginPage {
 
   async goToLoginPage() {
     await this.page.goto(
-      "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
+      "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
+      { timeout: 3 * 60 * 1000 }
     );
   }
 
