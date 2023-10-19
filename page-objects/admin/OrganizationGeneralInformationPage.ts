@@ -9,7 +9,7 @@ export class OrganizationGeneralInformationPage {
   readonly fax: Locator;
   readonly email: Locator;
   readonly edit_Button: Locator;
-  submit_Button: Locator;
+  readonly submit_Button: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -28,7 +28,7 @@ export class OrganizationGeneralInformationPage {
     this.edit_Button = page.locator(
       '//*[@class="oxd-switch-input oxd-switch-input--active --label-left"]'
     );
-    // this.submit_Button = page.locator('//*[@type="submit"]');
+    this.submit_Button = page.locator('//*[@type="submit"]');
   }
 
   async goToOrganizationGeneralInformationPage() {
@@ -76,7 +76,7 @@ export class OrganizationGeneralInformationPage {
     await this.edit_Button.click();
   }
   async click_Submit() {
-    this.submit_Button = this.page.locator('//*[@type="submit"]');
+    //  this.submit_Button = this.page.locator('//*[@type="submit"]');
     await this.submit_Button.click();
   }
   async getOrganizationName(): Promise<Locator> {
