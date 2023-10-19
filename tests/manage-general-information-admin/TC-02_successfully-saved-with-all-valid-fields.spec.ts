@@ -1,12 +1,13 @@
 import { test, expect, type Page } from "@playwright/test";
-import testCaseData from "../../test-data/general-infor-data-admin/TC-01.json";
+import testCaseData from "../../test-data/general-infor-data-admin/TC-02.json";
 import { GeneratePage } from "../../helpers/generatePage";
 import { OrganizationGeneralInformationPage } from "../../page-objects/abstract-page/abstract-admin-page/OrganizationGeneralInformationPage";
 
-test.describe.parallel("Update name", () => {
+test.describe.parallel("Update all fileds", () => {
   let page: Page;
   let organizationGeneralInformationPage: OrganizationGeneralInformationPage;
   let generatePage: GeneratePage;
+  let count = 0;
 
   test.beforeEach(async ({ browser }) => {
     generatePage = new GeneratePage(browser);
@@ -21,7 +22,8 @@ test.describe.parallel("Update name", () => {
   });
 
   for (const testData of testCaseData) {
-    test(`[TC-01] Verify general information saved successfully when updating only Origination name = ${testData.Organization_Name}`, async () => {
+    count++;
+    test(`[TC-02] Verify general information saved successfully when providing all fields in testdata${count} are valid `, async () => {
       test.setTimeout(3 * 60 * 1000);
       await test.step("Step 1: Go to Organization General Information Page", async () => {
         await organizationGeneralInformationPage.goToOrganizationGeneralInformationPage();
@@ -37,14 +39,34 @@ test.describe.parallel("Update name", () => {
         );
       });
 
-      await test.step("Step 4: Click Submit", async () => {
+      await test.step("Step 4: Update phone", async () => {
+        await organizationGeneralInformationPage.enterPhone(testData.Phone);
+      });
+
+      await test.step("Step 5: Update fax", async () => {
+        await organizationGeneralInformationPage.enterFax(testData.Fax);
+      });
+
+      await test.step("Step 6: Update email", async () => {
+        await organizationGeneralInformationPage.enterEmail(testData.Email);
+      });
+      await test.step("Step 7: Click Submit", async () => {
         await organizationGeneralInformationPage.clickSubmit();
       });
 
-      await test.step("Step 5: Verify Origination name after updating ", async () => {
+      await test.step("Step 8: Verify all fields after updating ", async () => {
         expect(
           await organizationGeneralInformationPage.getOrganizationNameTextbox()
         ).toHaveValue(testData.Organization_Name);
+        expect(
+          await organizationGeneralInformationPage.getPhoneTextbox()
+        ).toHaveValue(testData.Phone);
+        expect(
+          await organizationGeneralInformationPage.getFaxTextbox()
+        ).toHaveValue(testData.Fax);
+        expect(
+          await organizationGeneralInformationPage.getEmailTextbox()
+        ).toHaveValue(testData.Email);
       });
     });
   }
