@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import testCaseData from "../../test-data/general-infor-data-admin/TC-01.json";
 import { GeneratePage } from "../../helpers/generatePage";
-import { OrganizationGeneralInformationPage } from "../../page-objects/admin/OrganizationGeneralInformationPage";
+import { OrganizationGeneralInformationPage } from "../../page-objects/abstract-page/abstract-admin-page/OrganizationGeneralInformationPage";
 
 test.describe.parallel("Update name", () => {
   let page: Page;
@@ -43,7 +43,7 @@ test.describe.parallel("Update name", () => {
 
       await test.step("Step 5: Verify Origination name after updating ", async () => {
         expect(
-          await organizationGeneralInformationPage.getOrganizationNameInput()
+          await organizationGeneralInformationPage.getOrganizationNameTextbox()
         ).toHaveValue(testData.Organization_Name);
       });
     });

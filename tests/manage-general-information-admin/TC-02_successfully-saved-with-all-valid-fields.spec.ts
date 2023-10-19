@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import testCaseData from "../../test-data/general-infor-data-admin/TC-02.json";
 import { GeneratePage } from "../../helpers/generatePage";
-import { OrganizationGeneralInformationPage } from "../../page-objects/admin/OrganizationGeneralInformationPage";
+import { OrganizationGeneralInformationPage } from "../../page-objects/abstract-page/abstract-admin-page/OrganizationGeneralInformationPage";
 
 test.describe.parallel("Update all fileds", () => {
   let page: Page;
@@ -56,16 +56,16 @@ test.describe.parallel("Update all fileds", () => {
 
       await test.step("Step 8: Verify all fields after updating ", async () => {
         expect(
-          await organizationGeneralInformationPage.getOrganizationNameInput()
+          await organizationGeneralInformationPage.getOrganizationNameTextbox()
         ).toHaveValue(testData.Organization_Name);
         expect(
-          await organizationGeneralInformationPage.getPhoneInput()
+          await organizationGeneralInformationPage.getPhoneTextbox()
         ).toHaveValue(testData.Phone);
         expect(
-          await organizationGeneralInformationPage.getFaxInput()
+          await organizationGeneralInformationPage.getFaxTextbox()
         ).toHaveValue(testData.Fax);
         expect(
-          await organizationGeneralInformationPage.getEmailInput()
+          await organizationGeneralInformationPage.getEmailTextbox()
         ).toHaveValue(testData.Email);
       });
     });
