@@ -1,11 +1,9 @@
 import { test, expect, type Page } from "@playwright/test";
 import testCaseData from "../../test-data/general-infor-data-admin/TC-01.json";
-import { LoginPage } from "../../page-objects/login/LoginPage";
 import { GeneratePage } from "../../helpers/generatePage";
 import { OrganizationGeneralInformationPage } from "../../page-objects/admin/OrganizationGeneralInformationPage";
 
 test.describe.parallel("Update name", () => {
-  let loginPage: LoginPage;
   let page: Page;
   let organizationGeneralInformationPage: OrganizationGeneralInformationPage;
   let generatePage: GeneratePage;
@@ -13,14 +11,12 @@ test.describe.parallel("Update name", () => {
   test.beforeEach(async ({ browser }) => {
     generatePage = new GeneratePage(browser);
     page = await generatePage.createPage(browser);
-    //loginPage.loginProcess(loginData[0].username, loginData[0].password);
     organizationGeneralInformationPage = new OrganizationGeneralInformationPage(
       page
     );
   });
 
   test.afterEach(async ({ page }) => {
-    //  loginPage = new LoginPage(page);
     await page.close();
   });
 
@@ -32,22 +28,22 @@ test.describe.parallel("Update name", () => {
       });
 
       await test.step("Step 2: Click Edit", async () => {
-        await organizationGeneralInformationPage.click_Edit();
+        await organizationGeneralInformationPage.clickEdit();
       });
 
       await test.step("Step 3: Update Origination name", async () => {
-        await organizationGeneralInformationPage.enter_Organization_Name(
+        await organizationGeneralInformationPage.enterOrganizationName(
           testData.Organization_Name
         );
       });
 
       await test.step("Step 4: Click Submit", async () => {
-        await organizationGeneralInformationPage.click_Submit();
+        await organizationGeneralInformationPage.clickSubmit();
       });
 
       await test.step("Step 5: Verify Origination name after updating ", async () => {
         expect(
-          await organizationGeneralInformationPage.getOrganizationName()
+          await organizationGeneralInformationPage.getOrganizationNameInput()
         ).toHaveValue(testData.Organization_Name);
       });
     });

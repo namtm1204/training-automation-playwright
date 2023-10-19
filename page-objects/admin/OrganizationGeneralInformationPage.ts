@@ -4,39 +4,43 @@ import loginData from "../../test-data/login-test-data/TC-01.json";
 
 export class OrganizationGeneralInformationPage {
   readonly page: Page;
-  readonly organization_Name: Locator;
-  readonly phone: Locator;
-  readonly fax: Locator;
-  readonly email: Locator;
-  readonly edit_Button: Locator;
-  readonly submit_Button: Locator;
+  readonly organizationNameInput: Locator;
+  readonly phoneInput: Locator;
+  readonly faxInput: Locator;
+  readonly emailInput: Locator;
+  readonly editSwitch: Locator;
+  readonly submitButton: Locator;
+  readonly adminButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.organization_Name = page.locator(
+    this.organizationNameInput = page.locator(
       '//*[@class="oxd-label oxd-input-field-required"]//parent::div//parent::div//child::input'
     );
-    this.phone = page.locator(
+    this.phoneInput = page.locator(
       '//*[@class="oxd-form"]//*[contains(text(),"Phone")]//parent::div//parent::div//child::input'
     );
-    this.fax = page.locator(
+    this.faxInput = page.locator(
       '//*[@class="oxd-form"]//*[contains(text(),"Fax")]//parent::div//parent::div//child::input'
     );
-    this.email = page.locator(
+    this.emailInput = page.locator(
       '//*[@class="oxd-form"]//*[contains(text(),"Email")]//parent::div//parent::div//child::input'
     );
-    this.edit_Button = page.locator(
+    this.editSwitch = page.locator(
       '//*[@class="oxd-switch-input oxd-switch-input--active --label-left"]'
     );
-    this.submit_Button = page.locator('//*[@type="submit"]');
+    this.submitButton = page.locator('//*[@type="submit"]');
+    this.adminButton = page.locator('//*[text()="Admin"]');
   }
 
-  async goToOrganizationGeneralInformationPage() {
+  async goToLoginPage() {
     let loginPage = new LoginPage(this.page);
     await loginPage.loginProcess(loginData[0].username, loginData[0].password);
+  }
+  async goToOrganizationGeneralInformationPage() {
+    await this.goToLoginPage();
     //click "Admin"
-    await this.page.locator('//*[text()="Admin"]').click();
-
+    await this.adminButton.click();
     //click Organization dropdown
     await this.page
       .locator(
@@ -60,26 +64,38 @@ export class OrganizationGeneralInformationPage {
     await this.page.close();
   }
 
-  async enter_Organization_Name(name: string) {
-    await this.organization_Name.fill(name);
+  async enterOrganizationName(name: string) {
+    await this.organizationNameInput.clear();
+    await this.organizationNameInput.fill(name);
   }
   async enterPhone(phone: string) {
-    await this.phone.fill(phone);
+    await this.phoneInput.clear();
+    await this.phoneInput.fill(phone);
   }
   async enterFax(fax: string) {
-    await this.fax.fill(fax);
+    await this.faxInput.clear();
+    await this.faxInput.fill(fax);
   }
   async enterEmail(email: string) {
-    await this.email.fill(email);
+    await this.emailInput.clear();
+    await this.emailInput.fill(email);
   }
-  async click_Edit() {
-    await this.edit_Button.click();
+  async clickEdit() {
+    await this.editSwitch.click();
   }
-  async click_Submit() {
-    //  this.submit_Button = this.page.locator('//*[@type="submit"]');
-    await this.submit_Button.click();
+  async clickSubmit() {
+    await this.submitButton.click();
   }
-  async getOrganizationName(): Promise<Locator> {
-    return this.organization_Name;
+  async getOrganizationNameInput(): Promise<Locator> {
+    return this.organizationNameInput;
+  }
+  async getPhoneInput(): Promise<Locator> {
+    return this.phoneInput;
+  }
+  async getFaxInput(): Promise<Locator> {
+    return this.faxInput;
+  }
+  async getEmailInput(): Promise<Locator> {
+    return this.emailInput;
   }
 }
