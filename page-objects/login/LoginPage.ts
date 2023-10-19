@@ -15,9 +15,10 @@ export class LoginPage {
     this.forgotPasswordText = page.getByText("Forgot your password?");
   }
 
-  async goto() {
+  async goToLoginPage() {
     await this.page.goto(
-      "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
+      "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
+      { timeout: 3 * 60 * 1000 }
     );
   }
 
@@ -31,10 +32,16 @@ export class LoginPage {
   async enterPassword(password: string) {
     await this.passwordInput.fill(password);
   }
-  async clickLogin(time: number) {
-    await this.loginButton.click({ timeout: time });
+  async clickLogin() {
+    await this.loginButton.click();
   }
   async clickForgotPassword() {
     await this.forgotPasswordText.click();
+  }
+  async loginProcess(username: string, password: string) {
+    await this.goToLoginPage();
+    await this.enterUserName(username);
+    await this.enterPassword(password);
+    await this.clickLogin();
   }
 }

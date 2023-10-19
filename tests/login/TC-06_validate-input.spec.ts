@@ -6,7 +6,7 @@ test.describe.parallel("Verify when user click Forgot Password ", () => {
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
-    await loginPage.goto();
+    await loginPage.goToLoginPage();
   });
 
   test.afterEach(async ({ page }) => {
