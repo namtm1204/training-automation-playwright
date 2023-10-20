@@ -12,6 +12,7 @@ export class OrganizationGeneralInformationPage extends AdminPage {
   readonly editSwitch: Locator;
   readonly submitButton: Locator;
   readonly generalInforTitle: Locator;
+  readonly organizationNameRequiredLabel: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -34,6 +35,8 @@ export class OrganizationGeneralInformationPage extends AdminPage {
     this.generalInforTitle = page.locator(
       '//*[@class="oxd-text oxd-text--h6 orangehrm-main-title"]'
     );
+    this.organizationNameRequiredLabel = page.locator('//*[text()="Required"]');
+    //this.organizationNameRequiredLabel = page.getByText("Required");
   }
 
   async goToOrganizationGeneralInformationPage() {
@@ -44,7 +47,7 @@ export class OrganizationGeneralInformationPage extends AdminPage {
     await this.organizationTab.click();
     //select "General Information" item
     await this.generalInforItem.click();
-    await expect(this.generalInforTitle).toHaveText("General Information");
+    await expect(this.organizationNameTextbox).toBeVisible();
   }
 
   async close() {
@@ -84,5 +87,8 @@ export class OrganizationGeneralInformationPage extends AdminPage {
   }
   async getEmailTextbox(): Promise<Locator> {
     return this.emailTextbox;
+  }
+  async getOrganizationNameRequiredLabel(): Promise<Locator> {
+    return this.organizationNameRequiredLabel;
   }
 }

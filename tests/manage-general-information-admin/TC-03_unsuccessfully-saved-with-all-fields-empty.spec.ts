@@ -1,9 +1,9 @@
 import { test, expect, type Page } from "@playwright/test";
-import testCaseData from "../../test-data/general-infor-data-admin/TC-02.json";
+import testCaseData from "../../test-data/general-infor-data-admin/TC-03.json";
 import { GeneratePage } from "../../helpers/generatePage";
 import { OrganizationGeneralInformationPage } from "../../page-objects/abstract-page/abstract-admin-page/OrganizationGeneralInformationPage";
 
-test.describe.parallel("Update all fileds", () => {
+test.describe.parallel("Update all fileds empty", () => {
   let page: Page;
   let organizationGeneralInformationPage: OrganizationGeneralInformationPage;
   let generatePage: GeneratePage;
@@ -23,7 +23,7 @@ test.describe.parallel("Update all fileds", () => {
 
   for (const testData of testCaseData) {
     count++;
-    test(`[TC-02] Verify general information saved successfully when providing all fields in testdata${count} are valid `, async () => {
+    test(`[TC-03] Verify general information saved unsuccessfully when leaving all fields in testdata${count} empty `, async () => {
       test.setTimeout(3 * 60 * 1000);
       await test.step("Step 1: Go to Organization General Information Page", async () => {
         await organizationGeneralInformationPage.goToOrganizationGeneralInformationPage();
@@ -31,6 +31,12 @@ test.describe.parallel("Update all fileds", () => {
 
       await test.step("Step 2: Click Edit", async () => {
         await organizationGeneralInformationPage.clickEdit();
+      });
+
+      await test.step("Step 2.2: check textbox ", async () => {
+        await expect(
+          await organizationGeneralInformationPage.getOrganizationNameTextbox()
+        ).toBeVisible();
       });
 
       await test.step("Step 3: Update Origination name", async () => {
@@ -53,20 +59,10 @@ test.describe.parallel("Update all fileds", () => {
       await test.step("Step 7: Click Submit", async () => {
         await organizationGeneralInformationPage.clickSubmit();
       });
-
       await test.step("Step 8: Verify all fields after updating ", async () => {
         await expect(
-          await organizationGeneralInformationPage.getOrganizationNameTextbox()
-        ).toHaveValue(testData.Organization_Name);
-        await expect(
-          await organizationGeneralInformationPage.getPhoneTextbox()
-        ).toHaveValue(testData.Phone);
-        await expect(
-          await organizationGeneralInformationPage.getFaxTextbox()
-        ).toHaveValue(testData.Fax);
-        await expect(
-          await organizationGeneralInformationPage.getEmailTextbox()
-        ).toHaveValue(testData.Email);
+          await organizationGeneralInformationPage.getOrganizationNameRequiredLabel()
+        ).toBeVisible();
       });
     });
   }
