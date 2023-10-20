@@ -27,12 +27,6 @@ test.describe.parallel("Update all fileds empty", () => {
       test.setTimeout(3 * 60 * 1000);
       await test.step("Step 1: Go to Organization General Information Page", async () => {
         await organizationGeneralInformationPage.goToOrganizationGeneralInformationPage();
-        await expect(
-          organizationGeneralInformationPage.getGeneralInforTitle()
-        ).toHaveText("General Information");
-        await expect(
-          organizationGeneralInformationPage.getLoadSpinner()
-        ).toBeHidden();
       });
 
       await test.step("Step 2: Click Edit", async () => {

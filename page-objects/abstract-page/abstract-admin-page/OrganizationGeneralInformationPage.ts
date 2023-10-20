@@ -42,9 +42,14 @@ export class OrganizationGeneralInformationPage extends AdminPage {
     //click "Admin"
     await this.clickMenuItem();
     //click Organization dropdown
-    await this.organizationTab.click();
+    await this.getOrganizationTab().waitFor({ state: "visible" });
+    await this.getOrganizationTab().click();
     //select "General Information" item
-    await this.generalInforItem.click();
+    await this.getGeneralInforItem().click();
+
+    await this.getGeneralInforTitle().waitFor({ state: "visible" });
+
+    await this.getLoadSpinner().waitFor({ state: "hidden" });
   }
 
   async close() {
@@ -93,5 +98,11 @@ export class OrganizationGeneralInformationPage extends AdminPage {
   }
   getGeneralInforTitle(): Locator {
     return this.generalInforTitle;
+  }
+  getGeneralInforItem(): Locator {
+    return this.generalInforItem;
+  }
+  getOrganizationTab(): Locator {
+    return this.organizationTab;
   }
 }
