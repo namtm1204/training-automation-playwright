@@ -27,16 +27,16 @@ test.describe.parallel("Update all fileds empty", () => {
       test.setTimeout(3 * 60 * 1000);
       await test.step("Step 1: Go to Organization General Information Page", async () => {
         await organizationGeneralInformationPage.goToOrganizationGeneralInformationPage();
+        await expect(
+          organizationGeneralInformationPage.getGeneralInforTitle()
+        ).toHaveText("General Information");
+        await expect(
+          organizationGeneralInformationPage.getLoadSpinner()
+        ).toBeHidden();
       });
 
       await test.step("Step 2: Click Edit", async () => {
         await organizationGeneralInformationPage.clickEdit();
-      });
-
-      await test.step("Step 2.2: check textbox ", async () => {
-        await expect(
-          await organizationGeneralInformationPage.getOrganizationNameTextbox()
-        ).toBeVisible();
       });
 
       await test.step("Step 3: Update Origination name", async () => {
@@ -61,7 +61,7 @@ test.describe.parallel("Update all fileds empty", () => {
       });
       await test.step("Step 8: Verify all fields after updating ", async () => {
         await expect(
-          await organizationGeneralInformationPage.getOrganizationNameRequiredLabel()
+          organizationGeneralInformationPage.getOrganizationNameRequiredLabel()
         ).toBeVisible();
       });
     });

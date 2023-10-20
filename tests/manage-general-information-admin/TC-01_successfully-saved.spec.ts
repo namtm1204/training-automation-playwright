@@ -43,7 +43,7 @@ test.describe.parallel("Update name", () => {
 
       await test.step("Step 5: Verify Origination name after updating ", async () => {
         await expect(
-          await organizationGeneralInformationPage.getOrganizationNameTextbox()
+          organizationGeneralInformationPage.getOrganizationNameTextbox()
         ).toHaveValue(testData.Organization_Name);
       });
     });

@@ -56,16 +56,16 @@ test.describe.parallel("Update all fileds", () => {
 
       await test.step("Step 8: Verify all fields after updating ", async () => {
         await expect(
-          await organizationGeneralInformationPage.getOrganizationNameTextbox()
+          organizationGeneralInformationPage.getOrganizationNameTextbox()
         ).toHaveValue(testData.Organization_Name);
         await expect(
-          await organizationGeneralInformationPage.getPhoneTextbox()
+          organizationGeneralInformationPage.getPhoneTextbox()
         ).toHaveValue(testData.Phone);
         await expect(
-          await organizationGeneralInformationPage.getFaxTextbox()
+          organizationGeneralInformationPage.getFaxTextbox()
         ).toHaveValue(testData.Fax);
         await expect(
-          await organizationGeneralInformationPage.getEmailTextbox()
+          organizationGeneralInformationPage.getEmailTextbox()
         ).toHaveValue(testData.Email);
       });
     });

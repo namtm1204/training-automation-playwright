@@ -1,7 +1,4 @@
 import { expect, type Locator, type Page } from "@playwright/test";
-import { LoginPage } from "../../login/LoginPage";
-import loginData from "../../../test-data/login-test-data/TC-01.json";
-import { AbstractMenuPage } from "../AbstractMenuPage";
 import { AdminPage } from "./AdminPage";
 
 export class OrganizationGeneralInformationPage extends AdminPage {
@@ -13,6 +10,7 @@ export class OrganizationGeneralInformationPage extends AdminPage {
   readonly submitButton: Locator;
   readonly generalInforTitle: Locator;
   readonly organizationNameRequiredLabel: Locator;
+  readonly loadSpinner: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -36,7 +34,7 @@ export class OrganizationGeneralInformationPage extends AdminPage {
       '//*[@class="oxd-text oxd-text--h6 orangehrm-main-title"]'
     );
     this.organizationNameRequiredLabel = page.locator('//*[text()="Required"]');
-    //this.organizationNameRequiredLabel = page.getByText("Required");
+    this.loadSpinner = page.locator('//*[@class="oxd-loading-spinner"]');
   }
 
   async goToOrganizationGeneralInformationPage() {
@@ -47,7 +45,6 @@ export class OrganizationGeneralInformationPage extends AdminPage {
     await this.organizationTab.click();
     //select "General Information" item
     await this.generalInforItem.click();
-    await expect(this.organizationNameTextbox).toBeVisible();
   }
 
   async close() {
@@ -76,19 +73,25 @@ export class OrganizationGeneralInformationPage extends AdminPage {
   async clickSubmit() {
     await this.submitButton.click();
   }
-  async getOrganizationNameTextbox(): Promise<Locator> {
+  getOrganizationNameTextbox(): Locator {
     return this.organizationNameTextbox;
   }
-  async getPhoneTextbox(): Promise<Locator> {
+  getPhoneTextbox(): Locator {
     return this.phoneTextbox;
   }
-  async getFaxTextbox(): Promise<Locator> {
+  getFaxTextbox(): Locator {
     return this.faxTextbox;
   }
-  async getEmailTextbox(): Promise<Locator> {
+  getEmailTextbox(): Locator {
     return this.emailTextbox;
   }
-  async getOrganizationNameRequiredLabel(): Promise<Locator> {
+  getOrganizationNameRequiredLabel(): Locator {
     return this.organizationNameRequiredLabel;
+  }
+  getLoadSpinner(): Locator {
+    return this.loadSpinner;
+  }
+  getGeneralInforTitle(): Locator {
+    return this.generalInforTitle;
   }
 }
