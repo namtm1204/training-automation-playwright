@@ -55,11 +55,11 @@ export class AddLocationsPage extends AdminPage {
     await this.phoneTextbox.fill(phone);
   }
   async clickCountry() {
-    this.countrySelection.click();
+    await this.countrySelection.click();
   }
 
   async clickVietNamItem() {
-    this.vietNamItem.click();
+    await this.vietNamItem.click();
   }
   async clickSave() {
     await this.saveButton.click();

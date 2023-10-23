@@ -8,7 +8,6 @@ export class LocationsPage extends AdminPage {
   readonly searchButton: Locator;
   readonly addButton: Locator;
   readonly vietNamItem: Locator;
-  readonly loadSpinner: Locator;
   readonly nameRecord: Locator;
   readonly cityRecord: Locator;
   readonly countryRecord: Locator;
@@ -19,7 +18,6 @@ export class LocationsPage extends AdminPage {
 
   constructor(page: Page) {
     super(page);
-    //*[@class="oxd-select-option"]//*[contains(text(),"Viet Nam")]
     this.nameTextbox = page.locator(
       "//*[@class='oxd-label'][text()='Name']//parent::div//parent::div//child::input"
     );
@@ -34,9 +32,8 @@ export class LocationsPage extends AdminPage {
     this.vietNamItem = page.locator(
       "//*[@class='oxd-select-option']//*[contains(text(),'Viet Nam')]//parent::div"
     );
-    this.loadSpinner = page.locator('//*[@class="oxd-loading-spinner"]');
     this.nameRecord = page.locator(
-      '//*[@class="header"][text()="Name"]//parent::div//child::div[@class="data"]'
+      '//*[@class="oxd-table-body"]//*[contains(text(),"yRioii")]'
     );
     this.cityRecord = page.locator(
       '//*[@class="header"][text()="City"]//parent::div//child::div[@class="data"]'
@@ -48,8 +45,12 @@ export class LocationsPage extends AdminPage {
     this.selectAllCheckbox = page.locator(
       '//*[@class="oxd-table-header-sort"]//parent::div//parent::div//*[@class="oxd-checkbox-wrapper"]'
     );
-    this.deleteButton = page.locator('//*[text()=" Delete Selected "]');
-    this.confirmDeleteButton = page.locator('//*[text()=" Yes, Delete "]');
+    this.deleteButton = page.locator(
+      '//*[@class="oxd-icon bi-trash-fill oxd-button-icon"]'
+    );
+    this.confirmDeleteButton = page.locator(
+      '//*[@class="oxd-icon bi-trash oxd-button-icon"]'
+    );
   }
 
   async goToLocationsPage() {
@@ -74,11 +75,11 @@ export class LocationsPage extends AdminPage {
     await this.cityTextbox.fill(city);
   }
   async clickCountry() {
-    this.countrySelection.click();
+    await this.countrySelection.click();
   }
 
   async clickVietNamItem() {
-    this.vietNamItem.click();
+    await this.vietNamItem.click();
   }
 
   async clickAdd() {
@@ -109,14 +110,20 @@ export class LocationsPage extends AdminPage {
   getLoadSpinner(): Locator {
     return this.loadSpinner;
   }
-  getNameRecord(): Locator {
-    return this.nameRecord;
+  getNameRecord(name: string): Locator {
+    return this.page.locator(
+      `//*[@class="oxd-table-body"]//*[contains(text(),"${name}")]`
+    );
   }
-  getCityRecord(): Locator {
-    return this.cityRecord;
+  getCityRecord(city: string): Locator {
+    return this.page.locator(
+      `//*[@class="oxd-table-body"]//*[contains(text(),"${city}")]`
+    );
   }
-  getCountryRecord(): Locator {
-    return this.countryRecord;
+  getCountryRecord(country: string): Locator {
+    return this.page.locator(
+      `//*[@class="oxd-table-body"]//*[contains(text(),"${country}")]`
+    );
   }
   getNumberLocation(): Locator {
     return this.numberLocation;

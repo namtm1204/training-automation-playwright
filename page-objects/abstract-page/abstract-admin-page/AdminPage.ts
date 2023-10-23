@@ -21,4 +21,9 @@ export abstract class AdminPage extends AbstractMenuPage {
   async clickMenuItem() {
     await this.adminMenuItem.click();
   }
+  getCountryItem(country: string): Locator {
+    return this.page.locator(
+      `//*[@class='oxd-select-option']//*[contains(text(),'${country}')]//parent::div`
+    );
+  }
 }
