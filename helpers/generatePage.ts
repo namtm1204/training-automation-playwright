@@ -17,4 +17,7 @@ export class GeneratePage {
     browser = await chromium.launch();
     return await browser.newPage();
   }
+  async closeBrowser() {
+    this.browser.close();
+  }
 }
