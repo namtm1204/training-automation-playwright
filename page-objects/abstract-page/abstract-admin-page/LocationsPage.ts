@@ -1,5 +1,6 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { AdminPage } from "./AdminPage";
+import { Table } from "../../../element/Table";
 
 export class LocationsPage extends AdminPage {
   readonly nameTextbox: Locator;
@@ -15,6 +16,8 @@ export class LocationsPage extends AdminPage {
   readonly selectAllCheckbox: Locator;
   readonly deleteButton: Locator;
   readonly confirmDeleteButton: Locator;
+  readonly successToast: Locator;
+  readonly table: Table;
 
   constructor(page: Page) {
     super(page);
@@ -51,6 +54,8 @@ export class LocationsPage extends AdminPage {
     this.confirmDeleteButton = page.locator(
       '//*[@class="oxd-icon bi-trash oxd-button-icon"]'
     );
+    this.successToast = page.locator('//*[@class="oxd-toast-start"]');
+    this.table = new Table(page.locator("//*[@role='table']"));
   }
 
   async goToLocationsPage() {
@@ -110,10 +115,21 @@ export class LocationsPage extends AdminPage {
   getLoadSpinner(): Locator {
     return this.loadSpinner;
   }
-  getNameRecord(name: string): Locator {
-    return this.page.locator(
-      `//*[@class="oxd-table-body"]//*[contains(text(),"${name}")]`
-    );
+  async VerifySearch(
+    name: string,
+    city: string,
+    country: string
+  ): Promise<Boolean> {
+    const columnName = await this.table.getColumn("Name");
+    const rowName = await this.table.getRow(name, columnName);
+    const columnCity = await this.table.getColumn("City");
+    const rowCity = await this.table.getRow(city, columnCity);
+    const columnCountry = await this.table.getColumn("Country");
+    const rowCountry = await this.table.getRow(country, columnCountry);
+    console.log(rowName + " " + rowCity + " " + rowCountry);
+    if (rowName == rowCity && rowName == rowCountry && rowName != 0)
+      return true;
+    return false;
   }
   getCityRecord(city: string): Locator {
     return this.page.locator(
@@ -127,5 +143,8 @@ export class LocationsPage extends AdminPage {
   }
   getNumberLocation(): Locator {
     return this.numberLocation;
+  }
+  getSuccessToast(): Locator {
+    return this.successToast;
   }
 }

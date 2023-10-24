@@ -65,12 +65,16 @@ test.describe.parallel("Add location", () => {
         await addLocationsPage.getCountryItem(testData.Country).click();
       });
 
-      await test.step("Step 9: Click Save and verify add successfully ", async () => {
+      await test.step("Step 9: Click Save ", async () => {
         await addLocationsPage.clickSave();
-        await locationsPage.waitForPageLoad();
+      });
+
+      await test.step("VP:Verify add successfully ", async () => {
+        await expect(locationsPage.getAddButton()).toBeVisible();
       });
 
       await test.step("Step 10: Enter location name", async () => {
+        await locationsPage.waitForPageLoad();
         await locationsPage.enterName(locationName);
       });
 
@@ -92,17 +96,13 @@ test.describe.parallel("Add location", () => {
       });
 
       await test.step("VP: Verify search successfully", async () => {
-        await expect(locationsPage.getNameRecord(locationName)).toHaveText(
-          locationName
-        );
-
-        await expect(locationsPage.getCityRecord(testData.City)).toHaveText(
-          testData.City
-        );
-
-        await expect(
-          locationsPage.getCountryRecord(testData.Country)
-        ).toHaveText(testData.Country);
+        expect(
+          await locationsPage.VerifySearch(
+            locationName,
+            testData.City,
+            testData.Country
+          )
+        ).toBe(true);
       });
     });
   }

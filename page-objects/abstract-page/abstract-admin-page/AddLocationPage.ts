@@ -10,8 +10,6 @@ export class AddLocationsPage extends AdminPage {
   readonly countrySelection: Locator;
   readonly saveButton: Locator;
   readonly vietNamItem: Locator;
-  readonly table: Table
-
 
   constructor(page: Page) {
     super(page);
@@ -34,7 +32,6 @@ export class AddLocationsPage extends AdminPage {
     this.vietNamItem = page.locator(
       "//*[@class='oxd-select-option']//*[contains(text(),'Viet Nam')]//parent::div"
     );
-    this.table = new Table(page.locator(""))
   }
 
   async close() {
