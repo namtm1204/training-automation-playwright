@@ -115,17 +115,17 @@ export class LocationsPage extends AdminPage {
   getLoadSpinner(): Locator {
     return this.loadSpinner;
   }
-  async VerifySearch(
+  async verifySearch(
     name: string,
     city: string,
     country: string
   ): Promise<Boolean> {
-    const columnName = await this.table.getColumn("Name");
-    const rowName = await this.table.getRow(name, columnName);
-    const columnCity = await this.table.getColumn("City");
-    const rowCity = await this.table.getRow(city, columnCity);
-    const columnCountry = await this.table.getColumn("Country");
-    const rowCountry = await this.table.getRow(country, columnCountry);
+    const columnName = await this.table.getColumnIndex("Name");
+    const rowName = await this.table.getRowIndex(name, columnName);
+    const columnCity = await this.table.getColumnIndex("City");
+    const rowCity = await this.table.getRowIndex(city, columnCity);
+    const columnCountry = await this.table.getColumnIndex("Country");
+    const rowCountry = await this.table.getRowIndex(country, columnCountry);
     console.log(rowName + " " + rowCity + " " + rowCountry);
     if (rowName == rowCity && rowName == rowCountry && rowName != 0)
       return true;

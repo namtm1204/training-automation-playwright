@@ -6,21 +6,12 @@ export class Table extends BaseElement {
     super(locator);
   }
 
-  async getColumn(name: string) {
-    const headers = await this.locator
-      .locator("//*[@role='columnheader']")
-      .all();
-    const nameHeader = headers.find(async (header) => {
-      return (await header.innerText()).includes(name);
-    });
-    console.log("log: " + nameHeader);
-
-    const index = await nameHeader?.locator("//preceding-sibling::div").count();
-    if (index === undefined) return 0;
-    else return index + 1;
+  async getColumnIndex(name: string) {
+    const index = await this.locator.locator(`//div[@role='columnheader'][contains(., '${name}')]/preceding-sibling::div`).count();
+    return index + 1;
   }
 
-  async getRow(content: string, column: number) {
+  async getRowIndex(content: string, column: number) {
     const allRow = await this.locator
       .locator("//*[@class='oxd-table-card']")
       .all();
