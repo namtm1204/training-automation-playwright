@@ -1,6 +1,7 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { AdminPage } from "./AdminPage";
 import { Table } from "../../../element/Table";
+import exp from "constants";
 
 export class LocationsPage extends AdminPage {
   readonly nameTextbox: Locator;
@@ -55,7 +56,7 @@ export class LocationsPage extends AdminPage {
       '//*[@class="oxd-icon bi-trash oxd-button-icon"]'
     );
     this.successToast = page.locator('//*[@class="oxd-toast-start"]');
-    this.table = new Table(page.locator("//*[@role='table']"));
+    this.table = new Table(page.locator("//*"));
   }
 
   async goToLocationsPage() {
@@ -115,21 +116,23 @@ export class LocationsPage extends AdminPage {
   getLoadSpinner(): Locator {
     return this.loadSpinner;
   }
-  async verifySearch(
-    name: string,
-    city: string,
-    country: string
-  ): Promise<Boolean> {
+  async verifySearch(name: string, city: string, country: string) {
     const columnName = await this.table.getColumnIndex("Name");
-    const rowName = await this.table.getRowIndex(name, columnName);
     const columnCity = await this.table.getColumnIndex("City");
-    const rowCity = await this.table.getRowIndex(city, columnCity);
     const columnCountry = await this.table.getColumnIndex("Country");
-    const rowCountry = await this.table.getRowIndex(country, columnCountry);
-    console.log(rowName + " " + rowCity + " " + rowCountry);
-    if (rowName == rowCity && rowName == rowCountry && rowName != 0)
-      return true;
-    return false;
+    console.log(columnName + " " + columnCity + " " + columnCountry);
+    const rowName = await this.table.getRowIndex(name, columnName);
+    console.log(rowName);
+    //expect(rowName).toBeGreaterThan(-1);
+    await expect(
+      await this.table.getLocatorOfContent(columnName, rowName)
+    ).toHaveText(name);
+    await expect(
+      await this.table.getLocatorOfContent(columnCity, rowName)
+    ).toHaveText(city);
+    await expect(
+      await this.table.getLocatorOfContent(columnCountry, rowName)
+    ).toHaveText(country);
   }
   getCityRecord(city: string): Locator {
     return this.page.locator(

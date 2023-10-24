@@ -96,13 +96,11 @@ test.describe.parallel("Add location", () => {
       });
 
       await test.step("VP: Verify search successfully", async () => {
-        expect(
-          await locationsPage.verifySearch(
-            locationName,
-            testData.City,
-            testData.Country
-          )
-        ).toBe(true);
+        await locationsPage.verifySearch(
+          locationName,
+          testData.City,
+          testData.Country
+        );
       });
     });
   }

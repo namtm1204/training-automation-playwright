@@ -1,9 +1,9 @@
-import { Locator } from "@playwright/test";
+import { type Locator } from "@playwright/test";
 
 export abstract class BaseElement {
-    readonly locator: Locator
+  readonly locator: Locator;
 
-    constructor(locator: Locator) {
-        this.locator = locator
-    }
+  constructor(locator: Locator) {
+    this.locator = locator;
+  }
 }
