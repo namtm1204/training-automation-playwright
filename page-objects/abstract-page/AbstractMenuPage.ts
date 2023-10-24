@@ -17,4 +17,8 @@ export abstract class AbstractMenuPage {
     let loginPage = new LoginPage(this.page);
     await loginPage.loginProcess(loginData[0].username, loginData[0].password);
   }
+
+  async waitForPageLoad(): Promise<void> {
+    await this.loadSpinner.waitFor({ state: "hidden" });
+  }
 }

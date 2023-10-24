@@ -27,74 +27,82 @@ test.describe.parallel("Add location", () => {
   });
 
   for (const testData of testCaseData) {
-    let now = new Date();
     count++;
     test(`[TC-01] Verify that is possible to add location ${count} then search that location with full infor`, async () => {
+      let random = new Date().toISOString();
+      const locationName = testData.Location_Name + "_" + random;
+
       await test.step("Step 1: Go to Locations Page", async () => {
         await locationsPage.goToLocationsPage();
       });
 
       await test.step("Step 2: Click Add", async () => {
         await locationsPage.clickAdd();
-        await addLocationsPage.getLoadSpinner().waitFor({ state: "hidden" });
+        await locationsPage.waitForPageLoad();
       });
 
       await test.step("Step 3: Enter location name", async () => {
-        await addLocationsPage.enterName(
-          testData.Location_Name + " " + now.toISOString()
-        );
+        await addLocationsPage.enterName(locationName);
       });
+
       await test.step("Step 4: Enter city", async () => {
         await addLocationsPage.enterCity(testData.City);
       });
+
       await test.step("Step 5: Enter zip code", async () => {
         await addLocationsPage.enterZipCode(testData.Zip);
       });
+
       await test.step("Step 6: Enter phone", async () => {
         await addLocationsPage.enterPhone(testData.Phone);
       });
+
       await test.step("Step 7: Click country", async () => {
         await addLocationsPage.clickCountry();
       });
+
       await test.step("Step 8: Choose country", async () => {
         await addLocationsPage.getCountryItem(testData.Country).click();
       });
 
       await test.step("Step 9: Click Save and verify add successfully ", async () => {
         await addLocationsPage.clickSave();
-        await locationsPage.getLoadSpinner().waitFor({ state: "hidden" });
+        await locationsPage.waitForPageLoad();
       });
+
       await test.step("Step 10: Enter location name", async () => {
-        await locationsPage.enterName(
-          testData.Location_Name + " " + now.toISOString()
-        );
+        await locationsPage.enterName(locationName);
       });
+
       await test.step("Step 11: Enter city", async () => {
         await locationsPage.enterCity(testData.City);
       });
+
       await test.step("Step 12: Click country", async () => {
         await locationsPage.clickCountry();
       });
-      await test.step("Step 13: Choose viet nam", async () => {
-        await locationsPage.clickVietNamItem();
+
+      await test.step("Step 13: Choose country", async () => {
+        await addLocationsPage.getCountryItem(testData.Country).click();
       });
+
       await test.step("Step 14: Click Search", async () => {
         await locationsPage.clickSearch();
-        await locationsPage.getLoadSpinner().waitFor({ state: "hidden" });
+        await locationsPage.waitForPageLoad();
       });
-      await test.step("Step 15: Verify search successfully", async () => {
-        await expect(
-          locationsPage.getNameRecord(
-            testData.Location_Name + " " + now.toISOString()
-          )
-        ).toHaveText(testData.Location_Name + " " + now.toISOString());
+
+      await test.step("VP: Verify search successfully", async () => {
+        await expect(locationsPage.getNameRecord(locationName)).toHaveText(
+          locationName
+        );
+
         await expect(locationsPage.getCityRecord(testData.City)).toHaveText(
           testData.City
         );
+
         await expect(
           locationsPage.getCountryRecord(testData.Country)
         ).toHaveText(testData.Country);
-        //await expect(locationsPage.getNumberLocation()).toBeVisible();
       });
     });
   }

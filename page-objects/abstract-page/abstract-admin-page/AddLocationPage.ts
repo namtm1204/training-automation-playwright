@@ -1,5 +1,6 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { AdminPage } from "./AdminPage";
+import { Table } from "../../../element/Table";
 
 export class AddLocationsPage extends AdminPage {
   readonly nameTextbox: Locator;
@@ -9,11 +10,11 @@ export class AddLocationsPage extends AdminPage {
   readonly countrySelection: Locator;
   readonly saveButton: Locator;
   readonly vietNamItem: Locator;
-  readonly loadSpinner: Locator;
+  readonly table: Table
+
 
   constructor(page: Page) {
     super(page);
-    //*[@class="oxd-select-option"]//*[contains(text(),"Viet Nam")]
     this.nameTextbox = page.locator(
       '//*[text()="Name"]//parent::div//parent::div//child::input'
     );
@@ -30,12 +31,10 @@ export class AddLocationsPage extends AdminPage {
       '//*[text()="Phone"]//parent::div//parent::div//child::input'
     );
     this.saveButton = page.locator('button[type="submit"]');
-    //    this.vietNamItem = page.locator("//*[@role='listbox']");
     this.vietNamItem = page.locator(
       "//*[@class='oxd-select-option']//*[contains(text(),'Viet Nam')]//parent::div"
     );
-
-    this.loadSpinner = page.locator('//*[@class="oxd-loading-spinner"]');
+    this.table = new Table(page.locator(""))
   }
 
   async close() {
