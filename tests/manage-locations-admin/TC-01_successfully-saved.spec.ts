@@ -96,7 +96,7 @@ test.describe.parallel("Add location", () => {
       });
 
       await test.step("VP: Verify search successfully", async () => {
-        await locationsPage.verifySearch(
+        await locationsPage.verifySearchWithAllInfor(
           locationName,
           testData.City,
           testData.Country

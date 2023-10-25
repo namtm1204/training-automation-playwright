@@ -1,6 +1,6 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { AdminPage } from "./AdminPage";
-import { Table } from "../../../element/Table";
+import { LocationsPage } from "./LocationsPage";
 
 export class AddLocationsPage extends AdminPage {
   readonly nameTextbox: Locator;
@@ -65,5 +65,25 @@ export class AddLocationsPage extends AdminPage {
   }
   getLoadSpinner(): Locator {
     return this.loadSpinner;
+  }
+  async addTestData(
+    testCaseData: any,
+    randomDate: string,
+    locationsPage: LocationsPage
+  ) {
+    for (let i = 1; i < testCaseData.length; i++) {
+      await locationsPage.clickAdd();
+      await locationsPage.waitForPageLoad();
+
+      await this.enterName(testCaseData[i].Location_Name + "_" + randomDate);
+      await this.enterCity(testCaseData[i].City);
+      await this.enterZipCode(testCaseData[i].Zip);
+      await this.enterPhone(testCaseData[i].Phone);
+      await this.clickCountry();
+      await this.getCountryItem(testCaseData[i].Country).click();
+      await this.clickSave();
+
+      await locationsPage.waitForPageLoad();
+    }
   }
 }
