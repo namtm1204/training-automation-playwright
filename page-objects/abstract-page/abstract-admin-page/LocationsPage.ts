@@ -110,13 +110,36 @@ export class LocationsPage extends AdminPage {
   getLocationsItem(): Locator {
     return this.locationsItem;
   }
+
   getAddButton(): Locator {
     return this.addButton;
   }
+
   getLoadSpinner(): Locator {
     return this.loadSpinner;
   }
-  async verifySearch(name: string, city: string, country: string) {
+
+  getCityRecord(city: string): Locator {
+    return this.page.locator(
+      `//*[@class="oxd-table-body"]//*[contains(text(),"${city}")]`
+    );
+  }
+
+  getCountryRecord(country: string): Locator {
+    return this.page.locator(
+      `//*[@class="oxd-table-body"]//*[contains(text(),"${country}")]`
+    );
+  }
+
+  getNumberLocation(): Locator {
+    return this.numberLocation;
+  }
+
+  getSuccessToast(): Locator {
+    return this.successToast;
+  }
+
+  async verifySearchWithAllInfor(name: string, city: string, country: string) {
     const columnName = await this.table.getColumnIndex("Name");
     const columnCity = await this.table.getColumnIndex("City");
     const columnCountry = await this.table.getColumnIndex("Country");
@@ -134,20 +157,13 @@ export class LocationsPage extends AdminPage {
       await this.table.getLocatorOfContent(columnCountry, rowName)
     ).toHaveText(country);
   }
-  getCityRecord(city: string): Locator {
-    return this.page.locator(
-      `//*[@class="oxd-table-body"]//*[contains(text(),"${city}")]`
-    );
-  }
-  getCountryRecord(country: string): Locator {
-    return this.page.locator(
-      `//*[@class="oxd-table-body"]//*[contains(text(),"${country}")]`
-    );
-  }
-  getNumberLocation(): Locator {
-    return this.numberLocation;
-  }
-  getSuccessToast(): Locator {
-    return this.successToast;
+
+  async verifySearchWithCountry(country: string) {
+    const columnCountry = await this.table.getColumnIndex("Country");
+    const arrayCountry = await this.table.getAllDataOfColumn(columnCountry);
+    const count = arrayCountry.map((item) => {
+      item === country;
+    }).length;
+    expect(arrayCountry.length).toBe(count);
   }
 }

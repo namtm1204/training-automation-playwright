@@ -1,6 +1,9 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { AdminPage } from "./AdminPage";
 import { Table } from "../../../element/Table";
+import test from "node:test";
+import path from "path";
+import { LocationsPage } from "./LocationsPage";
 
 export class AddLocationsPage extends AdminPage {
   readonly nameTextbox: Locator;
@@ -65,5 +68,34 @@ export class AddLocationsPage extends AdminPage {
   }
   getLoadSpinner(): Locator {
     return this.loadSpinner;
+  }
+  async addTestData(
+    testCaseData: any,
+    randomDate: string,
+    locationsPage: LocationsPage
+  ) {
+    // await this.enterName(testData.Location_Name + "_" + randomDate);
+    // await this.enterCity(testData.City);
+    // await this.enterZipCode(testData.Zip);
+    // await this.enterPhone(testData.Phone);
+    // await this.clickCountry();
+    // await this.getCountryItem(testData.Country).click();
+    // await this.clickSave();
+
+    for (let i = 1; i < testCaseData.length; i++) {
+      await locationsPage.clickAdd();
+      await locationsPage.waitForPageLoad();
+
+      await this.enterName(testCaseData[i].Location_Name + "_" + randomDate);
+      await this.enterCity(testCaseData[i].City);
+      await this.enterZipCode(testCaseData[i].Zip);
+      await this.enterPhone(testCaseData[i].Phone);
+      await this.clickCountry();
+      await this.getCountryItem(testCaseData[i].Country).click();
+      await this.clickSave();
+
+      await locationsPage.waitForPageLoad();
+      await locationsPage.getAddButton().waitFor({ state: "visible" });
+    }
   }
 }

@@ -38,4 +38,13 @@ export class Table extends BaseElement {
       `//*[@class='oxd-table-body']//*[@class='oxd-table-card'][${rowIndex}]//*[@role='cell'][${columnIndex}]`
     );
   }
+
+  async getAllDataOfColumn(columnIndex: number) {
+    const array = await this.locator
+      .locator(
+        `//*[@class='oxd-table-body']//*[@class='oxd-table-card']//*[@role='cell'][${columnIndex}]`
+      )
+      .allInnerTexts();
+    return array;
+  }
 }
