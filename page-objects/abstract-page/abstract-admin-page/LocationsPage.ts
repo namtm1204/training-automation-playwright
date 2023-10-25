@@ -161,9 +161,11 @@ export class LocationsPage extends AdminPage {
   async verifySearchWithCountry(country: string) {
     const columnCountry = await this.table.getColumnIndex("Country");
     const arrayCountry = await this.table.getAllDataOfColumn(columnCountry);
-    const count = arrayCountry.map((item) => {
-      item === country;
-    }).length;
-    expect(arrayCountry.length).toBe(count);
+
+    expect(arrayCountry.length != 0).toBe(true);
+
+    arrayCountry.forEach(async (item) => {
+      expect(item).toEqual(country);
+    });
   }
 }
