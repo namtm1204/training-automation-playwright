@@ -10,7 +10,6 @@ export class OrganizationGeneralInformationPage extends AdminPage {
   readonly submitButton: Locator;
   readonly generalInforTitle: Locator;
   readonly organizationNameRequiredLabel: Locator;
-  readonly loadSpinner: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -34,7 +33,6 @@ export class OrganizationGeneralInformationPage extends AdminPage {
       '//*[@class="oxd-text oxd-text--h6 orangehrm-main-title"]'
     );
     this.organizationNameRequiredLabel = page.locator('//*[text()="Required"]');
-    this.loadSpinner = page.locator('//*[@class="oxd-loading-spinner"]');
   }
 
   async goToOrganizationGeneralInformationPage() {
