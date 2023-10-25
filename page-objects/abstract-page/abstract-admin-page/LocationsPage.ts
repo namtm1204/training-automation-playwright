@@ -120,16 +120,16 @@ export class LocationsPage extends AdminPage {
     const columnName = await this.table.getColumnIndex("Name");
     const columnCity = await this.table.getColumnIndex("City");
     const columnCountry = await this.table.getColumnIndex("Country");
-    console.log(columnName + " " + columnCity + " " + columnCountry);
     const rowName = await this.table.getRowIndex(name, columnName);
-    console.log(rowName);
-    //expect(rowName).toBeGreaterThan(-1);
+
     await expect(
       await this.table.getLocatorOfContent(columnName, rowName)
     ).toHaveText(name);
+
     await expect(
       await this.table.getLocatorOfContent(columnCity, rowName)
     ).toHaveText(city);
+
     await expect(
       await this.table.getLocatorOfContent(columnCountry, rowName)
     ).toHaveText(country);

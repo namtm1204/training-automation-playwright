@@ -70,11 +70,11 @@ test.describe.parallel("Add location", () => {
       });
 
       await test.step("VP:Verify add successfully ", async () => {
+        await locationsPage.waitForPageLoad();
         await expect(locationsPage.getAddButton()).toBeVisible();
       });
 
       await test.step("Step 10: Enter location name", async () => {
-        await locationsPage.waitForPageLoad();
         await locationsPage.enterName(locationName);
       });
 

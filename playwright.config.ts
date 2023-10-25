@@ -14,6 +14,7 @@ export default defineConfig({
     // Maximum time expect() should wait for the condition to be met.
     timeout: 2 * 60 * 1000,
   },
+  timeout: 2 * 60 * 1000,
   testDir: "./tests/manage-locations-admin",
   /* Run tests in files in parallel */
   fullyParallel: true,
