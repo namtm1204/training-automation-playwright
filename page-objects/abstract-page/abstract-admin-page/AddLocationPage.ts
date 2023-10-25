@@ -1,8 +1,5 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { AdminPage } from "./AdminPage";
-import { Table } from "../../../element/Table";
-import test from "node:test";
-import path from "path";
 import { LocationsPage } from "./LocationsPage";
 
 export class AddLocationsPage extends AdminPage {
@@ -74,14 +71,6 @@ export class AddLocationsPage extends AdminPage {
     randomDate: string,
     locationsPage: LocationsPage
   ) {
-    // await this.enterName(testData.Location_Name + "_" + randomDate);
-    // await this.enterCity(testData.City);
-    // await this.enterZipCode(testData.Zip);
-    // await this.enterPhone(testData.Phone);
-    // await this.clickCountry();
-    // await this.getCountryItem(testData.Country).click();
-    // await this.clickSave();
-
     for (let i = 1; i < testCaseData.length; i++) {
       await locationsPage.clickAdd();
       await locationsPage.waitForPageLoad();
@@ -95,7 +84,7 @@ export class AddLocationsPage extends AdminPage {
       await this.clickSave();
 
       await locationsPage.waitForPageLoad();
-      await locationsPage.getAddButton().waitFor({ state: "visible" });
+      //     await locationsPage.getAddButton().waitFor({ state: "visible" });
     }
   }
 }

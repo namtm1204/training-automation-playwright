@@ -19,6 +19,7 @@ test.describe.parallel("Search location", () => {
   });
 
   test.afterEach(async ({ page }) => {
+    await locationsPage.resetLocation();
     await locationsPage.clickSelectAll();
     await locationsPage.clickDelete();
     await locationsPage.clickConfirmDelete();

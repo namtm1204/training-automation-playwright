@@ -19,6 +19,7 @@ export class LocationsPage extends AdminPage {
   readonly confirmDeleteButton: Locator;
   readonly successToast: Locator;
   readonly table: Table;
+  readonly resetButton: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -57,6 +58,9 @@ export class LocationsPage extends AdminPage {
     );
     this.successToast = page.locator('//*[@class="oxd-toast-start"]');
     this.table = new Table(page.locator("//*"));
+    this.resetButton = page.locator(
+      "//*[@class='oxd-button oxd-button--medium oxd-button--ghost']"
+    );
   }
 
   async goToLocationsPage() {
@@ -139,6 +143,11 @@ export class LocationsPage extends AdminPage {
     return this.successToast;
   }
 
+  async resetLocation() {
+    await this.resetButton.click();
+    await this.waitForPageLoad();
+  }
+
   async verifySearchWithAllInfor(name: string, city: string, country: string) {
     const columnName = await this.table.getColumnIndex("Name");
     const columnCity = await this.table.getColumnIndex("City");
@@ -161,10 +170,10 @@ export class LocationsPage extends AdminPage {
   async verifySearchWithCountry(country: string) {
     const columnCountry = await this.table.getColumnIndex("Country");
     const arrayCountry = await this.table.getAllDataOfColumn(columnCountry);
+    console.log(arrayCountry);
+    expect(arrayCountry.length).not.toBe(0);
 
-    expect(arrayCountry.length != 0).toBe(true);
-
-    arrayCountry.forEach(async (item) => {
+    arrayCountry.forEach((item) => {
       expect(item).toEqual(country);
     });
   }
