@@ -84,6 +84,7 @@ export class AddLocationsPage extends AdminPage {
       await this.clickSave();
 
       await locationsPage.waitForPageLoad();
+      await locationsPage.getAddButton().waitFor({ state: "visible" });
     }
   }
 }
