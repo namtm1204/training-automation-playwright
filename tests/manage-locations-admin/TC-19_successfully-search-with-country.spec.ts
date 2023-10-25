@@ -33,13 +33,6 @@ test.describe.parallel("Search location", () => {
     });
 
     await test.step("Step 2: Enter all locations", async () => {
-      // testCaseData.forEach(async (testData) => {
-      //   await locationsPage.clickAdd();
-      //   await locationsPage.waitForPageLoad();
-      //   await addLocationsPage.addTestData(testData, random);
-      //   await locationsPage.waitForPageLoad();
-      //   await locationsPage.getAddButton().waitFor({ state: "visible" });
-      // });
       await addLocationsPage.addTestData(testCaseData, random, locationsPage);
     });
 
