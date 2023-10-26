@@ -1,7 +1,6 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { AdminPage } from "./AdminPage";
 import { Table } from "../../../element/Table";
-import exp from "constants";
 
 export class LocationsPage extends AdminPage {
   readonly nameTextbox: Locator;
@@ -143,6 +142,15 @@ export class LocationsPage extends AdminPage {
     return this.successToast;
   }
 
+  async getEditButton(name: string): Promise<Locator> {
+    const columnName = await this.table.getColumnIndex("Name");
+    const columnActions = await this.table.getColumnIndex("Actions");
+    const rowName = await this.table.getRowIndex(name, columnName);
+    return (
+      await this.table.getLocatorOfContent(columnActions, rowName)
+    ).locator("//*[@class='oxd-icon bi-pencil-fill']//parent::button");
+  }
+
   async resetLocation() {
     await this.resetButton.click();
     await this.waitForPageLoad();
@@ -170,9 +178,7 @@ export class LocationsPage extends AdminPage {
   async verifySearchWithCountry(country: string) {
     const columnCountry = await this.table.getColumnIndex("Country");
     const arrayCountry = await this.table.getAllDataOfColumn(columnCountry);
-    console.log(arrayCountry);
     expect(arrayCountry.length).not.toBe(0);
-
     arrayCountry.forEach((item) => {
       expect(item).toEqual(country);
     });
