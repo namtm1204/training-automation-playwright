@@ -151,6 +151,15 @@ export class LocationsPage extends AdminPage {
     ).locator("//*[@class='oxd-icon bi-pencil-fill']//parent::button");
   }
 
+  async getDeleteButton(name: string): Promise<Locator> {
+    const columnName = await this.table.getColumnIndex("Name");
+    const columnActions = await this.table.getColumnIndex("Actions");
+    const rowName = await this.table.getRowIndex(name, columnName);
+    return (
+      await this.table.getLocatorOfContent(columnActions, rowName)
+    ).locator("//*[@class='oxd-icon bi-trash']//parent::button");
+  }
+
   async resetLocation() {
     await this.resetButton.click();
     await this.waitForPageLoad();
@@ -182,5 +191,11 @@ export class LocationsPage extends AdminPage {
     arrayCountry.forEach((item) => {
       expect(item).toEqual(country);
     });
+  }
+
+  async verifyDeleteSuccessfully(name: string) {
+    const columnName = await this.table.getColumnIndex("Name");
+    const rowName = await this.table.getRowIndex(name, columnName);
+    expect(rowName).toEqual(-1);
   }
 }
