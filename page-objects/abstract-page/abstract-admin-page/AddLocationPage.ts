@@ -10,6 +10,7 @@ export class AddLocationsPage extends AdminPage {
   readonly countrySelection: Locator;
   readonly saveButton: Locator;
   readonly vietNamItem: Locator;
+  readonly noteTextbox: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -32,6 +33,9 @@ export class AddLocationsPage extends AdminPage {
     this.vietNamItem = page.locator(
       "//*[@class='oxd-select-option']//*[contains(text(),'Viet Nam')]//parent::div"
     );
+    this.noteTextbox = page.locator(
+      '//*[@class="oxd-label"][contains(.,"Note")]//parent::div//parent::div//child::textarea'
+    );
   }
 
   async close() {
@@ -50,6 +54,10 @@ export class AddLocationsPage extends AdminPage {
   async enterPhone(phone: string) {
     await this.phoneTextbox.fill(phone);
   }
+  async enterNote(note: string) {
+    await this.noteTextbox.fill(note);
+  }
+
   async clickCountry() {
     await this.countrySelection.click();
   }
@@ -57,6 +65,7 @@ export class AddLocationsPage extends AdminPage {
   async clickVietNamItem() {
     await this.vietNamItem.click();
   }
+
   async clickSave() {
     await this.saveButton.click();
   }
@@ -82,6 +91,7 @@ export class AddLocationsPage extends AdminPage {
         await this.enterPhone(testCaseData[i].Phone);
         await this.clickCountry();
         await this.getCountryItem(testCaseData[i].Country).click();
+        await this.enterNote(testCaseData[i].Note);
         await this.clickSave();
 
         await locationsPage.waitForPageLoad();

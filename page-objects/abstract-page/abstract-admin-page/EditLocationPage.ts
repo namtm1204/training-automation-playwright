@@ -9,6 +9,7 @@ export class EditLocationsPage extends AdminPage {
   readonly countrySelection: Locator;
   readonly saveButton: Locator;
   readonly title: Locator;
+  readonly noteTextbox: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -30,6 +31,9 @@ export class EditLocationsPage extends AdminPage {
     this.saveButton = page.locator('button[type="submit"]');
     this.title = page.locator(
       "//*[@class='oxd-text oxd-text--h6 orangehrm-main-title'][contains(.,'Edit Location')]"
+    );
+    this.noteTextbox = page.locator(
+      '//*[@class="oxd-label"][contains(.,"Note")]//parent::div//parent::div//child::textarea'
     );
   }
 
@@ -53,6 +57,11 @@ export class EditLocationsPage extends AdminPage {
     await this.phoneTextbox.clear();
     await this.phoneTextbox.fill(phone);
   }
+  async editNote(note: string) {
+    await this.noteTextbox.clear();
+    await this.noteTextbox.fill(note);
+  }
+
   async clickCountry() {
     await this.countrySelection.click();
   }
@@ -68,5 +77,13 @@ export class EditLocationsPage extends AdminPage {
   }
   getTitle(): Locator {
     return this.title;
+  }
+  getNote(): Locator {
+    return this.noteTextbox;
+  }
+  async verifyNoteAfterUpdate(newNote: string) {
+    await this.waitForPageLoad();
+    await this.getTitle().waitFor({ state: "visible" });
+    await expect(this.getNote()).toHaveValue(newNote);
   }
 }
