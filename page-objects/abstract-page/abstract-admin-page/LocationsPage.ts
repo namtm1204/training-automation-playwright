@@ -56,7 +56,7 @@ export class LocationsPage extends AdminPage {
       '//*[@class="oxd-icon bi-trash oxd-button-icon"]'
     );
     this.successToast = page.locator('//*[@class="oxd-toast-start"]');
-    this.table = new Table(page.locator("//*"));
+    this.table = new Table(page.locator("//*[@role='table']"));
     this.resetButton = page.locator(
       "//*[@class='oxd-button oxd-button--medium oxd-button--ghost']"
     );
@@ -156,7 +156,13 @@ export class LocationsPage extends AdminPage {
     await this.waitForPageLoad();
   }
 
-  async verifySearchWithAllInfor(name: string, city: string, country: string) {
+  getTable(): Table {
+    return this.table;
+  }
+
+  async verifyHaveLocationInTable(name: string, city: string, country: string) {
+    await this.getTable().locator.waitFor({ state: "visible" });
+
     const columnName = await this.table.getColumnIndex("Name");
     const columnCity = await this.table.getColumnIndex("City");
     const columnCountry = await this.table.getColumnIndex("Country");
