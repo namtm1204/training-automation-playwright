@@ -143,6 +143,8 @@ export class LocationsPage extends AdminPage {
   }
 
   async getEditButton(name: string): Promise<Locator> {
+    await this.getTable().waitForTableVisible();
+
     const columnName = await this.table.getColumnIndex("Name");
     const columnActions = await this.table.getColumnIndex("Actions");
     const rowName = await this.table.getRowIndex(name, columnName);
@@ -161,7 +163,7 @@ export class LocationsPage extends AdminPage {
   }
 
   async verifyHaveLocationInTable(name: string, city: string, country: string) {
-    await this.getTable().locator.waitFor({ state: "visible" });
+    await this.getTable().waitForTableVisible();
 
     const columnName = await this.table.getColumnIndex("Name");
     const columnCity = await this.table.getColumnIndex("City");

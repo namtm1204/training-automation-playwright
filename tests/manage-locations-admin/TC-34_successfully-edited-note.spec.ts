@@ -44,17 +44,8 @@ test.describe.parallel("Edit note location", () => {
       await addLocationsPage.addTestData(testCaseData, random, locationsPage);
     });
 
-    await test.step("Step 3: Enter location name", async () => {
-      await locationsPage.enterName(locationName);
-    });
-
-    await test.step("Step 4: Click Search", async () => {
-      await locationsPage.clickSearch();
-      await locationsPage.waitForPageLoad();
-    });
-
     await test.step("VP: Verify search successfully", async () => {
-      await locationsPage.verifySearchWithAllInfor(
+      await locationsPage.verifyHaveLocationInTable(
         locationName,
         testCaseData[0].City,
         testCaseData[0].Country
@@ -73,14 +64,6 @@ test.describe.parallel("Edit note location", () => {
 
     await test.step("Step 7: Click Save", async () => {
       await editLocationPage.clickSave();
-      await locationsPage.waitForPageLoad();
-    });
-    await test.step("Step 8: Enter location name", async () => {
-      await locationsPage.enterName(locationName);
-    });
-
-    await test.step("Step 9: Click Search", async () => {
-      await locationsPage.clickSearch();
       await locationsPage.waitForPageLoad();
     });
 
