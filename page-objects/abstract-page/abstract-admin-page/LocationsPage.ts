@@ -184,6 +184,7 @@ export class LocationsPage extends AdminPage {
   }
 
   async verifySearchWithCountry(country: string) {
+    await this.getTable().waitForTableVisible();
     const columnCountry = await this.table.getColumnIndex("Country");
     const arrayCountry = await this.table.getAllDataOfColumn(columnCountry);
     expect(arrayCountry.length).not.toBe(0);
