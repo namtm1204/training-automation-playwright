@@ -7,7 +7,9 @@ export class Table extends BaseElement {
   }
 
   async waitForTableVisible() {
-    await this.locator.waitFor({ state: "visible" });
+    await this.locator
+      .locator("//*[@class='oxd-table-body']")
+      .waitFor({ state: "visible" });
   }
 
   async getColumnIndex(name: string) {
