@@ -1,15 +1,14 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { AdminPage } from "./AdminPage";
-import { LocationsPage } from "./LocationsPage";
 
-export class AddLocationsPage extends AdminPage {
+export class EditLocationsPage extends AdminPage {
   readonly nameTextbox: Locator;
   readonly cityTextbox: Locator;
   readonly zipCodeTextbox: Locator;
   readonly phoneTextbox: Locator;
   readonly countrySelection: Locator;
   readonly saveButton: Locator;
-  readonly vietNamItem: Locator;
+  readonly title: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -29,8 +28,8 @@ export class AddLocationsPage extends AdminPage {
       '//*[text()="Phone"]//parent::div//parent::div//child::input'
     );
     this.saveButton = page.locator('button[type="submit"]');
-    this.vietNamItem = page.locator(
-      "//*[@class='oxd-select-option']//*[contains(text(),'Viet Nam')]//parent::div"
+    this.title = page.locator(
+      "//*[@class='oxd-text oxd-text--h6 orangehrm-main-title'][contains(.,'Edit Location')]"
     );
   }
 
@@ -38,25 +37,26 @@ export class AddLocationsPage extends AdminPage {
     await this.page.close();
   }
 
-  async enterName(name: string) {
+  async editName(name: string) {
+    await this.nameTextbox.clear();
     await this.nameTextbox.fill(name);
   }
-  async enterCity(city: string) {
+  async editCity(city: string) {
+    await this.cityTextbox.clear();
     await this.cityTextbox.fill(city);
   }
-  async enterZipCode(zipCode: string) {
+  async editZipCode(zipCode: string) {
+    await this.zipCodeTextbox.clear();
     await this.zipCodeTextbox.fill(zipCode);
   }
-  async enterPhone(phone: string) {
+  async editPhone(phone: string) {
+    await this.phoneTextbox.clear();
     await this.phoneTextbox.fill(phone);
   }
   async clickCountry() {
     await this.countrySelection.click();
   }
 
-  async clickVietNamItem() {
-    await this.vietNamItem.click();
-  }
   async clickSave() {
     await this.saveButton.click();
   }
@@ -66,26 +66,7 @@ export class AddLocationsPage extends AdminPage {
   getLoadSpinner(): Locator {
     return this.loadSpinner;
   }
-  async addTestData(
-    testCaseData: any,
-    randomDate: string,
-    locationsPage: LocationsPage
-  ) {
-    for (let i = 0; i < testCaseData.length; i++) {
-      if ("Location_Name" in testCaseData[i]) {
-        await locationsPage.clickAdd();
-        await locationsPage.waitForPageLoad();
-
-        await this.enterName(testCaseData[i].Location_Name + "_" + randomDate);
-        await this.enterCity(testCaseData[i].City);
-        await this.enterZipCode(testCaseData[i].Zip);
-        await this.enterPhone(testCaseData[i].Phone);
-        await this.clickCountry();
-        await this.getCountryItem(testCaseData[i].Country).click();
-        await this.clickSave();
-
-        await locationsPage.waitForPageLoad();
-      }
-    }
+  getTitle(): Locator {
+    return this.title;
   }
 }

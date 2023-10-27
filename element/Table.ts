@@ -21,7 +21,6 @@ export class Table extends BaseElement {
         `//*[@class='oxd-table-body']//*[@class='oxd-table-card']//*[@role='cell'][${columnIndex}]`
       )
       .allInnerTexts();
-    console.log(arrName);
     const rowIndex = arrName.indexOf(content);
     if (rowIndex != -1) return rowIndex + 1;
     return -1;
