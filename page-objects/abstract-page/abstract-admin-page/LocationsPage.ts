@@ -156,7 +156,7 @@ export class LocationsPage extends AdminPage {
     await this.waitForPageLoad();
   }
 
-  async verifySearchWithAllInfor(name: string, city: string, country: string) {
+  async verifyHaveLocationInTable(name: string, city: string, country: string) {
     const columnName = await this.table.getColumnIndex("Name");
     const columnCity = await this.table.getColumnIndex("City");
     const columnCountry = await this.table.getColumnIndex("Country");
