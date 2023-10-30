@@ -84,6 +84,10 @@ export class EditLocationsPage extends AdminPage {
   async verifyNoteAfterUpdate(newNote: string) {
     await this.getTitle().waitFor({ state: "visible" });
     await this.waitForPageLoad();
-    await expect(this.getNote()).toHaveValue(newNote);
+
+    await expect(
+      this.getNote(),
+      `Verify "Note" has new value ${newNote} `
+    ).toHaveValue(newNote);
   }
 }

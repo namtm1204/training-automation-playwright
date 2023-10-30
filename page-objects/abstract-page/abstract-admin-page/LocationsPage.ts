@@ -180,15 +180,18 @@ export class LocationsPage extends AdminPage {
     const rowName = await this.table.getRowIndex(name, columnName);
 
     await expect(
-      await this.table.getLocatorOfContent(columnName, rowName)
+      await this.table.getLocatorOfContent(columnName, rowName),
+      `Verify value at [${rowName},${columnName} is ${name}]`
     ).toHaveText(name);
 
     await expect(
-      await this.table.getLocatorOfContent(columnCity, rowName)
+      await this.table.getLocatorOfContent(columnCity, rowName),
+      `Verify value at [${rowName},${columnCity} is ${city}]`
     ).toHaveText(city);
 
     await expect(
-      await this.table.getLocatorOfContent(columnCountry, rowName)
+      await this.table.getLocatorOfContent(columnCountry, rowName),
+      `Verify value at [${rowName},${columnCountry} is ${country}]`
     ).toHaveText(country);
   }
 
@@ -196,17 +199,26 @@ export class LocationsPage extends AdminPage {
     await this.getTable().waitForTableVisible();
     const columnCountry = await this.table.getColumnIndex("Country");
     const arrayCountry = await this.table.getAllDataOfColumn(columnCountry);
-    expect(arrayCountry.length).not.toBe(0);
+
+    expect(
+      arrayCountry.length,
+      `Verify length of "Country" column is not 0`
+    ).not.toBe(0);
+
     arrayCountry.forEach((item) => {
-      expect(item).toEqual(country);
+      expect(
+        item,
+        `Verify ${item} of "Country" column equal to ${country}`
+      ).toEqual(country);
     });
   }
 
   async verifyDeleteSuccessfully(name: string) {
-    await this.getTable().waitForTableVisible();
-
     const columnName = await this.table.getColumnIndex("Name");
     const arrayName = await this.table.getAllDataOfColumn(columnName);
-    expect(arrayName).not.toContainEqual(name);
+    expect(
+      arrayName,
+      `Verify "Name" column does not contain ${name}`
+    ).not.toContainEqual(name);
   }
 }
