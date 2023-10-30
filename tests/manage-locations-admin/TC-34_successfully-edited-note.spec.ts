@@ -33,8 +33,8 @@ test.describe.parallel("Edit note location", () => {
 
   test(`[TC-34] Verify note is edited successfully in edit form`, async () => {
     let random = new Date().toISOString();
-    const locationName = testCaseData[0].Location_Name + "_" + random;
-    const newNote = testCaseData[0].Note + "_" + random;
+    const locationName = testCaseData[0].name + "_" + random;
+    const newNote = testCaseData[0].note + "_" + random;
 
     await test.step("Step 1: Go to Locations Page", async () => {
       await locationsPage.goToLocationsPage();
@@ -44,20 +44,11 @@ test.describe.parallel("Edit note location", () => {
       await addLocationsPage.addTestData(testCaseData, random, locationsPage);
     });
 
-    await test.step("Step 3: Enter location name", async () => {
-      await locationsPage.enterName(locationName);
-    });
-
-    await test.step("Step 4: Click Search", async () => {
-      await locationsPage.clickSearch();
-      await locationsPage.waitForPageLoad();
-    });
-
     await test.step("VP: Verify search successfully", async () => {
-      await locationsPage.verifySearchWithAllInfor(
+      await locationsPage.verifyHaveLocationInTable(
         locationName,
-        testCaseData[0].City,
-        testCaseData[0].Country
+        testCaseData[0].city,
+        testCaseData[0].country
       );
     });
 
@@ -73,14 +64,6 @@ test.describe.parallel("Edit note location", () => {
 
     await test.step("Step 7: Click Save", async () => {
       await editLocationPage.clickSave();
-      await locationsPage.waitForPageLoad();
-    });
-    await test.step("Step 8: Enter location name", async () => {
-      await locationsPage.enterName(locationName);
-    });
-
-    await test.step("Step 9: Click Search", async () => {
-      await locationsPage.clickSearch();
       await locationsPage.waitForPageLoad();
     });
 

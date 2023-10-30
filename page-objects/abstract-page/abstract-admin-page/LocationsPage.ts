@@ -56,7 +56,7 @@ export class LocationsPage extends AdminPage {
       '//*[@class="oxd-icon bi-trash oxd-button-icon"]'
     );
     this.successToast = page.locator('//*[@class="oxd-toast-start"]');
-    this.table = new Table(page.locator("//*"));
+    this.table = new Table(page.locator("//*[@role='table']"));
     this.resetButton = page.locator(
       "//*[@class='oxd-button oxd-button--medium oxd-button--ghost']"
     );
@@ -143,6 +143,8 @@ export class LocationsPage extends AdminPage {
   }
 
   async getEditButton(name: string): Promise<Locator> {
+    await this.getTable().waitForTableVisible();
+
     const columnName = await this.table.getColumnIndex("Name");
     const columnActions = await this.table.getColumnIndex("Actions");
     const rowName = await this.table.getRowIndex(name, columnName);
@@ -165,7 +167,13 @@ export class LocationsPage extends AdminPage {
     await this.waitForPageLoad();
   }
 
-  async verifySearchWithAllInfor(name: string, city: string, country: string) {
+  getTable(): Table {
+    return this.table;
+  }
+
+  async verifyHaveLocationInTable(name: string, city: string, country: string) {
+    await this.getTable().waitForTableVisible();
+
     const columnName = await this.table.getColumnIndex("Name");
     const columnCity = await this.table.getColumnIndex("City");
     const columnCountry = await this.table.getColumnIndex("Country");
@@ -185,6 +193,7 @@ export class LocationsPage extends AdminPage {
   }
 
   async verifySearchWithCountry(country: string) {
+    await this.getTable().waitForTableVisible();
     const columnCountry = await this.table.getColumnIndex("Country");
     const arrayCountry = await this.table.getAllDataOfColumn(columnCountry);
     expect(arrayCountry.length).not.toBe(0);

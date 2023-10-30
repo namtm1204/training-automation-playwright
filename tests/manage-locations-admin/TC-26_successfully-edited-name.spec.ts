@@ -31,7 +31,7 @@ test.describe.parallel("Edit location", () => {
 
   test(`[TC-26] Verify name is edited successfully in edit form`, async () => {
     let random = new Date().toISOString();
-    const locationName = testCaseData[0].Location_Name + "_" + random;
+    const locationName = testCaseData[0].name + "_" + random;
     const newLocationName = locationName + "new";
 
     await test.step("Step 1: Go to Locations Page", async () => {
@@ -42,20 +42,11 @@ test.describe.parallel("Edit location", () => {
       await addLocationsPage.addTestData(testCaseData, random, locationsPage);
     });
 
-    await test.step("Step 3: Enter location name", async () => {
-      await locationsPage.enterName(locationName);
-    });
-
-    await test.step("Step 4: Click Search", async () => {
-      await locationsPage.clickSearch();
-      await locationsPage.waitForPageLoad();
-    });
-
-    await test.step("VP: Verify search successfully", async () => {
-      await locationsPage.verifySearchWithAllInfor(
+    await test.step("VP: Verify add successfully", async () => {
+      await locationsPage.verifyHaveLocationInTable(
         locationName,
-        testCaseData[0].City,
-        testCaseData[0].Country
+        testCaseData[0].city,
+        testCaseData[0].country
       );
     });
 
@@ -73,20 +64,12 @@ test.describe.parallel("Edit location", () => {
       await editLocationPage.clickSave();
       await locationsPage.waitForPageLoad();
     });
-    await test.step("Step 8: Enter location name", async () => {
-      await locationsPage.enterName(newLocationName);
-    });
-
-    await test.step("Step 9: Click Search", async () => {
-      await locationsPage.clickSearch();
-      await locationsPage.waitForPageLoad();
-    });
 
     await test.step("VP: Verify edit successfully", async () => {
-      await locationsPage.verifySearchWithAllInfor(
+      await locationsPage.verifyHaveLocationInTable(
         newLocationName,
-        testCaseData[0].City,
-        testCaseData[0].Country
+        testCaseData[0].city,
+        testCaseData[0].country
       );
     });
   });

@@ -30,7 +30,7 @@ test.describe.parallel("Add location", () => {
     count++;
     test(`[TC-01] Verify that is possible to add location ${count} then search that location with full infor`, async () => {
       let random = new Date().toISOString();
-      const locationName = testData.Location_Name + "_" + random;
+      const locationName = testData.name + "_" + random;
 
       await test.step("Step 1: Go to Locations Page", async () => {
         await locationsPage.goToLocationsPage();
@@ -46,15 +46,15 @@ test.describe.parallel("Add location", () => {
       });
 
       await test.step("Step 4: Enter city", async () => {
-        await addLocationsPage.enterCity(testData.City);
+        await addLocationsPage.enterCity(testData.city);
       });
 
       await test.step("Step 5: Enter zip code", async () => {
-        await addLocationsPage.enterZipCode(testData.Zip);
+        await addLocationsPage.enterZipCode(testData.zip);
       });
 
       await test.step("Step 6: Enter phone", async () => {
-        await addLocationsPage.enterPhone(testData.Phone);
+        await addLocationsPage.enterPhone(testData.phone);
       });
 
       await test.step("Step 7: Click country", async () => {
@@ -62,7 +62,7 @@ test.describe.parallel("Add location", () => {
       });
 
       await test.step("Step 8: Choose country", async () => {
-        await addLocationsPage.getCountryItem(testData.Country).click();
+        await addLocationsPage.getCountryItem(testData.country).click();
       });
 
       await test.step("Step 9: Click Save ", async () => {
@@ -79,7 +79,7 @@ test.describe.parallel("Add location", () => {
       });
 
       await test.step("Step 11: Enter city", async () => {
-        await locationsPage.enterCity(testData.City);
+        await locationsPage.enterCity(testData.city);
       });
 
       await test.step("Step 12: Click country", async () => {
@@ -87,7 +87,7 @@ test.describe.parallel("Add location", () => {
       });
 
       await test.step("Step 13: Choose country", async () => {
-        await addLocationsPage.getCountryItem(testData.Country).click();
+        await addLocationsPage.getCountryItem(testData.country).click();
       });
 
       await test.step("Step 14: Click Search", async () => {
@@ -96,10 +96,10 @@ test.describe.parallel("Add location", () => {
       });
 
       await test.step("VP: Verify search successfully", async () => {
-        await locationsPage.verifySearchWithAllInfor(
+        await locationsPage.verifyHaveLocationInTable(
           locationName,
-          testData.City,
-          testData.Country
+          testData.city,
+          testData.country
         );
       });
     });

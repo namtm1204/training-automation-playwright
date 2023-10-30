@@ -1,10 +1,9 @@
 [
   {
-    "Location_Name": "Lankmark 81",
-    "City": "Vu Han",
-    "Zip": "1234",
-    "Phone": "01234567",
-    "Country": "China",
-    "Note": "None"
+    "name": "Lankmark 81",
+    "city": "Vu Han",
+    "zipCode": "1234",
+    "phone": "01234567",
+    "country": "China"
   }
 ]
