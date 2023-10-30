@@ -203,8 +203,10 @@ export class LocationsPage extends AdminPage {
   }
 
   async verifyDeleteSuccessfully(name: string) {
+    await this.getTable().waitForTableVisible();
+
     const columnName = await this.table.getColumnIndex("Name");
-    const rowName = await this.table.getRowIndex(name, columnName);
-    expect(rowName).toEqual(-1);
+    const arrayName = await this.table.getAllDataOfColumn(columnName);
+    expect(arrayName).not.toContainEqual(name);
   }
 }
