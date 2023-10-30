@@ -1,40 +1,40 @@
-[
-  {
-    "Country": "Viet Nam"
-  },
-  {
-    "Location_Name": "Lankmark 81",
-    "City": "Ho Chi Minh",
-    "Zip": "1234",
-    "Phone": "01234567",
-    "Country": "Viet Nam"
-  },
-  {
-    "Location_Name": "Lankmark 82",
-    "City": "Ho Chi Minh",
-    "Zip": "1234",
-    "Phone": "01234567",
-    "Country": "Viet Nam"
-  },
-  {
-    "Location_Name": "Lankmark 83",
-    "City": "Ho Chi Minh",
-    "Zip": "1234",
-    "Phone": "01234567",
-    "Country": "China"
-  },
-  {
-    "Location_Name": "Lankmark 84",
-    "City": "Ho Chi Minh",
-    "Zip": "1234",
-    "Phone": "01234567",
-    "Country": "France"
-  },
-  {
-    "Location_Name": "Lankmark 85",
-    "City": "Ho Chi Minh",
-    "Zip": "1234",
-    "Phone": "01234567",
-    "Country": "Viet Nam"
-  }
-]
+{
+  "country": "Viet Nam",
+  "data": [
+    {
+      "name": "Lankmark 81",
+      "city": "Ho Chi Minh",
+      "zipCode": "1234",
+      "phone": "01234567",
+      "country": "Viet Nam"
+    },
+    {
+      "name": "Lankmark 82",
+      "city": "Ho Chi Minh",
+      "zipCode": "1234",
+      "phone": "01234567",
+      "country": "Viet Nam"
+    },
+    {
+      "name": "Lankmark 83",
+      "city": "Ho Chi Minh",
+      "zipCode": "1234",
+      "phone": "01234567",
+      "country": "China"
+    },
+    {
+      "name": "Lankmark 84",
+      "city": "Ho Chi Minh",
+      "zipCode": "1234",
+      "phone": "01234567",
+      "country": "France"
+    },
+    {
+      "name": "Lankmark 85",
+      "city": "Ho Chi Minh",
+      "zipCode": "1234",
+      "phone": "01234567",
+      "country": "Viet Nam"
+    }
+  ]
+}

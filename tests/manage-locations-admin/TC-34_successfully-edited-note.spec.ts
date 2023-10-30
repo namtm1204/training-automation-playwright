@@ -1,11 +1,11 @@
 import { test, expect, type Page } from "@playwright/test";
-import testCaseData from "../../test-data/manage-locations/TC-26.json";
+import testCaseData from "../../test-data/manage-locations/TC-34.json";
 import { GeneratePage } from "../../helpers/generatePage";
 import { LocationsPage } from "../../page-objects/abstract-page/abstract-admin-page/LocationsPage";
 import { AddLocationsPage } from "../../page-objects/abstract-page/abstract-admin-page/AddLocationPage";
 import { EditLocationsPage } from "../../page-objects/abstract-page/abstract-admin-page/EditLocationPage";
 
-test.describe.parallel("Edit location", () => {
+test.describe.parallel("Edit note location", () => {
   let page: Page;
   let locationsPage: LocationsPage;
   let addLocationsPage: AddLocationsPage;
@@ -21,6 +21,8 @@ test.describe.parallel("Edit location", () => {
   });
 
   test.afterEach(async ({ page }) => {
+    await editLocationPage.clickSave();
+    await locationsPage.waitForPageLoad();
     await locationsPage.resetLocation();
     await locationsPage.clickSelectAll();
     await locationsPage.clickDelete();
@@ -29,10 +31,10 @@ test.describe.parallel("Edit location", () => {
     await page.close();
   });
 
-  test(`[TC-26] Verify name is edited successfully in edit form`, async () => {
+  test(`[TC-34] Verify note is edited successfully in edit form`, async () => {
     let random = new Date().toISOString();
     const locationName = testCaseData[0].name + "_" + random;
-    const newLocationName = locationName + "new";
+    const newNote = testCaseData[0].note + "_" + random;
 
     await test.step("Step 1: Go to Locations Page", async () => {
       await locationsPage.goToLocationsPage();
@@ -42,7 +44,7 @@ test.describe.parallel("Edit location", () => {
       await addLocationsPage.addTestData(testCaseData, random, locationsPage);
     });
 
-    await test.step("VP: Verify add successfully", async () => {
+    await test.step("VP: Verify search successfully", async () => {
       await locationsPage.verifyHaveLocationInTable(
         locationName,
         testCaseData[0].city,
@@ -54,10 +56,10 @@ test.describe.parallel("Edit location", () => {
       (await locationsPage.getEditButton(locationName)).click();
     });
 
-    await test.step("Step 6: Edit location name", async () => {
+    await test.step("Step 6: Edit Note", async () => {
       await editLocationPage.getTitle().waitFor({ state: "visible" });
       await editLocationPage.waitForPageLoad();
-      await editLocationPage.editName(newLocationName);
+      await editLocationPage.editNote(newNote);
     });
 
     await test.step("Step 7: Click Save", async () => {
@@ -65,12 +67,12 @@ test.describe.parallel("Edit location", () => {
       await locationsPage.waitForPageLoad();
     });
 
+    await test.step("Step 10: Click Edit", async () => {
+      (await locationsPage.getEditButton(locationName)).click();
+    });
+
     await test.step("VP: Verify edit successfully", async () => {
-      await locationsPage.verifyHaveLocationInTable(
-        newLocationName,
-        testCaseData[0].city,
-        testCaseData[0].country
-      );
+      await editLocationPage.verifyNoteAfterUpdate(newNote);
     });
   });
 });

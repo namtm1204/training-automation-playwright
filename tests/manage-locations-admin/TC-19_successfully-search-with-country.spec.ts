@@ -34,7 +34,11 @@ test.describe.parallel("Search location", () => {
     });
 
     await test.step("Step 2: Enter all locations", async () => {
-      await addLocationsPage.addTestData(testCaseData, random, locationsPage);
+      await addLocationsPage.addTestData(
+        testCaseData.data,
+        random,
+        locationsPage
+      );
     });
 
     await test.step("Step 3: Click country", async () => {
@@ -42,7 +46,7 @@ test.describe.parallel("Search location", () => {
     });
 
     await test.step("Step 4: Choose country", async () => {
-      await locationsPage.getCountryItem(testCaseData[0].Country).click();
+      await locationsPage.getCountryItem(testCaseData.country).click();
     });
 
     await test.step("Step 11: Click Search", async () => {
@@ -51,7 +55,7 @@ test.describe.parallel("Search location", () => {
     });
 
     await test.step("VP: Verify search successfully", async () => {
-      await locationsPage.verifySearchWithCountry(testCaseData[0].Country);
+      await locationsPage.verifySearchWithCountry(testCaseData.country);
     });
   });
 });

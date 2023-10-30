@@ -1,6 +1,7 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { AdminPage } from "./AdminPage";
 import { LocationsPage } from "./LocationsPage";
+import { Location } from "../../../interface/LocationInterface";
 
 export class AddLocationsPage extends AdminPage {
   readonly nameTextbox: Locator;
@@ -10,6 +11,7 @@ export class AddLocationsPage extends AdminPage {
   readonly countrySelection: Locator;
   readonly saveButton: Locator;
   readonly vietNamItem: Locator;
+  readonly noteTextbox: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -32,6 +34,9 @@ export class AddLocationsPage extends AdminPage {
     this.vietNamItem = page.locator(
       "//*[@class='oxd-select-option']//*[contains(text(),'Viet Nam')]//parent::div"
     );
+    this.noteTextbox = page.locator(
+      '//*[@class="oxd-label"][contains(.,"Note")]//parent::div//parent::div//child::textarea'
+    );
   }
 
   async close() {
@@ -50,6 +55,10 @@ export class AddLocationsPage extends AdminPage {
   async enterPhone(phone: string) {
     await this.phoneTextbox.fill(phone);
   }
+  async enterNote(note: any) {
+    await this.noteTextbox.fill(note);
+  }
+
   async clickCountry() {
     await this.countrySelection.click();
   }
@@ -57,6 +66,7 @@ export class AddLocationsPage extends AdminPage {
   async clickVietNamItem() {
     await this.vietNamItem.click();
   }
+
   async clickSave() {
     await this.saveButton.click();
   }
@@ -67,23 +77,27 @@ export class AddLocationsPage extends AdminPage {
     return this.loadSpinner;
   }
   async addTestData(
-    testCaseData: any,
+    locationInfor: Location[],
     randomDate: string,
     locationsPage: LocationsPage
   ) {
-    for (let i = 0; i < testCaseData.length; i++) {
-      if ("Location_Name" in testCaseData[i]) {
+    for (let i = 0; i < locationInfor.length; i++) {
+      if ("name" in locationInfor[i]) {
         await locationsPage.clickAdd();
         await locationsPage.waitForPageLoad();
 
-        await this.enterName(testCaseData[i].Location_Name + "_" + randomDate);
-        await this.enterCity(testCaseData[i].City);
-        await this.enterZipCode(testCaseData[i].Zip);
-        await this.enterPhone(testCaseData[i].Phone);
+        await this.enterName(locationInfor[i].name + "_" + randomDate);
+        await this.enterCity(locationInfor[i].city);
+        await this.enterZipCode(locationInfor[i].zipCode);
+        await this.enterPhone(locationInfor[i].phone);
         await this.clickCountry();
-        await this.getCountryItem(testCaseData[i].Country).click();
-        await this.clickSave();
+        await this.getCountryItem(locationInfor[i].country).click();
 
+        if (locationInfor[i].note) {
+          await this.enterNote(locationInfor[i]?.note);
+        }
+
+        await this.clickSave();
         await locationsPage.waitForPageLoad();
       }
     }

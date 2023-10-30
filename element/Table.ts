@@ -6,6 +6,12 @@ export class Table extends BaseElement {
     super(locator);
   }
 
+  async waitForTableVisible() {
+    await this.locator
+      .locator("//*[@class='oxd-table-body']")
+      .waitFor({ state: "visible" });
+  }
+
   async getColumnIndex(name: string) {
     const index = await this.locator
       .locator(
