@@ -24,7 +24,7 @@ test.describe.parallel("Delete location", () => {
 
   test(`[TC-47] Verify location is delete successfully`, async () => {
     let random = new Date().toISOString();
-    const locationName = testCaseData[0].Location_Name + "_" + random;
+    const locationName = testCaseData[0].name + "_" + random;
     await test.step("Step 1: Go to Locations Page", async () => {
       await locationsPage.goToLocationsPage();
     });
@@ -32,20 +32,12 @@ test.describe.parallel("Delete location", () => {
     await test.step("Step 2: Enter all locations", async () => {
       await addLocationsPage.addTestData(testCaseData, random, locationsPage);
     });
-    await test.step("Step 3: Enter location name", async () => {
-      await locationsPage.enterName(locationName);
-    });
 
-    await test.step("Step 4: Click Search", async () => {
-      await locationsPage.clickSearch();
-      await locationsPage.waitForPageLoad();
-    });
-
-    await test.step("VP: Verify search successfully", async () => {
-      await locationsPage.verifySearchWithAllInfor(
+    await test.step("VP: Verify add successfully", async () => {
+      await locationsPage.verifyHaveLocationInTable(
         locationName,
-        testCaseData[0].City,
-        testCaseData[0].Country
+        testCaseData[0].city,
+        testCaseData[0].country
       );
     });
 
@@ -55,15 +47,6 @@ test.describe.parallel("Delete location", () => {
 
     await test.step("Step 6: Click Confirm Delete", async () => {
       await locationsPage.clickConfirmDelete();
-      await locationsPage.getLoadSpinner().waitFor({ state: "hidden" });
-    });
-
-    await test.step("Step 7: Enter location name", async () => {
-      await locationsPage.enterName(locationName);
-    });
-
-    await test.step("Step 8: Click Search", async () => {
-      await locationsPage.clickSearch();
       await locationsPage.waitForPageLoad();
     });
 
