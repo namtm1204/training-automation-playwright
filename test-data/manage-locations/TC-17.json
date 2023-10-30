@@ -1,10 +1,9 @@
 [
   {
-    "Location_Name": "Lankmark 81",
-    "City": "Ho Chi Minh",
-    "Zip": "1234",
-    "Phone": "01234567",
-    "Country": "Viet Nam",
-    "Note": "None"
+    "name": "Lankmark 81",
+    "city": "Ho Chi Minh",
+    "zipCode": "1234",
+    "phone": "01234567",
+    "country": "Viet Nam"
   }
 ]
