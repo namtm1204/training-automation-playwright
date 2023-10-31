@@ -5,12 +5,16 @@ export abstract class AbstractMenuPage {
   readonly page: Page;
   readonly adminMenuItem: Locator;
   readonly dashBoardMenuItem: Locator;
+  readonly pimMenuItem: Locator;
   readonly loadSpinner: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.adminMenuItem = page.locator('//*[text()="Admin"]');
     this.loadSpinner = page.locator('//*[@class="oxd-loading-spinner"]');
+    this.pimMenuItem = page.locator(
+      "//*[@class = 'oxd-main-menu-item']//*[contains(.,'PIM')]"
+    );
   }
   async clickMenuItem(): Promise<void> {}
   async goToLoginPage() {

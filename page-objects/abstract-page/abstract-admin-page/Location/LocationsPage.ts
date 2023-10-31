@@ -1,6 +1,6 @@
 import { expect, type Locator, type Page } from "@playwright/test";
-import { AdminPage } from "./AdminPage";
-import { Table } from "../../../element/Table";
+import { AdminPage } from "../AdminPage";
+import { Table } from "../../../../element/Table";
 
 export class LocationsPage extends AdminPage {
   readonly nameTextbox: Locator;
