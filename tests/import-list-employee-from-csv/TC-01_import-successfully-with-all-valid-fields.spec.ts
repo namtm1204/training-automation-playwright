@@ -2,14 +2,14 @@ import { test, expect, type Page } from "@playwright/test";
 import { GeneratePage } from "../../helpers/GeneratePage";
 import { DataImportPage } from "../../page-objects/abstract-page/abstract-pim-page/PIMConfiguration/DataImportPage";
 import { EmployeeListPage } from "../../page-objects/abstract-page/abstract-pim-page/PIMConfiguration/EmployeeListPage";
-import { ParseCSVToJSON } from "../../helpers/ParseCSVToJSON";
+import { CSVHelper } from "../../helpers/CSVHelper";
 
 test.describe.parallel("Import employee", () => {
   let page: Page;
   let dataImportPage: DataImportPage;
   let employeeListPage: EmployeeListPage;
   let generatePage: GeneratePage;
-  let parseCSVToJSON: ParseCSVToJSON;
+  let parseCSVToJSON: CSVHelper;
 
   test.beforeEach(async ({ browser }) => {
     generatePage = new GeneratePage(browser);
@@ -23,10 +23,12 @@ test.describe.parallel("Import employee", () => {
   });
 
   test(`[TC-01] Verify import successfully with all valid fields`, async () => {
-    const dirname = "test-data/import-employee/TC-01.csv";
-    parseCSVToJSON = new ParseCSVToJSON(dirname);
+    const filename = "TC-01.csv";
+    const relativePath = "test-data/import-employee/";
+    const dirname = relativePath + filename;
+
+    parseCSVToJSON = new CSVHelper(dirname);
     const importData = parseCSVToJSON.parse();
-    console.log(importData);
 
     await test.step("Step 1: Go to Data Import Page", async () => {
       await dataImportPage.goToDataImportPage();
@@ -40,9 +42,11 @@ test.describe.parallel("Import employee", () => {
       await dataImportPage.clickSelectFileButton();
     });
 
-    await test.step("VP: Verify select file successfully", async () => {});
+    await test.step("VP: Verify select file successfully", async () => {
+      await expect(dataImportPage.getNameFileInput()).toContainText(filename);
+    });
 
-    await test.step("Step 3: Click Upload button", async () => {
+    await test.step("Step 4: Click Upload button", async () => {
       await dataImportPage.clickUploadButton();
     });
 
@@ -50,15 +54,18 @@ test.describe.parallel("Import employee", () => {
       await dataImportPage.verifyCanShowSuccessfullNotification(
         importData.length
       );
+    });
+
+    await test.step("Step 5: Click Ok", async () => {
       await dataImportPage.clickOkButton();
     });
 
-    await test.step("Step 4: Go to Employee list page", async () => {
+    await test.step("Step 6: Go to Employee list page", async () => {
       await employeeListPage.goToEmployeeListPageFromDataImportPage();
     });
 
-    // await test.step("VP: Import data successfully", async () => {
-    //   await employeeListPage.verifyHaveEmployeeInTable(importData);
-    // });
+    await test.step("VP: Import data successfully", async () => {
+      await employeeListPage.verifyHaveEmployeeInTable(importData);
+    });
   });
 });

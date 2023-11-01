@@ -25,12 +25,19 @@ export class DataImportPage extends PIMPage {
   async clickSelectFileButton() {
     await this.selectFileButton.click();
   }
+
   async clickUploadButton() {
     await this.uploadButton.click();
   }
+
   async clickOkButton() {
     await this.okButton.click();
   }
+
+  getNameFileInput(): Locator {
+    return this.nameFileInput;
+  }
+
   async setInputFile(dirname: string) {
     await this.fileInput.setInputFiles(dirname);
   }
@@ -40,9 +47,10 @@ export class DataImportPage extends PIMPage {
     });
   }
   async verifyCanShowSuccessfullNotification(countRecord: number) {
+    const many = countRecord > 1 ? "s" : "";
     await expect(
       this.importDetailMessageBox,
       `Verify ${countRecord} was imported successfully`
-    ).toContainText(`${countRecord} Record Successfully Imported`);
+    ).toContainText(` ${countRecord} Record${many} Successfully Imported`);
   }
 }

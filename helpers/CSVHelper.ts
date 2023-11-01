@@ -2,7 +2,7 @@ import { parse } from "csv-parse/sync";
 import fs from "fs";
 import path from "path";
 
-export class ParseCSVToJSON {
+export class CSVHelper {
   readonly dirName: string;
   constructor(dirName: string) {
     this.dirName = dirName;

@@ -32,6 +32,7 @@ export abstract class PIMPage extends AbstractMenuPage {
 
   async goToEmployeeListPageFromDataImportPage() {
     await this.clickEmployeeListTab();
+    await this.waitForPageLoad();
   }
   async clickMenuItem() {
     await this.pimMenuItem.click();
