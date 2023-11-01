@@ -9,34 +9,44 @@ test.describe.parallel("Import employee", () => {
   let dataImportPage: DataImportPage;
   let employeeListPage: EmployeeListPage;
   let generatePage: GeneratePage;
-  let parseCSVToJSON: CSVHelper;
+  let csvHelper: CSVHelper;
+  let randomEmployeeData;
 
   const filename = "TC-01.csv";
+  const randomFileName = "TC-01-Random.csv";
   const relativePath = "test-data/import-employee/";
-  const dirname = relativePath + filename;
-
-  parseCSVToJSON = new CSVHelper(dirname);
-  const importData = parseCSVToJSON.parse();
 
   test.beforeEach(async ({ browser }) => {
     generatePage = new GeneratePage(browser);
     page = await generatePage.createPage(browser);
     dataImportPage = new DataImportPage(page);
     employeeListPage = new EmployeeListPage(page);
+
+    csvHelper = new CSVHelper();
+    await csvHelper.createRandomTestDataFile(
+      relativePath + filename,
+      relativePath + randomFileName
+    );
+    randomEmployeeData = csvHelper.parseToEmployee(
+      relativePath + randomFileName
+    );
   });
 
   test.afterEach(async ({ page }) => {
-    await employeeListPage.deleteTestData(importData);
+    await employeeListPage.deleteTestData(randomEmployeeData);
+    csvHelper.deleteRandomTestDataFile(relativePath + randomFileName);
     await page.close();
   });
 
   test(`[TC-01] Verify import successfully with all valid fields`, async () => {
+    let newDirName = relativePath + randomFileName;
+
     await test.step("Step 1: Go to Data Import Page", async () => {
       await dataImportPage.goToDataImportPage();
     });
 
     await test.step("Step 2: Select file ", async () => {
-      await dataImportPage.selectFile(dirname);
+      await dataImportPage.selectFile(newDirName);
     });
 
     await test.step("Step 3: Click select file ", async () => {
@@ -44,7 +54,9 @@ test.describe.parallel("Import employee", () => {
     });
 
     await test.step("VP: Verify select file successfully", async () => {
-      await expect(dataImportPage.getNameFileInput()).toContainText(filename);
+      await expect(dataImportPage.getNameFileInput()).toContainText(
+        randomFileName
+      );
     });
 
     await test.step("Step 4: Click Upload button", async () => {
@@ -53,7 +65,7 @@ test.describe.parallel("Import employee", () => {
 
     await test.step("VP: Can show successfull notification", async () => {
       await dataImportPage.verifyCanShowSuccessfullNotification(
-        importData.length
+        randomEmployeeData.length
       );
     });
 
@@ -66,7 +78,7 @@ test.describe.parallel("Import employee", () => {
     });
 
     await test.step("VP: Import data successfully", async () => {
-      await employeeListPage.verifyHaveEmployeeInTable(importData);
+      await employeeListPage.verifyHaveEmployeeInTable(randomEmployeeData);
     });
   });
 });

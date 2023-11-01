@@ -38,13 +38,13 @@ export class EmployeeListPage extends PIMPage {
     return this.confirmDeleteButton;
   }
 
-  async getDeleteButton(id: string): Promise<Locator> {
-    const columnId = await this.table.getColumnIndex("Id");
+  async getDeleteButton(name: string): Promise<Locator> {
+    const columnName = await this.table.getColumnIndex("First (& Middle) Name");
     const columnActions = await this.table.getColumnIndex("Actions");
-    const rowId = await this.table.getRowIndex(id, columnId);
-    return (await this.table.getLocatorOfContent(columnActions, rowId)).locator(
-      "//*[@class='oxd-icon bi-trash']//parent::button"
-    );
+    const rowName = await this.table.getRowIndex(name, columnName);
+    return (
+      await this.table.getLocatorOfContent(columnActions, rowName)
+    ).locator("//*[@class='oxd-icon bi-trash']//parent::button");
   }
 
   async verifyHaveEmployeeInTable(listEmployee: Employee[]) {
@@ -53,19 +53,16 @@ export class EmployeeListPage extends PIMPage {
     let listTable = await this.getListsEmployeeFromTable();
 
     listEmployee.forEach((employee) => {
-      const indexEmployee = listTable.arrId.indexOf(employee.employeeId);
+      const indexEmployee = listTable.arrFirstMiddleName.indexOf(
+        employee.firstName + " " + employee.middleName
+      );
 
       expect(
         indexEmployee,
-        `Verify "Id" column contain ${employee.employeeId} `
-      ).not.toBe(-1);
-
-      expect(
-        listTable.arrFirstMiddleName[indexEmployee],
-        `Verify first and middle name of ${indexEmployee}th employee is ${
+        `Verify "First (& Middle) Name" column contain ${
           employee.firstName + " " + employee.middleName
-        }`
-      ).toBe(employee.firstName + " " + employee.middleName);
+        } `
+      ).not.toBe(-1);
 
       expect(
         listTable.arrayLastName[indexEmployee],
@@ -75,11 +72,9 @@ export class EmployeeListPage extends PIMPage {
   }
 
   async getListsEmployeeFromTable() {
-    let arrId = new Array<String>();
     let arrFirstMiddleName = new Array<String>();
     let arrayLastName = new Array<String>();
 
-    const columnId = await this.table.getColumnIndex("Id");
     const columnFirstMiddleName = await this.table.getColumnIndex(
       "First (& Middle) Name"
     );
@@ -87,7 +82,6 @@ export class EmployeeListPage extends PIMPage {
 
     let isContinue = true;
     do {
-      arrId = arrId.concat(await this.table.getAllDataOfColumn(columnId));
       arrFirstMiddleName = arrFirstMiddleName.concat(
         await this.table.getAllDataOfColumn(columnFirstMiddleName)
       );
@@ -103,7 +97,7 @@ export class EmployeeListPage extends PIMPage {
       }
     } while (isContinue);
 
-    return { arrId, arrFirstMiddleName, arrayLastName };
+    return { arrFirstMiddleName, arrayLastName };
   }
 
   async deleteTestData(listEmployee: Employee[]) {
@@ -116,7 +110,7 @@ export class EmployeeListPage extends PIMPage {
       ////find locator and delete employees in each page
       while (index < listEmployee.length) {
         const deleteButton = await this.getDeleteButton(
-          listEmployee[index].employeeId
+          listEmployee[index].firstName + " " + listEmployee[index].middleName
         );
 
         if ((await deleteButton.count()) > 0) {
