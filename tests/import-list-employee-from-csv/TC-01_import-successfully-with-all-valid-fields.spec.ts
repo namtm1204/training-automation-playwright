@@ -11,6 +11,13 @@ test.describe.parallel("Import employee", () => {
   let generatePage: GeneratePage;
   let parseCSVToJSON: CSVHelper;
 
+  const filename = "TC-01.csv";
+  const relativePath = "test-data/import-employee/";
+  const dirname = relativePath + filename;
+
+  parseCSVToJSON = new CSVHelper(dirname);
+  const importData = parseCSVToJSON.parse();
+
   test.beforeEach(async ({ browser }) => {
     generatePage = new GeneratePage(browser);
     page = await generatePage.createPage(browser);
@@ -19,17 +26,11 @@ test.describe.parallel("Import employee", () => {
   });
 
   test.afterEach(async ({ page }) => {
+    await employeeListPage.deleteTestData(importData);
     await page.close();
   });
 
   test(`[TC-01] Verify import successfully with all valid fields`, async () => {
-    const filename = "TC-01.csv";
-    const relativePath = "test-data/import-employee/";
-    const dirname = relativePath + filename;
-
-    parseCSVToJSON = new CSVHelper(dirname);
-    const importData = parseCSVToJSON.parse();
-
     await test.step("Step 1: Go to Data Import Page", async () => {
       await dataImportPage.goToDataImportPage();
     });
