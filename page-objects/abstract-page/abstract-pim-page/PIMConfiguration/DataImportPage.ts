@@ -38,9 +38,6 @@ export class DataImportPage extends PIMPage {
     return this.nameFileInput;
   }
 
-  async setInputFile(dirname: string) {
-    await this.fileInput.setInputFiles(dirname);
-  }
   async selectFile(dirname: string) {
     this.page.on("filechooser", async (fileChooser) => {
       await fileChooser.setFiles(path.join(dirname));

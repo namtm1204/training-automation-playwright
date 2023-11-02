@@ -3,12 +3,16 @@ import { GeneratePage } from "../../helpers/GeneratePage";
 import { DataImportPage } from "../../page-objects/abstract-page/abstract-pim-page/PIMConfiguration/DataImportPage";
 import { EmployeeListPage } from "../../page-objects/abstract-page/abstract-pim-page/PIMConfiguration/EmployeeListPage";
 import { CSVHelper } from "../../helpers/CSVHelper";
+import { PersonalDetailsPage } from "../../page-objects/abstract-page/abstract-pim-page/PIMConfiguration/PersonalDetailsPage";
+import { ContactDetailsPage } from "../../page-objects/abstract-page/abstract-pim-page/PIMConfiguration/ContactDetailsPage";
 
 test.describe.parallel("Import employee", () => {
   let page: Page;
   let dataImportPage: DataImportPage;
   let employeeListPage: EmployeeListPage;
   let generatePage: GeneratePage;
+  let personalDetailsPage: PersonalDetailsPage;
+  let contactDetailsPage: ContactDetailsPage;
   let csvHelper: CSVHelper;
   let randomEmployeeData;
 
@@ -21,6 +25,8 @@ test.describe.parallel("Import employee", () => {
     page = await generatePage.createPage(browser);
     dataImportPage = new DataImportPage(page);
     employeeListPage = new EmployeeListPage(page);
+    personalDetailsPage = new PersonalDetailsPage(page);
+    contactDetailsPage = new ContactDetailsPage(page);
 
     csvHelper = new CSVHelper();
     await csvHelper.createRandomTestDataFile(
@@ -78,7 +84,11 @@ test.describe.parallel("Import employee", () => {
     });
 
     await test.step("VP: Import data successfully", async () => {
-      await employeeListPage.verifyHaveEmployeeInTable(randomEmployeeData);
+      await employeeListPage.verifyImportSuccessFully(
+        randomEmployeeData,
+        personalDetailsPage,
+        contactDetailsPage
+      );
     });
   });
 });
