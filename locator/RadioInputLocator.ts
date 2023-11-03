@@ -1,6 +1,6 @@
 import { Locator, expect } from "@playwright/test";
 
-export class LabelLocator {
+export class RadioInputLocator {
   readonly locator: Locator;
   constructor(locator: Locator) {
     this.locator = locator;
@@ -9,8 +9,6 @@ export class LabelLocator {
     return this.locator.isChecked();
   }
   async verifyValue(value: string) {
-    await expect(
-      this.locator.locator(`//parent::label[text()="${value}"]//child::input`)
-    ).toBeChecked();
+    await expect(this.locator).toBeChecked();
   }
 }

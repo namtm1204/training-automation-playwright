@@ -91,55 +91,6 @@ export class ContactDetailsPage extends EmployeeDetailsPage {
     return this.otherEmailInput;
   }
 
-  async verifyContactDetail(employee: Employee) {
-    if (employee.addressStreet1) {
-      await expect(this.getFirstStreetInput()).toHaveValue(
-        employee.addressStreet1
-      );
-    }
-    if (employee.addressStreet2) {
-      await expect(this.getSecondStreetInput()).toHaveValue(
-        employee.addressStreet2
-      );
-    }
-    if (employee.city) {
-      await expect(this.getCityInput()).toHaveValue(employee.city);
-    }
-    if (employee.stateProvince) {
-      await expect(this.getStateInput()).toHaveValue(employee.stateProvince);
-    }
-    if (employee.zipPostalCode) {
-      await expect(this.getZipCodeInput()).toHaveValue(employee.zipPostalCode);
-    }
-    if (employee.country) {
-      await expect(this.getCountrySelection()).toHaveText(employee.country);
-    }
-    if (employee.homeTelephone) {
-      await expect(this.getHomePhoneInput()).toHaveValue(
-        employee.homeTelephone
-      );
-    }
-    if (employee.mobile) {
-      await expect(this.getMobilePhoneInput()).toHaveValue(employee.mobile);
-    }
-    if (employee.workTelephone) {
-      await expect(this.getWorkPhoneInput()).toHaveValue(
-        employee.workTelephone
-      );
-    }
-    if (employee.homeTelephone) {
-      await expect(this.getHomePhoneInput()).toHaveValue(
-        employee.homeTelephone
-      );
-    }
-    if (employee.workEmail) {
-      await expect(this.getWorkEmailInput()).toHaveValue(employee.workEmail);
-    }
-    if (employee.otherEmail) {
-      await expect(this.getOtherEmailInput()).toHaveValue(employee.otherEmail);
-    }
-  }
-
   async getContactInforEmployeeLocator(
     employeeLocator: EmployeeLocator
   ): Promise<EmployeeLocator> {

@@ -5,7 +5,7 @@ import { EmployeeDetailsPage } from "./EmployeeDetailsPage";
 import { EmployeeLocator } from "../../../../implement/EmployeeLocator";
 import { InputLocator } from "../../../../locator/InputLocator";
 import { SelectionLocator } from "../../../../locator/SelectionLocator";
-import { LabelLocator } from "../../../../locator/RadioInputLocator";
+import { RadioInputLocator } from "../../../../locator/RadioInputLocator";
 
 export class PersonalDetailsPage extends EmployeeDetailsPage {
   readonly page: Page;
@@ -53,7 +53,7 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
     this.maleRadio = page.locator('input[type="radio"][ value="1"]');
     this.feMaleRadio = page.locator('input[type="radio"][ value="2"]');
     this.maleLabel = page.locator(
-      '//*[@class="oxd-radio-input oxd-radio-input--active --label-right oxd-radio-input"]'
+      '//*[@class="oxd-radio-input oxd-radio-input--active --label-right oxd-radio-input"]//parent::label[text()="Male"]'
     );
     this.femaleLabel = page.locator(
       '//*[@class="oxd-radio-input oxd-radio-input--active --label-right oxd-radio-input"]//parent::label[text()="Female"]'
@@ -93,6 +93,9 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
   getMaleRadio(): Locator {
     return this.maleRadio;
   }
+  getFemaleRadio(): Locator {
+    return this.feMaleRadio;
+  }
   getMaleLabel(): Locator {
     return this.maleLabel;
   }
@@ -100,69 +103,10 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
     return this.femaleLabel;
   }
 
-  async verifyPersionalDetail(employee: Employee) {
-    await expect(this.getFirstNameInput()).toHaveValue(employee.firstName);
-    await expect(this.getLastNameInput()).toHaveValue(employee.lastName);
-    if (employee.middleName) {
-      await expect(this.getMiddleNameInput()).toHaveValue(employee.middleName);
-    }
-    if (employee.employeeId) {
-      await expect(this.getEmployeeIdInput()).toHaveValue(employee.employeeId);
-    }
-    if (employee.otherId) {
-      await expect(this.getOtherIdInput()).toHaveValue(employee.otherId);
-    }
-    if (employee.licenseExpiryDate) {
-      await expect(this.getLicenseExpiryDateInput()).toHaveValue(
-        employee.licenseExpiryDate
-      );
-    }
-    if (employee.driversLicenseNo) {
-      await expect(this.getDriverLicenseNumberInput()).toHaveValue(
-        employee.driversLicenseNo
-      );
-    }
-    if (employee.maritalStatus) {
-      await expect(this.getMaritalStatusSelection()).toHaveText(
-        employee.maritalStatus
-      );
-    }
-    if (employee.dateOfBirth) {
-      await expect(this.getDateOfBirthInput()).toHaveValue(
-        employee.dateOfBirth
-      );
-    }
-    if (employee.gender == "Male") {
-      await expect(this.getMaleRadio()).toBeChecked();
-    }
-    // if (employee.gender == "Female") {
-    //   await expect(this.getFeMaleRadio()).toBeChecked();
-    // }
-  }
-
   async getPersonalInforEmployeeLocator(
-    employeeLocator: EmployeeLocator
+    employeeLocator: EmployeeLocator,
+    employee: Employee
   ): Promise<EmployeeLocator> {
-    // await expect(this.getFirstNameInput()).not.toHaveValue("");
-
-    // employee.firstName = await this.getFirstNameInput().inputValue();
-    // employee.middleName = await this.getMiddleNameInput().inputValue();
-    // employee.lastName = await this.getLastNameInput().inputValue();
-    // employee.employeeId = await this.getEmployeeIdInput().inputValue();
-    // employee.otherId = await this.getOtherIdInput().inputValue();
-    // employee.driversLicenseNo =
-    //   await this.getDriverLicenseNumberInput().inputValue();
-    // employee.licenseExpiryDate =
-    //   await this.getLicenseExpiryDateInput().inputValue();
-    // employee.dateOfBirth = await this.getDateOfBirthInput().inputValue();
-    // employee.nationality = await this.getNationalitySelection().innerText();
-    // employee.maritalStatus = await this.getMaritalStatusSelection().innerText();
-    // if (await this.getMaleRadio().isChecked()) {
-    //   employee.gender = "Male";
-    // } else {
-    //   employee.gender = "Female";
-    // }
-    // console.log("aaa", employee);
     employeeLocator.firstName = new InputLocator(this.getFirstNameInput());
     employeeLocator.middleName = new InputLocator(this.getMiddleNameInput());
     employeeLocator.lastName = new InputLocator(this.getLastNameInput());
@@ -181,10 +125,12 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
     employeeLocator.maritalStatus = new SelectionLocator(
       this.getMaritalStatusSelection()
     );
+    if (employee.gender == "Male") {
+      employeeLocator.gender = new RadioInputLocator(this.getMaleRadio());
+    } else {
+      employeeLocator.gender = new RadioInputLocator(this.getFemaleRadio());
+    }
 
-    employeeLocator.gender = new LabelLocator(this.getMaleLabel());
-
-    // console.log("aaa", employee);
     return employeeLocator;
   }
 }

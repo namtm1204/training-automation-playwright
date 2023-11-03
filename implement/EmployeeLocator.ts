@@ -1,5 +1,5 @@
 import { InputLocator } from "../locator/InputLocator";
-import { LabelLocator } from "../locator/RadioInputLocator";
+import { RadioInputLocator } from "../locator/RadioInputLocator";
 import { SelectionLocator } from "../locator/SelectionLocator";
 
 export class EmployeeLocator {
@@ -10,7 +10,7 @@ export class EmployeeLocator {
   otherId: InputLocator;
   driversLicenseNo: InputLocator;
   licenseExpiryDate: InputLocator;
-  gender: LabelLocator;
+  gender: RadioInputLocator;
   maritalStatus: SelectionLocator;
   nationality: SelectionLocator;
   dateOfBirth: InputLocator;

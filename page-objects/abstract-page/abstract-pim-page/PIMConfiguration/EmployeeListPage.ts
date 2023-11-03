@@ -124,28 +124,21 @@ export class EmployeeListPage extends PIMPage {
         );
 
         if (rowFirstMiddleName !== -1) {
-          // // if table contain Employee
-          // await this.verifyDataInRowIsCorrect(employee, rowFirstMiddleName);
-          // // go to Personal detail page to verify
-          // await this.verifyPersonalDetails(employee, personalDetailsPage);
-          // //go to Contact detail page to verify
-          // await this.verifyContactDetails(employee, contactDetailsPage);
-          // // go back to employee list page to verify next employee
           await (
             await this.getEditButton(
               employee.firstName + " " + employee.middleName
             )
           ).click();
-          // let actualEmployeeLocator = await this.getActualEmployee(
-          //   personalDetailsPage,
-          //   contactDetailsPage
-          // );
-          await this.getActualEmployee(
+
+          await this.verifyPersonalDetailEmployeeLocator(
             personalDetailsPage,
+            employee
+          );
+          await this.verifyContactDetailEmployeeLocator(
             contactDetailsPage,
             employee
           );
-          // await this.verifyEmployee(actualEmployeeLocator, employee);
+
           await this.clickEmployeeListTab();
           await this.getTable().waitForTableVisible();
 
@@ -197,34 +190,11 @@ export class EmployeeListPage extends PIMPage {
     }
   }
 
-  async verifyContactDetails(
-    employee: Employee,
-    contactDetailsPage: ContactDetailsPage
-  ) {
-    await contactDetailsPage.clickContactDetailButton();
-    await this.waitForPageLoad();
-    await contactDetailsPage.verifyContactDetail(employee);
-  }
-
-  async verifyPersonalDetails(
-    employee: Employee,
-    personalDetailsPage: PersonalDetailsPage
-  ) {
-    await (
-      await this.getEditButton(employee.firstName + " " + employee.middleName)
-    ).click();
-    await this.waitForPageLoad();
-
-    await personalDetailsPage.verifyPersionalDetail(employee);
-  }
-
   async verifyEmployee(
     actualEmployeeLocator: EmployeeLocator,
     expectEmployee: Employee
   ) {
     const keys = Object.keys(actualEmployeeLocator);
-    console.log("actual", actualEmployeeLocator);
-    // console.log("expect", expectEmployee);
 
     for (let i = 0; i < keys.length; i++) {
       if (actualEmployeeLocator[keys[i]] !== undefined) {
@@ -235,21 +205,26 @@ export class EmployeeListPage extends PIMPage {
     }
   }
 
-  async getActualEmployee(
+  async verifyPersonalDetailEmployeeLocator(
     personalDetailsPage: PersonalDetailsPage,
-    contactDetailsPage: ContactDetailsPage,
     employee: Employee
   ) {
     let personalEmployeeLocator = new EmployeeLocator();
-    let contactEmployeeLocator = new EmployeeLocator();
 
     await this.waitForPageLoad();
     personalEmployeeLocator =
       await personalDetailsPage.getPersonalInforEmployeeLocator(
-        personalEmployeeLocator
+        personalEmployeeLocator,
+        employee
       );
     await this.verifyEmployee(personalEmployeeLocator, employee);
-    console.log("personal", personalEmployeeLocator);
+  }
+
+  async verifyContactDetailEmployeeLocator(
+    contactDetailsPage: ContactDetailsPage,
+    employee: Employee
+  ) {
+    let contactEmployeeLocator = new EmployeeLocator();
 
     await contactDetailsPage.clickContactDetailButton();
     await this.waitForPageLoad();
@@ -258,7 +233,5 @@ export class EmployeeListPage extends PIMPage {
         contactEmployeeLocator
       );
     await this.verifyEmployee(contactEmployeeLocator, employee);
-
-    // return contactEmployeeLocator;
   }
 }
