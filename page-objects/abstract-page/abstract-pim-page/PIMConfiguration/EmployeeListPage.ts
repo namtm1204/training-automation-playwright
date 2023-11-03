@@ -49,37 +49,6 @@ export class EmployeeListPage extends PIMPage {
     ).locator("//*[@class='oxd-icon bi-trash']//parent::button");
   }
 
-  async verifyHaveEmployeeInTable(listEmployee: Employee[]) {
-    await this.getTable().waitForTableVisible();
-
-    let listTable = await this.getListsEmployeeFromTable();
-
-    listEmployee.forEach((employee) => {
-      const indexEmployee = listTable.arrFirstMiddleName.indexOf(
-        employee.firstName + " " + employee.middleName
-      );
-
-      expect(
-        indexEmployee,
-        `Verify "First (& Middle) Name" column contain ${
-          employee.firstName + " " + employee.middleName
-        } `
-      ).not.toBe(-1);
-
-      expect(
-        listTable.arrayLastName[indexEmployee],
-        `Verify last name of ${indexEmployee}th employee is ${employee.lastName}`
-      ).toBe(employee.lastName);
-
-      if (employee.employeeId) {
-        expect(
-          listTable.arrId[indexEmployee],
-          `Verify Id of ${indexEmployee}th employee is ${employee.employeeId}`
-        ).toBe(employee.employeeId);
-      }
-    });
-  }
-
   async getEditButton(name: string): Promise<Locator> {
     await this.getTable().waitForTableVisible();
 
@@ -91,38 +60,6 @@ export class EmployeeListPage extends PIMPage {
     return (
       await this.table.getLocatorOfContent(columnActions, rowName)
     ).locator("//*[@class='oxd-icon bi-pencil-fill']//parent::button");
-  }
-
-  async getListsEmployeeFromTable() {
-    let arrId = new Array<String>();
-    let arrFirstMiddleName = new Array<String>();
-    let arrayLastName = new Array<String>();
-
-    const columnId = await this.table.getColumnIndex("Id");
-    const columnFirstMiddleName = await this.table.getColumnIndex(
-      "First (& Middle) Name"
-    );
-    const columnLastName = await this.table.getColumnIndex("Last Name");
-
-    let isContinue = true;
-    do {
-      arrId = arrId.concat(await this.table.getAllDataOfColumn(columnId));
-      arrFirstMiddleName = arrFirstMiddleName.concat(
-        await this.table.getAllDataOfColumn(columnFirstMiddleName)
-      );
-      arrayLastName = arrayLastName.concat(
-        await this.table.getAllDataOfColumn(columnLastName)
-      );
-
-      if (await this.getRightTableButton().isVisible()) {
-        await this.getRightTableButton().click();
-        await this.waitForPageLoad();
-      } else {
-        isContinue = false;
-      }
-    } while (isContinue);
-
-    return { arrId, arrFirstMiddleName, arrayLastName };
   }
 
   async deleteTestData(listEmployee: Employee[]) {
@@ -175,7 +112,8 @@ export class EmployeeListPage extends PIMPage {
       "First (& Middle) Name"
     );
     for (let index = 0; index < listEmployee.length; index++) {
-      let employee = listEmployee[index]; // with each employee, verify this employee is imported successfully
+      // with each employee, verify this employee is imported successfully
+      let employee = listEmployee[index];
       let isContinue = true;
       let isCheck = false;
       do {
@@ -188,19 +126,9 @@ export class EmployeeListPage extends PIMPage {
           // if table contain Employee
           await this.verifyDataInRowIsCorrect(employee, rowFirstMiddleName);
           // go to Personal detail page to verify
-          await (
-            await this.getEditButton(
-              employee.firstName + " " + employee.middleName
-            )
-          ).click();
-          await this.waitForPageLoad();
-          await personalDetailsPage.verifyPersionalDetail(employee);
-
+          await this.verifyPersonalDetails(employee, personalDetailsPage);
           //go to Contact detail page to verify
-          await contactDetailsPage.clickContactDetailButton();
-          await this.waitForPageLoad();
-          await contactDetailsPage.verifyContactDetail(employee);
-
+          await this.verifyContactDetails(employee, contactDetailsPage);
           // go back to employee list page to verify next employee
           await this.clickEmployeeListTab();
           await this.getTable().waitForTableVisible();
@@ -251,5 +179,26 @@ export class EmployeeListPage extends PIMPage {
         `Verify value at [${rowIndex},${columnId}] is ${employee.employeeId} `
       ).toHaveText(employee.employeeId);
     }
+  }
+
+  async verifyContactDetails(
+    employee: Employee,
+    contactDetailsPage: ContactDetailsPage
+  ) {
+    await contactDetailsPage.clickContactDetailButton();
+    await this.waitForPageLoad();
+    await contactDetailsPage.verifyContactDetail(employee);
+  }
+
+  async verifyPersonalDetails(
+    employee: Employee,
+    personalDetailsPage: PersonalDetailsPage
+  ) {
+    await (
+      await this.getEditButton(employee.firstName + " " + employee.middleName)
+    ).click();
+    await this.waitForPageLoad();
+
+    await personalDetailsPage.verifyPersionalDetail(employee);
   }
 }
