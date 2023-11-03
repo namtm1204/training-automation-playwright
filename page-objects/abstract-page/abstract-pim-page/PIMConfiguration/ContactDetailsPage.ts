@@ -1,7 +1,10 @@
 import { Locator, Page } from "playwright-core";
 import { expect } from "playwright/test";
-import { Employee } from "../../../../interface/EmployeeInterface";
+import { Employee } from "../../../../implement/Employee";
 import { EmployeeDetailsPage } from "./EmployeeDetailsPage";
+import { EmployeeLocator } from "../../../../implement/EmployeeLocator";
+import { InputLocator } from "../../../../locator/InputLocator";
+import { SelectionLocator } from "../../../../locator/SelectionLocator";
 
 export class ContactDetailsPage extends EmployeeDetailsPage {
   readonly page: Page;
@@ -135,5 +138,26 @@ export class ContactDetailsPage extends EmployeeDetailsPage {
     if (employee.otherEmail) {
       await expect(this.getOtherEmailInput()).toHaveValue(employee.otherEmail);
     }
+  }
+
+  async getContactInforEmployeeLocator(
+    employeeLocator: EmployeeLocator
+  ): Promise<EmployeeLocator> {
+    employeeLocator.addressStreet1 = new InputLocator(
+      this.getFirstStreetInput()
+    );
+    employeeLocator.addressStreet2 = new InputLocator(
+      this.getSecondStreetInput()
+    );
+    employeeLocator.city = new InputLocator(this.getCityInput());
+    employeeLocator.zipPostalCode = new InputLocator(this.getZipCodeInput());
+    employeeLocator.stateProvince = new InputLocator(this.getStateInput());
+    employeeLocator.country = new SelectionLocator(this.getCountrySelection());
+    employeeLocator.homeTelephone = new InputLocator(this.getHomePhoneInput());
+    employeeLocator.mobile = new InputLocator(this.getMobilePhoneInput());
+    employeeLocator.workTelephone = new InputLocator(this.getWorkPhoneInput());
+    employeeLocator.workEmail = new InputLocator(this.getWorkEmailInput());
+    employeeLocator.otherEmail = new InputLocator(this.getOtherEmailInput());
+    return employeeLocator;
   }
 }

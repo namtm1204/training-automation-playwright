@@ -1,7 +1,7 @@
 import { parse } from "csv-parse/sync";
 import fs from "fs";
 import path from "path";
-import { Employee } from "../interface/EmployeeInterface";
+import { Employee } from "../implement/Employee";
 import ObjectsToCsv from "objects-to-csv";
 
 export class CSVHelper {
