@@ -44,7 +44,7 @@ export class Table extends BaseElement {
     );
   }
 
-  async getAllDataOfColumn(columnIndex: number) {
+  async getAllDataOfColumn(columnIndex: number): Promise<string[]> {
     const array = await this.locator
       .locator(
         `//*[@class='oxd-table-body']//*[@class='oxd-table-card']//*[@role='cell'][${columnIndex}]`

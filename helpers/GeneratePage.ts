@@ -1,10 +1,4 @@
-import {
-  chromium,
-  expect,
-  type Locator,
-  type Page,
-  type Browser,
-} from "@playwright/test";
+import { chromium, type Page, type Browser } from "@playwright/test";
 
 export class GeneratePage {
   readonly browser: Browser;

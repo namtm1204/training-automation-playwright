@@ -1,9 +1,9 @@
 import { test, expect, type Page } from "@playwright/test";
 import testCaseData from "../../test-data/manage-locations/TC-26.json";
-import { GeneratePage } from "../../helpers/generatePage";
-import { LocationsPage } from "../../page-objects/abstract-page/abstract-admin-page/LocationsPage";
-import { AddLocationsPage } from "../../page-objects/abstract-page/abstract-admin-page/AddLocationPage";
-import { EditLocationsPage } from "../../page-objects/abstract-page/abstract-admin-page/EditLocationPage";
+import { GeneratePage } from "../../helpers/GeneratePage";
+import { LocationsPage } from "../../page-objects/abstract-page/abstract-admin-page/Location/LocationsPage";
+import { AddLocationsPage } from "../../page-objects/abstract-page/abstract-admin-page/Location/AddLocationPage";
+import { EditLocationsPage } from "../../page-objects/abstract-page/abstract-admin-page/Location/EditLocationPage";
 
 test.describe.parallel("Edit location", () => {
   let page: Page;
