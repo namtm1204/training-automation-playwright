@@ -14,5 +14,6 @@ export class SelectionLocator {
     } else {
       await expect(this.locator).toHaveText("-- Select --");
     }
+
   }
 }

@@ -46,6 +46,7 @@ export class CSVHelper {
         item.employee_id =
           item.employee_id + "_" + Math.floor(Math.random() * 100);
       }
+
       return item;
     });
     const csv = new ObjectsToCsv(newListEmployee);

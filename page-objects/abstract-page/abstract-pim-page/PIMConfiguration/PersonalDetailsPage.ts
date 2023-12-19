@@ -25,6 +25,7 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
   readonly femaleLabel: Locator;
   readonly genderRadio: Locator;
 
+
   constructor(page: Page) {
     super(page);
     this.firstNameInput = page.locator('input[name="firstName"]');

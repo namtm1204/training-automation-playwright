@@ -11,6 +11,7 @@ export class DataImportPage extends PIMPage {
   readonly fileInput: Locator;
   readonly errorToast: Locator;
 
+
   constructor(page: Page) {
     super(page);
     this.selectFileButton = page.locator(".oxd-file-input-icon");
@@ -42,6 +43,7 @@ export class DataImportPage extends PIMPage {
     return this.nameFileInput;
   }
 
+
   getErrorToast(): Locator {
     return this.errorToast;
   }
@@ -65,4 +67,5 @@ export class DataImportPage extends PIMPage {
       `Verify data was imported successfully`
     ).toContainText(`The CSV File Is Not Valid`);
   }
+
 }

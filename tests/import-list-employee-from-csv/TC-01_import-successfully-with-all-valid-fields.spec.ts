@@ -40,6 +40,7 @@ test.describe.parallel("Import employee", () => {
 
   test.afterEach(async ({ page }) => {
     console.log(randomEmployeeData);
+    
     await employeeListPage.deleteTestData(randomEmployeeData);
     csvHelper.deleteRandomTestDataFile(relativePath + randomFileName);
     await page.close();
