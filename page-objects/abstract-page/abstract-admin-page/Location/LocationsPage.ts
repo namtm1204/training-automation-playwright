@@ -205,6 +205,8 @@ export class LocationsPage extends AdminPage {
       `Verify length of "Country" column is not 0`
     ).not.toBe(0);
 
+    console.log(arrayCountry);
+
     arrayCountry.forEach((item) => {
       expect(
         item,

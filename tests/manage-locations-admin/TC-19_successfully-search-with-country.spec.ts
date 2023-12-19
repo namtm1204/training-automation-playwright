@@ -47,6 +47,10 @@ test.describe.parallel("Search location", () => {
 
     await test.step("Step 4: Choose country", async () => {
       await locationsPage.getCountryItem(testCaseData.country).click();
+      await expect(locationsPage.countrySelection).toHaveText(
+        testCaseData.country
+      );
+      console.log(await locationsPage.countrySelection.innerText());
     });
 
     await test.step("Step 11: Click Search", async () => {

@@ -9,6 +9,13 @@ export class RadioInputLocator {
     return this.locator.isChecked();
   }
   async verifyValue(value: string) {
-    await expect(this.locator).toBeChecked();
+    if (value != "") {
+      await expect(this.locator).toBeChecked();
+    } else {
+      let arr = await this.locator.all();
+      arr.forEach(async (subLocator) => {
+        await expect(subLocator).not.toBeChecked();
+      });
+    }
   }
 }

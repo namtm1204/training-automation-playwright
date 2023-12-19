@@ -16,8 +16,8 @@ test.describe.parallel("Import employee", () => {
   let csvHelper: CSVHelper;
   let randomEmployeeData;
 
-  const filename = "TC-01.csv";
-  const randomFileName = "TC-01-Random.csv";
+  const filename = "TC-02.csv";
+  const randomFileName = "TC-02-Random.csv";
   const relativePath = "test-data/import-employee/";
 
   test.beforeEach(async ({ browser }) => {
@@ -45,7 +45,7 @@ test.describe.parallel("Import employee", () => {
     await page.close();
   });
 
-  test(`[TC-01] Verify import successfully with all valid fields`, async () => {
+  test(`[TC-02] Verify import successfully with option fields are null`, async () => {
     let newDirName = relativePath + randomFileName;
 
     await test.step("Step 1: Go to Data Import Page", async () => {

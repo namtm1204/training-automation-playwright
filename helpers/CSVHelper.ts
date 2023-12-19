@@ -42,6 +42,10 @@ export class CSVHelper {
 
     let newListEmployee = listEmployee.map((item) => {
       item.first_name = item.first_name + "_" + new Date().getTime();
+      if (item.employee_id != "") {
+        item.employee_id =
+          item.employee_id + "_" + Math.floor(Math.random() * 100);
+      }
       return item;
     });
     const csv = new ObjectsToCsv(newListEmployee);

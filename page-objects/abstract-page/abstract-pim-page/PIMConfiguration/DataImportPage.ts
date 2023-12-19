@@ -9,6 +9,7 @@ export class DataImportPage extends PIMPage {
   readonly importDetailMessageBox: Locator;
   readonly okButton: Locator;
   readonly fileInput: Locator;
+  readonly errorToast: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -20,6 +21,9 @@ export class DataImportPage extends PIMPage {
       '//*[@class="orangehrm-modal-footer"]//button'
     );
     this.fileInput = page.locator(".oxd-file-input");
+    this.errorToast = page.locator(
+      " .oxd-toast-content--error .oxd-text--toast-message"
+    );
   }
 
   async clickSelectFileButton() {
@@ -38,6 +42,10 @@ export class DataImportPage extends PIMPage {
     return this.nameFileInput;
   }
 
+  getErrorToast(): Locator {
+    return this.errorToast;
+  }
+
   async selectFile(dirname: string) {
     this.page.on("filechooser", async (fileChooser) => {
       await fileChooser.setFiles(path.join(dirname));
@@ -49,5 +57,12 @@ export class DataImportPage extends PIMPage {
       this.importDetailMessageBox,
       `Verify ${countRecord} was imported successfully`
     ).toContainText(` ${countRecord} Record${many} Successfully Imported`);
+  }
+
+  async verifyCanShowErrorNotification() {
+    await expect(
+      this.errorToast,
+      `Verify data was imported successfully`
+    ).toContainText(`The CSV File Is Not Valid`);
   }
 }
