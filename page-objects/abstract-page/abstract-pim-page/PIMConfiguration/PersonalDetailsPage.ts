@@ -25,7 +25,6 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
   readonly femaleLabel: Locator;
   readonly genderRadio: Locator;
 
-
   constructor(page: Page) {
     super(page);
     this.firstNameInput = page.locator('input[name="firstName"]');
@@ -133,13 +132,9 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
       this.getMaritalStatusSelection()
     );
     if (employee.gender == "Male") {
-      employeeLocator.gender = new RadioInputLocator(
-        this.getGenDerRadio().locator('[ value="1"]')
-      );
+      employeeLocator.gender = new RadioInputLocator(this.getMaleRadio());
     } else if (employee.gender == "Female") {
-      employeeLocator.gender = new RadioInputLocator(
-        this.getGenDerRadio().locator('[ value="2"]')
-      );
+      employeeLocator.gender = new RadioInputLocator(this.getFemaleRadio());
     } else {
       employeeLocator.gender = new RadioInputLocator(this.getGenDerRadio());
     }
