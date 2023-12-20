@@ -5,6 +5,8 @@ import { Employee } from "../../../../implement/Employee";
 import { PersonalDetailsPage } from "./PersonalDetailsPage";
 import { ContactDetailsPage } from "./ContactDetailsPage";
 import { EmployeeLocator } from "../../../../implement/EmployeeLocator";
+import { RadioInputLocator } from "../../../../locator/RadioInputLocator";
+import { SelectionLocator } from "../../../../locator/SelectionLocator";
 
 export class EmployeeListPage extends PIMPage {
   readonly table: Table;
@@ -122,6 +124,7 @@ export class EmployeeListPage extends PIMPage {
           employee.firstName + " " + employee.middleName,
           columnFirstMiddleName
         );
+        console.log("abc" + rowFirstMiddleName + "_" + columnFirstMiddleName);
 
         if (rowFirstMiddleName !== -1) {
           await (
@@ -195,12 +198,27 @@ export class EmployeeListPage extends PIMPage {
     expectEmployee: Employee
   ) {
     const keys = Object.keys(actualEmployeeLocator);
+    console.log(expectEmployee);
 
     for (let i = 0; i < keys.length; i++) {
       if (actualEmployeeLocator[keys[i]] !== undefined) {
-        await actualEmployeeLocator[keys[i]].verifyValue(
-          expectEmployee[keys[i]]
-        );
+        if (keys[i] == "gender" && expectEmployee[keys[i]] == "") {
+          let arr = await actualEmployeeLocator[keys[i]].getLocator().all();
+          console.log("Tam");
+          arr.forEach(async (subLocator) => {
+            let subRadioLocator = new RadioInputLocator(subLocator);
+            await subRadioLocator.verifyValue(expectEmployee[keys[i]]);
+          });
+        } else if (
+          actualEmployeeLocator[keys[i]] instanceof SelectionLocator &&
+          expectEmployee[keys[i]] == ""
+        ) {
+          await actualEmployeeLocator[keys[i]].verifyValue("-- Select --");
+        } else {
+          await actualEmployeeLocator[keys[i]].verifyValue(
+            expectEmployee[keys[i]]
+          );
+        }
       }
     }
   }

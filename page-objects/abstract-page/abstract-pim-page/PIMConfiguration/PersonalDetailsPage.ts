@@ -23,6 +23,7 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
   readonly feMaleRadio: Locator;
   readonly maleLabel: Locator;
   readonly femaleLabel: Locator;
+  readonly genderRadio: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -52,6 +53,8 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
     );
     this.maleRadio = page.locator('input[type="radio"][ value="1"]');
     this.feMaleRadio = page.locator('input[type="radio"][ value="2"]');
+    this.genderRadio = page.locator('input[type="radio"]');
+
     this.maleLabel = page.locator(
       '//*[@class="oxd-radio-input oxd-radio-input--active --label-right oxd-radio-input"]//parent::label[text()="Male"]'
     );
@@ -102,6 +105,9 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
   getFemaleLabel(): Locator {
     return this.femaleLabel;
   }
+  getGenDerRadio(): Locator {
+    return this.genderRadio;
+  }
 
   async getPersonalInforEmployeeLocator(
     employeeLocator: EmployeeLocator,
@@ -127,8 +133,10 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
     );
     if (employee.gender == "Male") {
       employeeLocator.gender = new RadioInputLocator(this.getMaleRadio());
-    } else {
+    } else if (employee.gender == "Female") {
       employeeLocator.gender = new RadioInputLocator(this.getFemaleRadio());
+    } else {
+      employeeLocator.gender = new RadioInputLocator(this.getGenDerRadio());
     }
 
     return employeeLocator;

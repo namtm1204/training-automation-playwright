@@ -15,6 +15,7 @@ export default defineConfig({
     timeout: 2 * 60 * 1000,
   },
   timeout: 2 * 60 * 1000,
+
   testDir: "./tests/import-list-employee-from-csv",
   /* Run tests in files in parallel */
   fullyParallel: true,

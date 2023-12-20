@@ -5,10 +5,18 @@ export class RadioInputLocator {
   constructor(locator: Locator) {
     this.locator = locator;
   }
+  getLocator(): Locator {
+    return this.locator;
+  }
   async isChecked() {
     return this.locator.isChecked();
   }
   async verifyValue(value: string) {
-    await expect(this.locator).toBeChecked();
+    if (value != "") {
+      console.log(this.locator);
+      await expect(this.locator).toBeChecked();
+    } else {
+      await expect(this.locator).not.toBeChecked();
+    }
   }
 }

@@ -9,6 +9,11 @@ export class SelectionLocator {
     return await this.locator.innerText();
   }
   async verifyValue(value: string) {
+    // if (value != "") {
+    //   await expect(this.locator).toHaveText(value);
+    // } else {
+    //   await expect(this.locator).toHaveText("-- Select --");
+    // }
     await expect(this.locator).toHaveText(value);
   }
 }
