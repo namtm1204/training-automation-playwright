@@ -1,6 +1,7 @@
 import { Locator, Page, expect } from "@playwright/test";
 import { PIMPage } from "../PIMPage";
 import path from "path";
+import { Employee } from "../../../../implement/Employee";
 
 export class DataImportPage extends PIMPage {
   readonly selectFileButton: Locator;
@@ -10,7 +11,6 @@ export class DataImportPage extends PIMPage {
   readonly okButton: Locator;
   readonly fileInput: Locator;
   readonly errorToast: Locator;
-
 
   constructor(page: Page) {
     super(page);
@@ -43,7 +43,6 @@ export class DataImportPage extends PIMPage {
     return this.nameFileInput;
   }
 
-
   getErrorToast(): Locator {
     return this.errorToast;
   }
@@ -61,11 +60,36 @@ export class DataImportPage extends PIMPage {
     ).toContainText(` ${countRecord} Record${many} Successfully Imported`);
   }
 
-  async verifyCanShowErrorNotification() {
-    await expect(
-      this.errorToast,
-      `Verify data was imported successfully`
-    ).toContainText(`The CSV File Is Not Valid`);
+  async verifyCanShowErrorToast() {
+    await expect(this.errorToast, `Verify can show error toast`).toContainText(
+      `The CSV File Is Not Valid`
+    );
   }
 
+  async verifyCanShowErrorNotification(customEmployeeData) {
+    const many1 = customEmployeeData.uniqueData.length > 1 ? "s" : "";
+    const many2 = customEmployeeData.duplicatedData.length > 1 ? "s" : "";
+    let failedRow = customEmployeeData.index[0];
+    for (let i = 1; i < customEmployeeData.index.length; i++)
+      failedRow += "," + customEmployeeData.index[i];
+
+    await expect(
+      this.importDetailMessageBox,
+      `Verify ${customEmployeeData.uniqueData.length} was imported successfully`
+    ).toContainText(
+      ` ${customEmployeeData.uniqueData.length} Record${many1} Successfully Imported`
+    );
+
+    await expect(
+      this.importDetailMessageBox,
+      `Verify ${customEmployeeData.duplicatedData.length} can not be imported successfully`
+    ).toContainText(
+      ` ${customEmployeeData.duplicatedData.length} Record${many2} Failed to Import`
+    );
+
+    await expect(
+      this.importDetailMessageBox,
+      `Verify ${failedRow} is failed rows`
+    ).toContainText(`Failed Rows` + failedRow);
+  }
 }

@@ -15,9 +15,10 @@ test.describe.parallel("Import employee", () => {
   let contactDetailsPage: ContactDetailsPage;
   let csvHelper: CSVHelper;
   let randomEmployeeData;
+  let customEmployeeData;
 
-  const filename = "TC-02.csv";
-  const randomFileName = "TC-02-Random.csv";
+  const filename = "TC-09.csv";
+  const randomFileName = "TC-09-Random.csv";
   const relativePath = "test-data/import-employee/";
 
   test.beforeEach(async ({ browser }) => {
@@ -36,16 +37,18 @@ test.describe.parallel("Import employee", () => {
     randomEmployeeData = csvHelper.parseToEmployee(
       relativePath + randomFileName
     );
+    customEmployeeData = csvHelper.filterEmployeeList(randomEmployeeData);
   });
 
   test.afterEach(async ({ page }) => {
     console.log(randomEmployeeData);
-    await employeeListPage.deleteTestData(randomEmployeeData);
+
+    await employeeListPage.deleteTestData(customEmployeeData.uniqueData);
     csvHelper.deleteRandomTestDataFile(relativePath + randomFileName);
     await page.close();
   });
 
-  test(`[TC-02] Verify import successfully with option fields are null`, async () => {
+  test(`[TC-01] Verify import successfully with all valid fields`, async () => {
     let newDirName = relativePath + randomFileName;
 
     await test.step("Step 1: Go to Data Import Page", async () => {
@@ -69,9 +72,7 @@ test.describe.parallel("Import employee", () => {
     });
 
     await test.step("VP: Can show successfull notification", async () => {
-      await dataImportPage.verifyCanShowSuccessfullNotification(
-        randomEmployeeData.length
-      );
+      await dataImportPage.verifyCanShowErrorNotification(customEmployeeData);
     });
 
     await test.step("Step 5: Click Ok", async () => {
@@ -82,9 +83,9 @@ test.describe.parallel("Import employee", () => {
       await employeeListPage.goToEmployeeListPageFromDataImportPage();
     });
 
-    await test.step("VP: Import data successfully", async () => {
+    await test.step("VP: Import unique data successfully", async () => {
       await employeeListPage.verifyImportSuccessFully(
-        randomEmployeeData,
+        customEmployeeData.uniqueData,
         personalDetailsPage,
         contactDetailsPage
       );
