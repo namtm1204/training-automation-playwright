@@ -37,7 +37,7 @@ export class PersonalDetailsPage extends EmployeeDetailsPage {
       '//*[@class="oxd-input-group oxd-input-field-bottom-space"][contains(.,"Other Id")]//child::input'
     );
     this.driverLicenseNumberInput = page.locator(
-      `//*[@class="oxd-input-group oxd-input-field-bottom-space"][contains(.,"Driver License Number")]//child::input`
+      `//*[@class="oxd-form-row"][2]/child::div[2]/child::div[1]//child::input`
     );
     this.licenseExpiryDateInput = page.locator(
       '//*[@class="oxd-input-group oxd-input-field-bottom-space"][contains(.,"License Expiry Date")]//child::input'

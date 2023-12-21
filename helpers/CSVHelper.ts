@@ -23,23 +23,6 @@ export class CSVHelper {
     return records;
   }
 
-  filterEmployeeList(listEmployeeData: Employee[]) {
-    let uniqueData = new Array();
-    let duplicatedData = new Array();
-    let index = new Array();
-    let uniqueFirstName = new Array();
-    for (let i = 0; i < listEmployeeData.length; i++) {
-      if (uniqueFirstName.indexOf(listEmployeeData[i].firstName) == -1) {
-        uniqueData.push(listEmployeeData[i]);
-        uniqueFirstName.push(listEmployeeData[i].firstName);
-      } else {
-        duplicatedData.push(listEmployeeData[i]);
-        index.push(i + 2);
-      }
-    }
-    return { uniqueData, duplicatedData, index };
-  }
-
   toConventionString(key: string) {
     let regex = /[&\/\\#,_+()$~%.'":*?<>{}]/g;
 
@@ -56,16 +39,8 @@ export class CSVHelper {
   }
   async createRandomTestDataFile(fileName: string, randomFileName: string) {
     let listEmployee = this.parseToJson(fileName);
+    let newListEmployee = this.generateRandomData(listEmployee);
 
-    let newListEmployee = listEmployee.map((item) => {
-      item.first_name = item.first_name + "_" + new Date().getTime();
-      if (item.employee_id != "") {
-        item.employee_id =
-          item.employee_id + "_" + Math.floor(Math.random() * 100);
-      }
-
-      return item;
-    });
     const csv = new ObjectsToCsv(newListEmployee);
     // create and write to file:
     fs.open(randomFileName, "w", function (err, file) {
@@ -75,10 +50,58 @@ export class CSVHelper {
     await csv.toDisk(randomFileName);
   }
 
-  async deleteRandomTestDataFile(randomFileName: string) {
+  deleteRandomTestDataFile(randomFileName: string) {
     fs.unlink(randomFileName, function (err) {
       if (err) throw err;
       console.log("File deleted!");
     });
+  }
+
+  generateRandomData(listEmployee: any) {
+    let uniqueRawFirstName = new Map();
+    let newListEmployee = new Array();
+
+    for (let i = 0; i < listEmployee.length; i++) {
+      if (uniqueRawFirstName.has(listEmployee[i].first_name)) {
+        newListEmployee.push(
+          newListEmployee[uniqueRawFirstName.get(listEmployee[i].first_name)]
+        );
+      } else {
+        let item = { ...listEmployee[i] };
+        item.first_name = item.first_name + "_" + new Date().getTime();
+        if (item.employee_id != "") {
+          item.employee_id =
+            item.employee_id + "_" + Math.floor(Math.random() * 100);
+        }
+        if (item.other_id != "") {
+          item.other_id = item.other_id + "_" + Math.floor(Math.random() * 100);
+        }
+        if (item[`driver's_license_no`] != "") {
+          item[`driver's_license_no`] =
+            item[`driver's_license_no`] + Math.floor(Math.random() * 100);
+        }
+        if (item.home_telephone != "") {
+          item.home_telephone =
+            item.home_telephone + Math.floor(Math.random() * 100);
+        }
+        if (item.mobile != "") {
+          item.mobile = item.mobile + Math.floor(Math.random() * 100);
+        }
+        if (item.work_telephone != "") {
+          item.work_telephone =
+            item.work_telephone + Math.floor(Math.random() * 100);
+        }
+        if (item.work_email != "") {
+          item.work_email = Math.floor(Math.random() * 100) + item.work_email;
+        }
+        if (item.other_email != "") {
+          item.other_email = Math.floor(Math.random() * 100) + item.other_email;
+        }
+        newListEmployee.push(item);
+        uniqueRawFirstName.set(listEmployee[i].first_name, i);
+        console.log(listEmployee[i].first_name);
+      }
+    }
+    return newListEmployee;
   }
 }

@@ -69,9 +69,9 @@ export class DataImportPage extends PIMPage {
   async verifyCanShowErrorNotification(customEmployeeData) {
     const many1 = customEmployeeData.uniqueData.length > 1 ? "s" : "";
     const many2 = customEmployeeData.duplicatedData.length > 1 ? "s" : "";
-    let failedRow = customEmployeeData.index[0];
-    for (let i = 1; i < customEmployeeData.index.length; i++)
-      failedRow += "," + customEmployeeData.index[i];
+    let failedRow = customEmployeeData.duplicatedDataIndex[0];
+    for (let i = 1; i < customEmployeeData.duplicatedDataIndex.length; i++)
+      failedRow += "," + customEmployeeData.duplicatedDataIndex[i];
 
     await expect(
       this.importDetailMessageBox,
