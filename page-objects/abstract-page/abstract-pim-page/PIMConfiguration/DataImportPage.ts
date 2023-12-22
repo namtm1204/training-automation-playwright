@@ -2,6 +2,7 @@ import { Locator, Page, expect } from "@playwright/test";
 import { PIMPage } from "../PIMPage";
 import path from "path";
 import { Employee } from "../../../../implement/Employee";
+import { CustomEmployee } from "../../../../interface/CustomEmployee";
 
 export class DataImportPage extends PIMPage {
   readonly selectFileButton: Locator;
@@ -71,10 +72,10 @@ export class DataImportPage extends PIMPage {
     );
   }
 
-  async verifyCanShowErrorNotification(customEmployeeData) {
+  async verifyCanShowErrorNotification(customEmployeeData: CustomEmployee) {
     const many1 = customEmployeeData.uniqueData.length > 1 ? "s" : "";
     const many2 = customEmployeeData.duplicatedData.length > 1 ? "s" : "";
-    let failedRow = customEmployeeData.duplicatedDataIndex[0];
+    let failedRow = customEmployeeData.duplicatedDataIndex[0] + "";
     for (let i = 1; i < customEmployeeData.duplicatedDataIndex.length; i++)
       failedRow += "," + customEmployeeData.duplicatedDataIndex[i];
 

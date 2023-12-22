@@ -1,7 +1,8 @@
 import { Employee } from "../implement/Employee";
+import { CustomEmployee } from "../interface/CustomEmployee";
 
 export class EmployeeUtils {
-  filterEmployeeList(listEmployeeData: Employee[]) {
+  filterEmployeeList(listEmployeeData: Employee[]): CustomEmployee {
     let uniqueData = new Array();
     let duplicatedData = new Array();
     let duplicatedDataIndex = new Array();
@@ -16,9 +17,9 @@ export class EmployeeUtils {
       }
     }
     return {
-      uniqueData: uniqueData,
-      duplicatedData: duplicatedData,
-      duplicatedDataIndex: duplicatedDataIndex,
+      uniqueData,
+      duplicatedData,
+      duplicatedDataIndex,
     };
   }
 }

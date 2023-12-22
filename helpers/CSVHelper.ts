@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { Employee } from "../implement/Employee";
 import ObjectsToCsv from "objects-to-csv";
+import { GenerateData } from "./GenerateData";
 
 export class CSVHelper {
   constructor() {}
@@ -39,7 +40,9 @@ export class CSVHelper {
   }
   async createRandomTestDataFile(fileName: string, randomFileName: string) {
     let listEmployee = this.parseToJson(fileName);
-    let newListEmployee = this.generateRandomData(listEmployee);
+    let newListEmployee = new GenerateData().generateRandomEmployeeData(
+      listEmployee
+    );
 
     const csv = new ObjectsToCsv(newListEmployee);
     // create and write to file:
@@ -50,58 +53,10 @@ export class CSVHelper {
     await csv.toDisk(randomFileName);
   }
 
-  deleteRandomTestDataFile(randomFileName: string) {
-    fs.unlink(randomFileName, function (err) {
+  deleteFile(fileName: string) {
+    fs.unlink(fileName, function (err) {
       if (err) throw err;
       console.log("File deleted!");
     });
-  }
-
-  generateRandomData(listEmployee: any) {
-    let uniqueRawFirstName = new Map();
-    let newListEmployee = new Array();
-
-    for (let i = 0; i < listEmployee.length; i++) {
-      if (uniqueRawFirstName.has(listEmployee[i].first_name)) {
-        newListEmployee.push(
-          newListEmployee[uniqueRawFirstName.get(listEmployee[i].first_name)]
-        );
-      } else {
-        let item = { ...listEmployee[i] };
-        item.first_name = item.first_name + "_" + new Date().getTime();
-        if (item.employee_id != "") {
-          item.employee_id =
-            item.employee_id + "_" + Math.floor(Math.random() * 100);
-        }
-        if (item.other_id != "") {
-          item.other_id = item.other_id + "_" + Math.floor(Math.random() * 100);
-        }
-        if (item[`driver's_license_no`] != "") {
-          item[`driver's_license_no`] =
-            item[`driver's_license_no`] + Math.floor(Math.random() * 100);
-        }
-        if (item.home_telephone != "") {
-          item.home_telephone =
-            item.home_telephone + Math.floor(Math.random() * 100);
-        }
-        if (item.mobile != "") {
-          item.mobile = item.mobile + Math.floor(Math.random() * 100);
-        }
-        if (item.work_telephone != "") {
-          item.work_telephone =
-            item.work_telephone + Math.floor(Math.random() * 100);
-        }
-        if (item.work_email != "") {
-          item.work_email = Math.floor(Math.random() * 100) + item.work_email;
-        }
-        if (item.other_email != "") {
-          item.other_email = Math.floor(Math.random() * 100) + item.other_email;
-        }
-        newListEmployee.push(item);
-        uniqueRawFirstName.set(listEmployee[i].first_name, i);
-        console.log(listEmployee[i].first_name);
-      }
-    }
-    return newListEmployee;
   }
 }

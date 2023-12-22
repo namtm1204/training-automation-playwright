@@ -42,7 +42,7 @@ test.describe.parallel("Import employee", () => {
     console.log(randomEmployeeData);
 
     await employeeListPage.deleteTestData(randomEmployeeData);
-    csvHelper.deleteRandomTestDataFile(relativePath + randomFileName);
+    csvHelper.deleteFile(relativePath + randomFileName);
     await page.close();
   });
 
