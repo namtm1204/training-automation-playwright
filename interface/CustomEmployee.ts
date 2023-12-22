@@ -1,5 +1,7 @@
+import { Employee } from "../implement/Employee";
+
 export interface CustomEmployee {
-  uniqueData: Array<any>;
-  duplicatedData: Array<any>;
-  duplicatedDataIndex: Array<any>;
+  uniqueData: Employee[];
+  duplicatedData: Employee[];
+  duplicatedDataIndex: String[];
 }
