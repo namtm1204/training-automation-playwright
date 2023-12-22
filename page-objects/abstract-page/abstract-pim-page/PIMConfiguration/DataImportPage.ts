@@ -11,6 +11,7 @@ export class DataImportPage extends PIMPage {
   readonly okButton: Locator;
   readonly fileInput: Locator;
   readonly errorToast: Locator;
+  readonly downloadLink: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -25,6 +26,7 @@ export class DataImportPage extends PIMPage {
     this.errorToast = page.locator(
       " .oxd-toast-content--error .oxd-text--toast-message"
     );
+    this.downloadLink = page.locator(".download-link");
   }
 
   async clickSelectFileButton() {
@@ -45,6 +47,9 @@ export class DataImportPage extends PIMPage {
 
   getErrorToast(): Locator {
     return this.errorToast;
+  }
+  async clickDownLoad() {
+    await this.downloadLink.click();
   }
 
   async selectFile(dirname: string) {
