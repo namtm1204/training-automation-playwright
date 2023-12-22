@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { Employee } from "../implement/Employee";
 import ObjectsToCsv from "objects-to-csv";
+import { GenerateData } from "./GenerateData";
 
 export class CSVHelper {
   constructor() {}
@@ -39,16 +40,10 @@ export class CSVHelper {
   }
   async createRandomTestDataFile(fileName: string, randomFileName: string) {
     let listEmployee = this.parseToJson(fileName);
+    let newListEmployee = new GenerateData().generateRandomEmployeeData(
+      listEmployee
+    );
 
-    let newListEmployee = listEmployee.map((item) => {
-      item.first_name = item.first_name + "_" + new Date().getTime();
-      if (item.employee_id != "") {
-        item.employee_id =
-          item.employee_id + "_" + Math.floor(Math.random() * 100);
-      }
-
-      return item;
-    });
     const csv = new ObjectsToCsv(newListEmployee);
     // create and write to file:
     fs.open(randomFileName, "w", function (err, file) {
@@ -58,8 +53,8 @@ export class CSVHelper {
     await csv.toDisk(randomFileName);
   }
 
-  async deleteRandomTestDataFile(randomFileName: string) {
-    fs.unlink(randomFileName, function (err) {
+  deleteFile(fileName: string) {
+    fs.unlink(fileName, function (err) {
       if (err) throw err;
       console.log("File deleted!");
     });

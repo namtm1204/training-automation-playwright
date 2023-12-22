@@ -1,6 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import testCaseData from "../../test-data/general-infor-data-admin/TC-02.json";
-import { GeneratePage } from "../../helpers/generatePage";
+import { GeneratePage } from "../../helpers/GeneratePage";
 import { OrganizationGeneralInformationPage } from "../../page-objects/abstract-page/abstract-admin-page/OrganizationGeneralInformationPage";
 
 test.describe.parallel("Update all fileds", () => {

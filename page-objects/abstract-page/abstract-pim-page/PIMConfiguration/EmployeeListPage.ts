@@ -198,7 +198,6 @@ export class EmployeeListPage extends PIMPage {
     expectEmployee: Employee
   ) {
     const keys = Object.keys(actualEmployeeLocator);
-    console.log(expectEmployee);
 
     for (let i = 0; i < keys.length; i++) {
       if (actualEmployeeLocator[keys[i]] !== undefined) {

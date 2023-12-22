@@ -5,6 +5,8 @@ import { EmployeeListPage } from "../../page-objects/abstract-page/abstract-pim-
 import { CSVHelper } from "../../helpers/CSVHelper";
 import { PersonalDetailsPage } from "../../page-objects/abstract-page/abstract-pim-page/PIMConfiguration/PersonalDetailsPage";
 import { ContactDetailsPage } from "../../page-objects/abstract-page/abstract-pim-page/PIMConfiguration/ContactDetailsPage";
+import { EmployeeUtils } from "../../helpers/EmployeeUtils";
+import { Employee } from "../../implement/Employee";
 
 test.describe.parallel("Import employee", () => {
   let page: Page;
@@ -14,10 +16,12 @@ test.describe.parallel("Import employee", () => {
   let personalDetailsPage: PersonalDetailsPage;
   let contactDetailsPage: ContactDetailsPage;
   let csvHelper: CSVHelper;
-  let randomEmployeeData;
+  let randomEmployeeData: Employee[];
+  let customEmployeeData: any;
+  let employeeUtils: EmployeeUtils;
 
-  const filename = "TC-01.csv";
-  const randomFileName = "TC-01-Random.csv";
+  const filename = "TC-09.csv";
+  const randomFileName = "TC-09-Random.csv";
   const relativePath = "test-data/import-employee/";
 
   test.beforeEach(async ({ browser }) => {
@@ -29,6 +33,7 @@ test.describe.parallel("Import employee", () => {
     contactDetailsPage = new ContactDetailsPage(page);
 
     csvHelper = new CSVHelper();
+    employeeUtils = new EmployeeUtils();
     await csvHelper.createRandomTestDataFile(
       relativePath + filename,
       relativePath + randomFileName
@@ -36,17 +41,18 @@ test.describe.parallel("Import employee", () => {
     randomEmployeeData = csvHelper.parseToEmployee(
       relativePath + randomFileName
     );
+    customEmployeeData = employeeUtils.filterEmployeeList(randomEmployeeData);
   });
 
   test.afterEach(async ({ page }) => {
     console.log(randomEmployeeData);
 
-    await employeeListPage.deleteTestData(randomEmployeeData);
+    await employeeListPage.deleteTestData(customEmployeeData.uniqueData);
     csvHelper.deleteFile(relativePath + randomFileName);
     await page.close();
   });
 
-  test(`[TC-01] Verify import successfully with all valid fields`, async () => {
+  test(`[TC-09] Verify can not add the duplicated employee list`, async () => {
     let newDirName = relativePath + randomFileName;
 
     await test.step("Step 1: Go to Data Import Page", async () => {
@@ -69,10 +75,8 @@ test.describe.parallel("Import employee", () => {
       await dataImportPage.clickUploadButton();
     });
 
-    await test.step("VP: Can show successfull notification", async () => {
-      await dataImportPage.verifyCanShowSuccessfullNotification(
-        randomEmployeeData.length
-      );
+    await test.step("VP: Can show error notification", async () => {
+      await dataImportPage.verifyCanShowErrorNotification(customEmployeeData);
     });
 
     await test.step("Step 5: Click Ok", async () => {
@@ -83,9 +87,9 @@ test.describe.parallel("Import employee", () => {
       await employeeListPage.goToEmployeeListPageFromDataImportPage();
     });
 
-    await test.step("VP: Import data successfully", async () => {
+    await test.step("VP: Import unique data successfully", async () => {
       await employeeListPage.verifyImportSuccessFully(
-        randomEmployeeData,
+        customEmployeeData.uniqueData,
         personalDetailsPage,
         contactDetailsPage
       );

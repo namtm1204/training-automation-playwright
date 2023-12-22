@@ -36,7 +36,7 @@ test.describe.parallel("Import employee", () => {
     });
 
     await test.step("VP: Verify select file successfully", async () => {
-      await expect(dataImportPage.getNameFileInput()).toContainText(filename);
+      await expect(dataImportPage.nameFileInput).toContainText(filename);
     });
 
     await test.step("Step 4: Click Upload button", async () => {
@@ -44,7 +44,7 @@ test.describe.parallel("Import employee", () => {
     });
 
     await test.step("VP: Can show successfull notification", async () => {
-      await dataImportPage.verifyCanShowErrorNotification();
+      await dataImportPage.verifyCanShowErrorToast();
     });
   });
 });

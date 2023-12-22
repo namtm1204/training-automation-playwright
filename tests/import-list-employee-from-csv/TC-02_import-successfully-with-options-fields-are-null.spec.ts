@@ -41,7 +41,7 @@ test.describe.parallel("Import employee", () => {
   test.afterEach(async ({ page }) => {
     console.log(randomEmployeeData);
     await employeeListPage.deleteTestData(randomEmployeeData);
-    csvHelper.deleteRandomTestDataFile(relativePath + randomFileName);
+    csvHelper.deleteFile(relativePath + randomFileName);
     await page.close();
   });
 
@@ -61,9 +61,7 @@ test.describe.parallel("Import employee", () => {
     });
 
     await test.step("VP: Verify select file successfully", async () => {
-      await expect(dataImportPage.getNameFileInput()).toContainText(
-        randomFileName
-      );
+      await expect(dataImportPage.nameFileInput).toContainText(randomFileName);
     });
 
     await test.step("Step 4: Click Upload button", async () => {
