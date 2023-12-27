@@ -1,8 +1,6 @@
 import { test, expect, type Page, Download } from "@playwright/test";
 import { GeneratePage } from "../../helpers/GeneratePage";
 import { DataImportPage } from "../../page-objects/abstract-page/abstract-pim-page/PIMConfiguration/DataImportPage";
-import fs from "fs";
-import { CSVHelper } from "../../helpers/CSVHelper";
 import { FileHelper } from "../../helpers/FileHepler";
 
 test.describe.parallel("Import employee", () => {
@@ -10,6 +8,8 @@ test.describe.parallel("Import employee", () => {
   let dataImportPage: DataImportPage;
   let generatePage: GeneratePage;
   let fileHelper: FileHelper;
+  let downloadPromise: Promise<Download>;
+  let download: Download;
 
   const filename = "TC-04.csv";
   const relativePath = "test-data/import-employee/";
@@ -18,15 +18,16 @@ test.describe.parallel("Import employee", () => {
     generatePage = new GeneratePage(browser);
     page = await generatePage.createPage(browser);
     dataImportPage = new DataImportPage(page);
+
+    fileHelper = new FileHelper();
   });
 
   test.afterEach(async ({ page }) => {
+    fileHelper.deleteFile(relativePath + download.suggestedFilename());
     await page.close();
   });
 
   test(`[TC-04] Verify download imported data to local successfully`, async () => {
-    let downloadPromise: Promise<Download>;
-    let download: Download;
     let dirName = relativePath + filename;
 
     await test.step("Step 1: Go to Data Import Page", async () => {
@@ -37,13 +38,17 @@ test.describe.parallel("Import employee", () => {
       downloadPromise = dataImportPage.page.waitForEvent("download");
       await dataImportPage.clickDownLoad();
       download = await downloadPromise;
+      await download.saveAs(relativePath + download.suggestedFilename());
     });
 
     await test.step("VP: Verify download file successfully", async () => {
       expect(download.suggestedFilename()).toBe("importData.csv");
     });
     await test.step("VP: Verify content of file is correct", async () => {
-      dataImportPage.verifyContentOfFile(dirName, await download.path());
+      dataImportPage.verifyContentOfFile(
+        dirName,
+        relativePath + download.suggestedFilename()
+      );
     });
   });
 });
