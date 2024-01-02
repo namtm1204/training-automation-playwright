@@ -11,6 +11,15 @@ export class GeneratePage {
     browser = await chromium.launch();
     return await browser.newPage();
   }
+
+  async createPageWithSpecificDownLloadPath(
+    browser: Browser,
+    downloadPath: string
+  ): Promise<Page> {
+    browser = await chromium.launch({ downloadsPath: downloadPath });
+    return await browser.newPage();
+  }
+
   async closeBrowser() {
     this.browser.close();
   }

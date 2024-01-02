@@ -23,7 +23,7 @@ test.describe.parallel("Import employee", () => {
   });
 
   test.afterEach(async ({ page }) => {
-    fileHelper.deleteFile(relativePath + download.suggestedFilename());
+    fileHelper.deleteFile(await download.path());
     await page.close();
   });
 
@@ -38,17 +38,14 @@ test.describe.parallel("Import employee", () => {
       downloadPromise = dataImportPage.page.waitForEvent("download");
       await dataImportPage.clickDownLoad();
       download = await downloadPromise;
-      await download.saveAs(relativePath + download.suggestedFilename());
     });
 
     await test.step("VP: Verify download file successfully", async () => {
       expect(download.suggestedFilename()).toBe("importData.csv");
     });
     await test.step("VP: Verify content of file is correct", async () => {
-      dataImportPage.verifyContentOfFile(
-        dirName,
-        relativePath + download.suggestedFilename()
-      );
+      console.log((await download.path()) + "aloloo");
+      dataImportPage.verifyContentOfFile(dirName, await download.path());
     });
   });
 });
