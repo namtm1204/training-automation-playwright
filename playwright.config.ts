@@ -48,7 +48,9 @@ export default defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        launchOptions: { downloadsPath: "test-data/import-employee/" },
+        launchOptions: {
+          downloadsPath: "Training-Automation/download/",
+        },
       },
     },
 
@@ -56,7 +58,7 @@ export default defineConfig({
       name: "firefox",
       use: {
         ...devices["Desktop Firefox"],
-        launchOptions: { downloadsPath: "test-data/import-employee/" },
+        launchOptions: { downloadsPath: "Training-Automation/download/" },
       },
     },
 
@@ -64,7 +66,7 @@ export default defineConfig({
       name: "webkit",
       use: {
         ...devices["Desktop Safari"],
-        launchOptions: { downloadsPath: "test-data/import-employee/" },
+        launchOptions: { downloadsPath: "Training-Automation/download/" },
       },
     },
 

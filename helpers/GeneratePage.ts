@@ -8,14 +8,7 @@ export class GeneratePage {
   }
 
   async createPage(browser: Browser): Promise<Page> {
-    browser = await chromium.launch();
-    return await browser.newPage();
-  }
-
-  async createPageWithSpecificDownLloadPath(
-    browser: Browser,
-    downloadPath: string
-  ): Promise<Page> {
+    let downloadPath = "Training-Automation/download/";
     browser = await chromium.launch({ downloadsPath: downloadPath });
     return await browser.newPage();
   }
