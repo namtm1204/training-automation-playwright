@@ -62,13 +62,13 @@ export default defineConfig({
       },
     },
 
-    {
-      name: "webkit",
-      use: {
-        ...devices["Desktop Safari"],
-        launchOptions: { downloadsPath: "Training-Automation/download/" },
-      },
-    },
+    // {
+    //   name: "webkit",
+    //   use: {
+    //     ...devices["Desktop Safari"],
+    //     launchOptions: { downloadsPath: "Training-Automation/download/" },
+    //   },
+    // },
 
     /* Test against mobile viewports. */
     // {
