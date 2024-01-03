@@ -16,7 +16,7 @@ test.describe.parallel("Import employee", () => {
     dataImportPage = new DataImportPage(page);
   });
 
-  test.afterEach(async ({ page }) => {
+  test.afterEach(async () => {
     await page.close();
   });
 

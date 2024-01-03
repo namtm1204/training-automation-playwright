@@ -9,11 +9,11 @@ export class GeneratePage {
 
   async createPage(browser: Browser): Promise<Page> {
     //let downloadPath = "Training-Automation/download/";
-    browser = await chromium.launch();
+    //browser = await chromium.launch();
     return await browser.newPage();
   }
-
   async closeBrowser() {
-    this.browser.close();
+    await this.browser.close();
+    console.log("close browser");
   }
 }

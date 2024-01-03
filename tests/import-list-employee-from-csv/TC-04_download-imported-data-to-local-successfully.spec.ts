@@ -22,7 +22,7 @@ test.describe.parallel("Import employee", () => {
     fileHelper = new FileHelper();
   });
 
-  test.afterEach(async ({ page }) => {
+  test.afterEach(async () => {
     fileHelper.deleteFile(await download.path());
     await page.close();
   });
@@ -44,7 +44,7 @@ test.describe.parallel("Import employee", () => {
       expect(download.suggestedFilename()).toBe("importData.csv");
     });
     await test.step("VP: Verify content of file is correct", async () => {
-      console.log((await download.path()) + "aloloo");
+      //console.log((await download.path()) + "aloloo");
       dataImportPage.verifyContentOfFile(dirName, await download.path());
     });
   });

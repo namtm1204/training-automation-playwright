@@ -47,7 +47,7 @@ test.describe.parallel("Import employee", () => {
     customEmployeeData = employeeUtils.filterEmployeeList(randomEmployeeData);
   });
 
-  test.afterEach(async ({ page }) => {
+  test.afterEach(async () => {
     console.log(randomEmployeeData);
 
     await employeeListPage.deleteTestData(customEmployeeData.uniqueData);
