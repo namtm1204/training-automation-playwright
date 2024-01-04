@@ -3,6 +3,7 @@ import { PIMPage } from "../PIMPage";
 import path from "path";
 import { Employee } from "../../../../implement/Employee";
 import { CustomEmployee } from "../../../../interface/CustomEmployee";
+import { FileHelper } from "../../../../helpers/FileHepler";
 
 export class DataImportPage extends PIMPage {
   readonly selectFileButton: Locator;
@@ -12,6 +13,7 @@ export class DataImportPage extends PIMPage {
   readonly okButton: Locator;
   readonly fileInput: Locator;
   readonly errorToast: Locator;
+  readonly downloadLink: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -26,6 +28,7 @@ export class DataImportPage extends PIMPage {
     this.errorToast = page.locator(
       " .oxd-toast-content--error .oxd-text--toast-message"
     );
+    this.downloadLink = page.locator(".download-link");
   }
 
   async clickSelectFileButton() {
@@ -46,6 +49,9 @@ export class DataImportPage extends PIMPage {
 
   getErrorToast(): Locator {
     return this.errorToast;
+  }
+  async clickDownLoad() {
+    await this.downloadLink.click();
   }
 
   async selectFile(dirname: string) {
@@ -92,5 +98,22 @@ export class DataImportPage extends PIMPage {
       this.importDetailMessageBox,
       `Verify ${failedRow} is failed rows`
     ).toContainText(`Failed Rows` + failedRow);
+  }
+
+  verifyContentOfFile(expectFile: string, actualFile: string) {
+    const fileHelper = new FileHelper();
+    Promise.all([
+      fileHelper.readFile(expectFile),
+      fileHelper.readFile(actualFile),
+    ]).then((data) => {
+      var expectContent = data[0];
+      var actualContent = data[1];
+      console.log(expectContent);
+      console.log(actualContent);
+      expect(
+        expectContent,
+        "Verify content of expect file is the same as actual file"
+      ).toEqual(actualContent);
+    });
   }
 }

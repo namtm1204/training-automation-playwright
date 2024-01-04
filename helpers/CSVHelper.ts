@@ -52,11 +52,4 @@ export class CSVHelper {
     });
     await csv.toDisk(randomFileName);
   }
-
-  deleteFile(fileName: string) {
-    fs.unlink(fileName, function (err) {
-      if (err) throw err;
-      console.log("File deleted!");
-    });
-  }
 }

@@ -7,6 +7,7 @@ import { PersonalDetailsPage } from "../../page-objects/abstract-page/abstract-p
 import { ContactDetailsPage } from "../../page-objects/abstract-page/abstract-pim-page/PIMConfiguration/ContactDetailsPage";
 import { EmployeeUtils } from "../../helpers/EmployeeUtils";
 import { Employee } from "../../implement/Employee";
+import { FileHelper } from "../../helpers/FileHepler";
 
 test.describe.parallel("Import employee", () => {
   let page: Page;
@@ -16,6 +17,7 @@ test.describe.parallel("Import employee", () => {
   let personalDetailsPage: PersonalDetailsPage;
   let contactDetailsPage: ContactDetailsPage;
   let csvHelper: CSVHelper;
+  let fileHelper: FileHelper;
   let randomEmployeeData: Employee[];
   let customEmployeeData: any;
   let employeeUtils: EmployeeUtils;
@@ -33,6 +35,7 @@ test.describe.parallel("Import employee", () => {
     contactDetailsPage = new ContactDetailsPage(page);
 
     csvHelper = new CSVHelper();
+    fileHelper = new FileHelper();
     employeeUtils = new EmployeeUtils();
     await csvHelper.createRandomTestDataFile(
       relativePath + filename,
@@ -44,11 +47,11 @@ test.describe.parallel("Import employee", () => {
     customEmployeeData = employeeUtils.filterEmployeeList(randomEmployeeData);
   });
 
-  test.afterEach(async ({ page }) => {
+  test.afterEach(async () => {
     console.log(randomEmployeeData);
 
     await employeeListPage.deleteTestData(customEmployeeData.uniqueData);
-    csvHelper.deleteFile(relativePath + randomFileName);
+    fileHelper.deleteFile(relativePath + randomFileName);
     await page.close();
   });
 

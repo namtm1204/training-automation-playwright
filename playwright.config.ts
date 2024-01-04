@@ -46,18 +46,29 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        launchOptions: {
+          downloadsPath: "Training-Automation/download/",
+        },
+      },
     },
 
     {
       name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
+      use: {
+        ...devices["Desktop Firefox"],
+        launchOptions: { downloadsPath: "Training-Automation/download/" },
+      },
     },
 
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
+    // {
+    //   name: "webkit",
+    //   use: {
+    //     ...devices["Desktop Safari"],
+    //     launchOptions: { downloadsPath: "Training-Automation/download/" },
+    //   },
+    // },
 
     /* Test against mobile viewports. */
     // {
