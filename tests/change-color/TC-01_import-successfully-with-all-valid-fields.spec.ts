@@ -5,7 +5,7 @@ import testCaseData from "../../test-data/change-color/TC-01.json";
 import { ColorHelper } from "../../helpers/ColorHelper";
 import { LoginPage } from "../../page-objects/login/LoginPage";
 
-test.describe.parallel("Change color", () => {
+test.describe("Change color", () => {
   let page: Page;
   let page2: Page;
   let generatePage: GeneratePage;
