@@ -6,13 +6,15 @@ export class LoginPage {
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
   readonly forgotPasswordText: Locator;
+  readonly backGround: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.userNameInput = page.getByPlaceholder("Username");
-    this.passwordInput = page.getByPlaceholder("Password");
-    this.loginButton = page.getByRole("button", { name: " Login " });
-    this.forgotPasswordText = page.getByText("Forgot your password?");
+    this.userNameInput = page.locator('input[name="username"]');
+    this.passwordInput = page.locator('input[name="password"]');
+    this.loginButton = page.locator('button[type="submit"]');
+    this.forgotPasswordText = page.locator(".orangehrm-login-forgot-header");
+    this.backGround = page.locator(".orangehrm-login-layout");
   }
 
   async goToLoginPage() {

@@ -16,7 +16,7 @@ export default defineConfig({
   },
   timeout: 2 * 60 * 1000,
 
-  testDir: "./tests/import-list-employee-from-csv",
+  testDir: "./tests/change-color",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
