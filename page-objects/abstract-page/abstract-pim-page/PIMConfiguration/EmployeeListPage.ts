@@ -13,6 +13,8 @@ export class EmployeeListPage extends PIMPage {
   readonly rightTableButton: Locator;
   readonly resetButton: Locator;
   readonly confirmDeleteButton: Locator;
+  readonly addButton: Locator;
+  readonly searchButton: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -26,6 +28,12 @@ export class EmployeeListPage extends PIMPage {
     this.confirmDeleteButton = page.locator(
       '//*[@class="oxd-icon bi-trash oxd-button-icon"]'
     );
+    this.searchButton = page.locator("button[type='submit']");
+    this.addButton = page.locator("//button[text()=' Add ']");
+  }
+
+  async close() {
+    await this.page.close();
   }
 
   getTable(): Table {

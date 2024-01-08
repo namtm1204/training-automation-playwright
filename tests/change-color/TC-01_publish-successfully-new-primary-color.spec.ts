@@ -48,17 +48,20 @@ test.describe("Change color", () => {
       );
     });
 
-    await test.step("VP: Verify color of Corporate Branding tab", async () => {
+    await test.step("VP: Verify primary color of Corporate Branding tab", async () => {
       await corporateBrandingPage.verifyColorOfTab(rgbColor);
     });
-    await test.step("VP: Verify color of Social Media Image Switch", async () => {
+    await test.step("VP: Verify primary color of Social Media Image Switch", async () => {
       await corporateBrandingPage.verifySocialMediaImageSwitch(rgbColor);
     });
-    await test.step("VP: Verify color of main menu button", async () => {
+    await test.step("VP: Verify primary color of main menu button", async () => {
       await corporateBrandingPage.verifyMainMenuButton(rgbColor);
     });
-    await test.step("VP: Verify color of login page", async () => {
-      await corporateBrandingPage.verifyLoginPage(loginPage, rgbColor);
+    await test.step("VP: Verify primary color of login page", async () => {
+      await corporateBrandingPage.verifyPrimaryColorLoginPage(
+        loginPage,
+        rgbColor
+      );
     });
   });
 });
