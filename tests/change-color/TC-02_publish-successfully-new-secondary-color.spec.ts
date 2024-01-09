@@ -8,7 +8,6 @@ import { EmployeeListPage } from "../../page-objects/abstract-page/abstract-pim-
 
 test.describe("Change color", () => {
   let page: Page;
-  let page2: Page;
   let generatePage: GeneratePage;
   let corporateBrandingPage: CorporateBrandingPage;
   let locationsPage: LocationsPage;
@@ -18,9 +17,8 @@ test.describe("Change color", () => {
   test.beforeEach(async ({ browser }) => {
     generatePage = new GeneratePage(browser);
     page = await generatePage.createPage(browser);
-    page2 = await generatePage.createPage(browser);
     corporateBrandingPage = new CorporateBrandingPage(page);
-    locationsPage = new LocationsPage(page2);
+    locationsPage = new LocationsPage(page);
     employeeListPage = new EmployeeListPage(page);
     colorHelper = new ColorHelper();
   });

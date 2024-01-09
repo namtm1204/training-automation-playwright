@@ -74,7 +74,6 @@ export class LocationsPage extends AdminPage {
   }
 
   async goToLocationsPageFromCorporatePage() {
-    await this.clickMenuItem();
     //click Organization dropdown
     await this.getOrganizationTab().waitFor({ state: "visible" });
     await this.getOrganizationTab().click();
