@@ -36,7 +36,6 @@ export class OrganizationGeneralInformationPage extends AdminPage {
   }
 
   async goToOrganizationGeneralInformationPage() {
-    await this.goToLoginPage();
     //click "Admin"
     await this.clickMenuItem();
     //click Organization dropdown

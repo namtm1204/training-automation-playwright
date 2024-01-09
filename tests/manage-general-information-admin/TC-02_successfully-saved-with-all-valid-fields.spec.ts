@@ -26,6 +26,7 @@ test.describe.parallel("Update all fileds", () => {
     test(`[TC-02] Verify general information saved successfully when providing all fields in testdata${count} are valid `, async () => {
       test.setTimeout(3 * 60 * 1000);
       await test.step("Step 1: Go to Organization General Information Page", async () => {
+        await organizationGeneralInformationPage.goToLoginPage();
         await organizationGeneralInformationPage.goToOrganizationGeneralInformationPage();
       });
 

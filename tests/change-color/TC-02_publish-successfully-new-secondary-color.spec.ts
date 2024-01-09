@@ -24,7 +24,7 @@ test.describe("Change color", () => {
   });
 
   test.afterEach(async () => {
-    await corporateBrandingPage.goToCorporateBrandingPageFromOtherMainPage();
+    await corporateBrandingPage.goToCorporateBrandingPage();
     await corporateBrandingPage.clickReset();
     await corporateBrandingPage.waitForPageLoad();
     await page.close();
@@ -33,6 +33,7 @@ test.describe("Change color", () => {
   test(`[TC-02] Verify color is changed successfully when Publish random color for Secondary Color`, async () => {
     let rgbColor = colorHelper.convertHexToRGB(testCaseData.secondaryColor);
     await test.step("Step 1: Go to Data Import Page", async () => {
+      await corporateBrandingPage.goToLoginPage();
       await corporateBrandingPage.goToCorporateBrandingPage();
     });
 

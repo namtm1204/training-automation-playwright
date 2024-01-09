@@ -37,6 +37,7 @@ test.describe.parallel("Edit note location", () => {
     const newNote = testCaseData[0].note + "_" + random;
 
     await test.step("Step 1: Go to Locations Page", async () => {
+      await locationsPage.goToLoginPage();
       await locationsPage.goToLocationsPage();
     });
 

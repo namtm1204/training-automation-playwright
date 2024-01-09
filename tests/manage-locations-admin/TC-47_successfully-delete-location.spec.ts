@@ -26,6 +26,7 @@ test.describe.parallel("Delete location", () => {
     let random = new Date().toISOString();
     const locationName = testCaseData[0].name + "_" + random;
     await test.step("Step 1: Go to Locations Page", async () => {
+      await locationsPage.goToLoginPage();
       await locationsPage.goToLocationsPage();
     });
 

@@ -31,6 +31,7 @@ test.describe("Change color", () => {
   test(`[TC-01] Verify color is changed successfully when Publish random color for Primary Color`, async () => {
     let rgbColor = colorHelper.convertHexToRGB(testCaseData.primaryColor);
     await test.step("Step 1: Go to Data Import Page", async () => {
+      await corporateBrandingPage.goToLoginPage();
       await corporateBrandingPage.goToCorporateBrandingPage();
     });
 

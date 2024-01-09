@@ -35,6 +35,7 @@ test.describe.parallel("Edit location", () => {
     const newLocationName = locationName + "new";
 
     await test.step("Step 1: Go to Locations Page", async () => {
+      await locationsPage.goToLoginPage();
       await locationsPage.goToLocationsPage();
     });
 

@@ -26,6 +26,7 @@ test.describe.parallel("Update all fileds empty", () => {
     test(`[TC-03] Verify general information saved unsuccessfully when leaving all fields in testdata${count} empty `, async () => {
       test.setTimeout(3 * 60 * 1000);
       await test.step("Step 1: Go to Organization General Information Page", async () => {
+        await organizationGeneralInformationPage.goToLoginPage();
         await organizationGeneralInformationPage.goToOrganizationGeneralInformationPage();
       });
 

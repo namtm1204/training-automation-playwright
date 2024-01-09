@@ -10,7 +10,9 @@ export abstract class AbstractMenuPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.adminMenuItem = page.locator('//*[text()="Admin"]');
+    this.adminMenuItem = page.locator(
+      '//*[@class="oxd-text oxd-text--span oxd-main-menu-item--name"][contains(.,"Admin")]'
+    );
     this.loadSpinner = page.locator('//*[@class="oxd-loading-spinner"]');
     this.pimMenuItem = page.locator(
       "//*[@class = 'oxd-main-menu-item']//*[contains(.,'PIM')]"
