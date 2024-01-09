@@ -223,4 +223,32 @@ export class LocationsPage extends AdminPage {
       `Verify "Name" column does not contain ${name}`
     ).not.toContainEqual(name);
   }
+
+  async verifySecondaryColorLocationPage(rgbColor: any) {
+    await this.goToLocationsPage();
+
+    await expect(
+      this.addButton,
+      "verify color of Add button at Location page"
+    ).toHaveCSS(
+      "background-color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(
+      this.searchButton,
+      "verify color of search button at Location page"
+    ).toHaveCSS(
+      "background-color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(
+      this.resetButton,
+      "verify color of reset button at Location page"
+    ).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+
+    await this.close();
+  }
 }

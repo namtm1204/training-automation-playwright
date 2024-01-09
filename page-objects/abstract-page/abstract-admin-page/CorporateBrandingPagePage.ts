@@ -121,24 +121,6 @@ export class CorporateBrandingPage extends AdminPage {
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
   }
-  async verifyPrimaryColorLoginPage(loginPage: LoginPage, rgbColor: any) {
-    await loginPage.goToLoginPage();
-
-    await expect(loginPage.loginButton).toHaveCSS(
-      "background-color",
-      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
-    );
-    await expect(loginPage.forgotPasswordText).toHaveCSS(
-      "color",
-      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
-    );
-    await expect(loginPage.backGround).toHaveCSS(
-      "background-color",
-      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
-    );
-
-    await loginPage.close();
-  }
   async verifySecondaryColorOfCorporateBrandingPage(rgbColor: any) {
     await expect(
       this.publishButton,
@@ -161,67 +143,5 @@ export class CorporateBrandingPage extends AdminPage {
       "color",
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
-  }
-
-  async verifySecondaryColorLocationPage(
-    locationPage: LocationsPage,
-    rgbColor: any
-  ) {
-    await locationPage.goToLocationsPage();
-
-    await expect(
-      locationPage.addButton,
-      "verify color of Add button at Location page"
-    ).toHaveCSS(
-      "background-color",
-      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
-    );
-    await expect(
-      locationPage.searchButton,
-      "verify color of search button at Location page"
-    ).toHaveCSS(
-      "background-color",
-      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
-    );
-    await expect(
-      locationPage.resetButton,
-      "verify color of reset button at Location page"
-    ).toHaveCSS(
-      "color",
-      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
-    );
-
-    await locationPage.close();
-  }
-
-  async verifySecondaryColorEmployeeListPage(
-    employeeListPage: EmployeeListPage,
-    rgbColor: any
-  ) {
-    await employeeListPage.goToEmployeeListPage();
-
-    await expect(
-      employeeListPage.addButton,
-      "verify color of Add button at Employee List page"
-    ).toHaveCSS(
-      "background-color",
-      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
-    );
-    await expect(
-      employeeListPage.searchButton,
-      "verify color of search button at Employee List page"
-    ).toHaveCSS(
-      "background-color",
-      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
-    );
-    await expect(
-      employeeListPage.resetButton,
-      "verify color of reset button at Employee List page"
-    ).toHaveCSS(
-      "color",
-      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
-    );
-
-    await employeeListPage.close();
   }
 }

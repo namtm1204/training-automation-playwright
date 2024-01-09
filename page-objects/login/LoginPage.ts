@@ -46,4 +46,23 @@ export class LoginPage {
     await this.enterPassword(password);
     await this.clickLogin();
   }
+
+  async verifyPrimaryColorLoginPage(rgbColor: any) {
+    await this.goToLoginPage();
+
+    await expect(this.loginButton).toHaveCSS(
+      "background-color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(this.forgotPasswordText).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(this.backGround).toHaveCSS(
+      "background-color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+
+    await this.close();
+  }
 }

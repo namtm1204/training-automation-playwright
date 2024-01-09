@@ -259,4 +259,32 @@ export class EmployeeListPage extends PIMPage {
       );
     await this.verifyEmployee(contactEmployeeLocator, employee);
   }
+
+  async verifySecondaryColorEmployeeListPage(rgbColor: any) {
+    await this.goToEmployeeListPage();
+
+    await expect(
+      this.addButton,
+      "verify color of Add button at Employee List page"
+    ).toHaveCSS(
+      "background-color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(
+      this.searchButton,
+      "verify color of search button at Employee List page"
+    ).toHaveCSS(
+      "background-color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(
+      this.resetButton,
+      "verify color of reset button at Employee List page"
+    ).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+
+    await this.close();
+  }
 }
