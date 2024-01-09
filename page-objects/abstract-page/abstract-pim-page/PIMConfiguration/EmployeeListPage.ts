@@ -32,6 +32,32 @@ export class EmployeeListPage extends PIMPage {
     this.addButton = page.locator("//button[text()=' Add ']");
   }
 
+  async goToEmployeeListPage() {
+    await this.goToLoginPage();
+    //click "PIM"
+    await this.clickMenuItem();
+    //click Configuration dropdown
+    await this.configurationTab.waitFor({ state: "visible" });
+
+    await this.clickEmployeeListTab();
+    await this.waitForPageLoad();
+  }
+
+  async goToEmployeeListPageFromCorparatePage() {
+    //click "PIM"
+    await this.clickMenuItem();
+    //click Configuration dropdown
+    await this.configurationTab.waitFor({ state: "visible" });
+
+    await this.clickEmployeeListTab();
+    await this.waitForPageLoad();
+  }
+
+  async goToEmployeeListPageFromDataImportPage() {
+    await this.clickEmployeeListTab();
+    await this.waitForPageLoad();
+  }
+
   async close() {
     await this.page.close();
   }
@@ -261,7 +287,7 @@ export class EmployeeListPage extends PIMPage {
   }
 
   async verifySecondaryColorEmployeeListPage(rgbColor: any) {
-    await this.goToEmployeeListPage();
+    await this.goToEmployeeListPageFromCorparatePage();
 
     await expect(
       this.addButton,
@@ -284,7 +310,5 @@ export class EmployeeListPage extends PIMPage {
       "color",
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
-
-    await this.close();
   }
 }

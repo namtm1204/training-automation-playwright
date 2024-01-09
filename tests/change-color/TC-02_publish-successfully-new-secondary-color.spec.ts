@@ -9,7 +9,6 @@ import { EmployeeListPage } from "../../page-objects/abstract-page/abstract-pim-
 test.describe("Change color", () => {
   let page: Page;
   let page2: Page;
-  let page3: Page;
   let generatePage: GeneratePage;
   let corporateBrandingPage: CorporateBrandingPage;
   let locationsPage: LocationsPage;
@@ -20,14 +19,14 @@ test.describe("Change color", () => {
     generatePage = new GeneratePage(browser);
     page = await generatePage.createPage(browser);
     page2 = await generatePage.createPage(browser);
-    page3 = await generatePage.createPage(browser);
     corporateBrandingPage = new CorporateBrandingPage(page);
     locationsPage = new LocationsPage(page2);
-    employeeListPage = new EmployeeListPage(page3);
+    employeeListPage = new EmployeeListPage(page);
     colorHelper = new ColorHelper();
   });
 
   test.afterEach(async () => {
+    await corporateBrandingPage.goToCorporateBrandingPageFromOtherMainPage();
     await corporateBrandingPage.clickReset();
     await corporateBrandingPage.waitForPageLoad();
     await page.close();

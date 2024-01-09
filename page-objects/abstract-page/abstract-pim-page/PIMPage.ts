@@ -19,32 +19,6 @@ export abstract class PIMPage extends AbstractMenuPage {
     );
   }
 
-  async goToDataImportPage() {
-    await this.goToLoginPage();
-    //click "PIM"
-    await this.clickMenuItem();
-    //click Configuration dropdown
-    await this.configurationTab.waitFor({ state: "visible" });
-    await this.clickConfigurationTab();
-    //select "Data import" item
-    await this.clickDataImportItem();
-  }
-
-  async goToEmployeeListPage() {
-    await this.goToLoginPage();
-    //click "PIM"
-    await this.clickMenuItem();
-    //click Configuration dropdown
-    await this.configurationTab.waitFor({ state: "visible" });
-
-    await this.clickEmployeeListTab();
-    await this.waitForPageLoad();
-  }
-
-  async goToEmployeeListPageFromDataImportPage() {
-    await this.clickEmployeeListTab();
-    await this.waitForPageLoad();
-  }
   async clickMenuItem() {
     await this.pimMenuItem.click();
   }

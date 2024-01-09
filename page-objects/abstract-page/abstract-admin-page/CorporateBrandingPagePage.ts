@@ -66,6 +66,16 @@ export class CorporateBrandingPage extends AdminPage {
     await this.loadSpinner.waitFor({ state: "hidden" });
   }
 
+  async goToCorporateBrandingPageFromOtherMainPage() {
+    //click "Admin"
+    await this.clickMenuItem();
+    //click Organization dropdown
+    await this.corporateBrandingTab.waitFor({ state: "visible" });
+    await this.corporateBrandingTab.click();
+
+    await this.loadSpinner.waitFor({ state: "hidden" });
+  }
+
   async close() {
     await this.page.close();
   }

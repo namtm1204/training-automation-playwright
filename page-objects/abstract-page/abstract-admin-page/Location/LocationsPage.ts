@@ -73,6 +73,15 @@ export class LocationsPage extends AdminPage {
     await this.getLocationsItem().click();
   }
 
+  async goToLocationsPageFromCorporatePage() {
+    await this.clickMenuItem();
+    //click Organization dropdown
+    await this.getOrganizationTab().waitFor({ state: "visible" });
+    await this.getOrganizationTab().click();
+    //select "General Information" item
+    await this.getLocationsItem().click();
+  }
+
   async close() {
     await this.page.close();
   }
@@ -225,7 +234,7 @@ export class LocationsPage extends AdminPage {
   }
 
   async verifySecondaryColorLocationPage(rgbColor: any) {
-    await this.goToLocationsPage();
+    await this.goToLocationsPageFromCorporatePage();
 
     await expect(
       this.addButton,
@@ -248,7 +257,5 @@ export class LocationsPage extends AdminPage {
       "color",
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
-
-    await this.close();
   }
 }
