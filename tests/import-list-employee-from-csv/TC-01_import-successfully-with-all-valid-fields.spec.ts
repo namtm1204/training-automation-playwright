@@ -53,6 +53,7 @@ test.describe.parallel("Import employee", () => {
     let newDirName = relativePath + randomFileName;
 
     await test.step("Step 1: Go to Data Import Page", async () => {
+      await dataImportPage.goToLoginPage();
       await dataImportPage.goToDataImportPage();
     });
 

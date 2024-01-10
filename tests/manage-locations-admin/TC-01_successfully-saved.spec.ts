@@ -33,6 +33,7 @@ test.describe.parallel("Add location", () => {
       const locationName = testData.name + "_" + random;
 
       await test.step("Step 1: Go to Locations Page", async () => {
+        await locationsPage.goToLoginPage();
         await locationsPage.goToLocationsPage();
       });
 

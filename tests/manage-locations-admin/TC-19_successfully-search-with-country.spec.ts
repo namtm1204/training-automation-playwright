@@ -30,6 +30,7 @@ test.describe.parallel("Search location", () => {
   test(`[TC-19] Verify that is possible to search location with country`, async () => {
     let random = new Date().toISOString();
     await test.step("Step 1: Go to Locations Page", async () => {
+      await locationsPage.goToLoginPage();
       await locationsPage.goToLocationsPage();
     });
 

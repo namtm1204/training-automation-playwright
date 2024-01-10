@@ -31,6 +31,12 @@ export class DataImportPage extends PIMPage {
     this.downloadLink = page.locator(".download-link");
   }
 
+  async goToDataImportPage() {
+    await this.clickMenuItem("PIM");
+    await this.clickConfigurationTab();
+    await this.clickDataImportItem();
+  }
+
   async clickSelectFileButton() {
     await this.selectFileButton.click();
   }

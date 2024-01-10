@@ -24,6 +24,7 @@ test.describe.parallel("Update name", () => {
     test(`[TC-01] Verify general information saved successfully when updating only Origination name = ${testData.Organization_Name}`, async () => {
       test.setTimeout(3 * 60 * 1000);
       await test.step("Step 1: Go to Organization General Information Page", async () => {
+        await organizationGeneralInformationPage.goToLoginPage();
         await organizationGeneralInformationPage.goToOrganizationGeneralInformationPage();
       });
 

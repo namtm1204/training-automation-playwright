@@ -1,6 +1,8 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { AdminPage } from "./AdminPage";
 import { LoginPage } from "../../login/LoginPage";
+import { LocationsPage } from "./Location/LocationsPage";
+import { EmployeeListPage } from "../abstract-pim-page/PIMConfiguration/EmployeeListPage";
 
 export class CorporateBrandingPage extends AdminPage {
   readonly primaryColorPreview: Locator;
@@ -54,14 +56,9 @@ export class CorporateBrandingPage extends AdminPage {
   }
 
   async goToCorporateBrandingPage() {
-    await this.goToLoginPage();
-    //click "Admin"
-    await this.clickMenuItem();
-    //click Organization dropdown
-    await this.corporateBrandingTab.waitFor({ state: "visible" });
+    await this.clickMenuItem("Admin");
     await this.corporateBrandingTab.click();
-
-    await this.loadSpinner.waitFor({ state: "hidden" });
+    await this.waitForPageLoad();
   }
 
   async close() {
@@ -119,22 +116,27 @@ export class CorporateBrandingPage extends AdminPage {
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
   }
-  async verifyLoginPage(loginPage: LoginPage, rgbColor: any) {
-    await loginPage.goToLoginPage();
-
-    await expect(loginPage.loginButton).toHaveCSS(
+  async verifySecondaryColorOfCorporateBrandingPage(rgbColor: any) {
+    await expect(
+      this.publishButton,
+      "Verify color of Publish button at Corparate page"
+    ).toHaveCSS(
       "background-color",
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
-    await expect(loginPage.forgotPasswordText).toHaveCSS(
+    await expect(
+      this.previewButton,
+      "Verify color of Preview button at Corparate page"
+    ).toHaveCSS(
       "color",
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
-    await expect(loginPage.backGround).toHaveCSS(
-      "background-color",
+    await expect(
+      this.previewButton,
+      "Verify color of Reset to Default button at Corparate page"
+    ).toHaveCSS(
+      "color",
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
-
-    await loginPage.close();
   }
 }

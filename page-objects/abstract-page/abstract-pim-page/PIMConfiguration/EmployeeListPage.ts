@@ -13,6 +13,8 @@ export class EmployeeListPage extends PIMPage {
   readonly rightTableButton: Locator;
   readonly resetButton: Locator;
   readonly confirmDeleteButton: Locator;
+  readonly addButton: Locator;
+  readonly searchButton: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -26,6 +28,23 @@ export class EmployeeListPage extends PIMPage {
     this.confirmDeleteButton = page.locator(
       '//*[@class="oxd-icon bi-trash oxd-button-icon"]'
     );
+    this.searchButton = page.locator("button[type='submit']");
+    this.addButton = page.locator("//button[text()=' Add ']");
+  }
+
+  async goToEmployeeListPage() {
+    await this.clickMenuItem("PIM");
+    await this.clickEmployeeListTab();
+    await this.waitForPageLoad();
+  }
+
+  async goToEmployeeListPageFromDataImportPage() {
+    await this.clickEmployeeListTab();
+    await this.waitForPageLoad();
+  }
+
+  async close() {
+    await this.page.close();
   }
 
   getTable(): Table {
@@ -250,5 +269,29 @@ export class EmployeeListPage extends PIMPage {
         contactEmployeeLocator
       );
     await this.verifyEmployee(contactEmployeeLocator, employee);
+  }
+
+  async verifySecondaryColorEmployeeListPage(rgbColor: any) {
+    await expect(
+      this.addButton,
+      "verify color of Add button at Employee List page"
+    ).toHaveCSS(
+      "background-color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(
+      this.searchButton,
+      "verify color of search button at Employee List page"
+    ).toHaveCSS(
+      "background-color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(
+      this.resetButton,
+      "verify color of reset button at Employee List page"
+    ).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
   }
 }

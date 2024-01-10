@@ -63,13 +63,8 @@ export class LocationsPage extends AdminPage {
   }
 
   async goToLocationsPage() {
-    await this.goToLoginPage();
-    //click "Admin"
-    await this.clickMenuItem();
-    //click Organization dropdown
-    await this.getOrganizationTab().waitFor({ state: "visible" });
+    await this.clickMenuItem("Admin");
     await this.getOrganizationTab().click();
-    //select "General Information" item
     await this.getLocationsItem().click();
   }
 
@@ -222,5 +217,29 @@ export class LocationsPage extends AdminPage {
       arrayName,
       `Verify "Name" column does not contain ${name}`
     ).not.toContainEqual(name);
+  }
+
+  async verifySecondaryColorLocationPage(rgbColor: any) {
+    await expect(
+      this.addButton,
+      "verify color of Add button at Location page"
+    ).toHaveCSS(
+      "background-color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(
+      this.searchButton,
+      "verify color of search button at Location page"
+    ).toHaveCSS(
+      "background-color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(
+      this.resetButton,
+      "verify color of reset button at Location page"
+    ).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
   }
 }
