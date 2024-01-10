@@ -242,4 +242,21 @@ export class LocationsPage extends AdminPage {
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
   }
+
+  async verifySecondaryFontColorLocationPage(rgbColor: any) {
+    await expect(
+      this.addButton,
+      "verify color of Add button at Location page"
+    ).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(
+      this.searchButton,
+      "verify color of search button at Location page"
+    ).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+  }
 }

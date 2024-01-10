@@ -139,4 +139,13 @@ export class CorporateBrandingPage extends AdminPage {
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
   }
+  async verifySecondaryFontColorOfCorporateBrandingPage(rgbColor: any) {
+    await expect(
+      this.publishButton,
+      "Verify color of Publish button at Corparate page"
+    ).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+  }
 }

@@ -28,7 +28,7 @@ test.describe("Change color", () => {
     await page.close();
   });
 
-  test(`[TC-01] Verify color is changed successfully when Publish random color for Primary Font Color`, async () => {
+  test(`[TC-03] Verify color is changed successfully when Publish random color for Primary Font Color`, async () => {
     let rgbColor = colorHelper.convertHexToRGB(testCaseData.primaryFontColor);
     await test.step("Step 1: Go to Data Import Page", async () => {
       await corporateBrandingPage.goToLoginPage();

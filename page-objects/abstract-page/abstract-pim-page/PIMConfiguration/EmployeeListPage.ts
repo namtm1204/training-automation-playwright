@@ -294,4 +294,21 @@ export class EmployeeListPage extends PIMPage {
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
   }
+
+  async verifySecondaryFontColorEmployeeListPage(rgbColor: any) {
+    await expect(
+      this.addButton,
+      "verify color of Add button at Employee List page"
+    ).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(
+      this.searchButton,
+      "verify color of search button at Employee List page"
+    ).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+  }
 }
