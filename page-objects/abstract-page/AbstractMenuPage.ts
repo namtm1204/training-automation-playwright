@@ -7,6 +7,8 @@ export abstract class AbstractMenuPage {
   readonly dashBoardMenuItem: Locator;
   readonly pimMenuItem: Locator;
   readonly loadSpinner: Locator;
+  readonly moduleHeader: Locator;
+  readonly userDropdownName: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,6 +19,8 @@ export abstract class AbstractMenuPage {
     this.pimMenuItem = page.locator(
       "//*[@class = 'oxd-main-menu-item']//*[contains(.,'PIM')]"
     );
+    this.moduleHeader = page.locator(".oxd-topbar-header-breadcrumb-module");
+    this.userDropdownName = page.locator(".oxd-userdropdown-name");
   }
   async clickMenuItem(item: string): Promise<void> {
     switch (item) {
@@ -29,6 +33,7 @@ export abstract class AbstractMenuPage {
       // code block
     }
   }
+
   async goToLoginPage() {
     let loginPage = new LoginPage(this.page);
     await loginPage.loginProcess(loginData[0].username, loginData[0].password);
@@ -36,5 +41,23 @@ export abstract class AbstractMenuPage {
 
   async waitForPageLoad(): Promise<void> {
     await this.loadSpinner.waitFor({ state: "hidden" });
+  }
+
+  async verifyPrimaryFontColorOfAbstractPage(rgbColor: any) {
+    await expect(this.adminMenuItem, "Verify color of admin item ").toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(this.moduleHeader, "Verify color of modulw header ").toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+    await expect(
+      this.userDropdownName,
+      "Verify color of user dropdown name"
+    ).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
   }
 }

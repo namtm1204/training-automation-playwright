@@ -61,4 +61,11 @@ export class LoginPage {
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
   }
+
+  async verifyPrimaryFontColorLoginPage(rgbColor: any) {
+    await expect(this.loginButton).toHaveCSS(
+      "color",
+      `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
+    );
+  }
 }
