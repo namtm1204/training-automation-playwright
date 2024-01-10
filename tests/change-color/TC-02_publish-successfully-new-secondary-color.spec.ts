@@ -59,9 +59,11 @@ test.describe("Change color", () => {
       );
     });
     await test.step("VP: Verify secondary color of Locations page", async () => {
+      await locationsPage.goToLocationsPage();
       await locationsPage.verifySecondaryColorLocationPage(rgbColor);
     });
     await test.step("VP: Verify secondary color of Employee List page", async () => {
+      await employeeListPage.goToEmployeeListPage();
       await employeeListPage.verifySecondaryColorEmployeeListPage(rgbColor);
     });
   });

@@ -19,10 +19,6 @@ export abstract class PIMPage extends AbstractMenuPage {
     );
   }
 
-  async clickMenuItem() {
-    await this.pimMenuItem.click();
-  }
-
   async clickConfigurationTab() {
     await this.configurationTab.click();
   }

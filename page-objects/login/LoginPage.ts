@@ -48,8 +48,6 @@ export class LoginPage {
   }
 
   async verifyPrimaryColorLoginPage(rgbColor: any) {
-    await this.goToLoginPage();
-
     await expect(this.loginButton).toHaveCSS(
       "background-color",
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
@@ -62,7 +60,5 @@ export class LoginPage {
       "background-color",
       `rgb(${rgbColor.red}, ${rgbColor.green}, ${rgbColor.blue})`
     );
-
-    await this.close();
   }
 }

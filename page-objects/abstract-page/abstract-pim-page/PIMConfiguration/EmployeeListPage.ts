@@ -33,11 +33,7 @@ export class EmployeeListPage extends PIMPage {
   }
 
   async goToEmployeeListPage() {
-    //click "PIM"
-    await this.clickMenuItem();
-    //click Configuration dropdown
-    await this.configurationTab.waitFor({ state: "visible" });
-
+    await this.clickMenuItem("PIM");
     await this.clickEmployeeListTab();
     await this.waitForPageLoad();
   }
@@ -276,8 +272,6 @@ export class EmployeeListPage extends PIMPage {
   }
 
   async verifySecondaryColorEmployeeListPage(rgbColor: any) {
-    await this.goToEmployeeListPage();
-
     await expect(
       this.addButton,
       "verify color of Add button at Employee List page"

@@ -18,7 +18,17 @@ export abstract class AbstractMenuPage {
       "//*[@class = 'oxd-main-menu-item']//*[contains(.,'PIM')]"
     );
   }
-  async clickMenuItem(): Promise<void> {}
+  async clickMenuItem(item: string): Promise<void> {
+    switch (item) {
+      case "PIM":
+        await this.pimMenuItem.click();
+        break;
+      case "Admin":
+        await this.adminMenuItem.click();
+        break;
+      // code block
+    }
+  }
   async goToLoginPage() {
     let loginPage = new LoginPage(this.page);
     await loginPage.loginProcess(loginData[0].username, loginData[0].password);

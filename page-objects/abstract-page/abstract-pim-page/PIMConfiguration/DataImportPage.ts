@@ -32,12 +32,8 @@ export class DataImportPage extends PIMPage {
   }
 
   async goToDataImportPage() {
-    //click "PIM"
-    await this.clickMenuItem();
-    //click Configuration dropdown
-    await this.configurationTab.waitFor({ state: "visible" });
+    await this.clickMenuItem("PIM");
     await this.clickConfigurationTab();
-    //select "Data import" item
     await this.clickDataImportItem();
   }
 

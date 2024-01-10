@@ -59,7 +59,9 @@ test.describe("Change color", () => {
       await corporateBrandingPage.verifyMainMenuButton(rgbColor);
     });
     await test.step("VP: Verify primary color of login page", async () => {
+      await loginPage.goToLoginPage();
       await loginPage.verifyPrimaryColorLoginPage(rgbColor);
+      await loginPage.close();
     });
   });
 });

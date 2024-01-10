@@ -63,12 +63,8 @@ export class LocationsPage extends AdminPage {
   }
 
   async goToLocationsPage() {
-    //click "Admin"
-    await this.clickMenuItem();
-    //click Organization dropdown
-    await this.getOrganizationTab().waitFor({ state: "visible" });
+    await this.clickMenuItem("Admin");
     await this.getOrganizationTab().click();
-    //select "General Information" item
     await this.getLocationsItem().click();
   }
 
@@ -224,8 +220,6 @@ export class LocationsPage extends AdminPage {
   }
 
   async verifySecondaryColorLocationPage(rgbColor: any) {
-    await this.goToLocationsPage();
-
     await expect(
       this.addButton,
       "verify color of Add button at Location page"
